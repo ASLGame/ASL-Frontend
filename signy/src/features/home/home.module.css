@@ -1,0 +1,49 @@
+.container {
+  display: flex;
+  height: 92vh;
+  width: 100vw;
+  flex-direction: column;
+}
+
+.background {
+  /* height: 100vh;
+  width: 100vw; */
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-image: url("./layered-waves-haikei.svg");
+}
+
+.top {
+  display: flex;
+  margin-top: 5%;
+  height: 60%;
+  width: 100%;
+  min-height: 300px;
+}
+.left {
+  display: flex;
+  width: 50%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.right {
+  display: flex;
+  width: 50%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.bottom {
+  display: flex;
+  height: 30%;
+  min-height: 200px;
+}
+
+.paragraph {
+  text-align: center;
+  width: 70%;
+}

@@ -1,0 +1,71 @@
+.containerOuter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100vw;
+  height: 91vh;
+  align-self: center;
+}
+
+.containerInner {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 75%;
+  height: 100%;
+  /* margin-top: 20px; */
+  background-color: var(--gray);
+  border-radius: 3%;
+}
+
+.searchContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 5%;
+  width: 100%;
+}
+
+.form {
+  border-radius: 3%;
+  width: 60%;
+}
+
+.inputContainer {
+  display: -ms-flexbox; /* IE10 */
+  display: flex;
+  width: 100%;
+  margin-bottom: 15px;
+}
+.icon {
+  padding-bottom: 13px;
+  padding-top: 8px;
+  background: #fff;
+  color: #000;
+  border: 0px solid #000;
+  border-left: none;
+  min-width: 50px;
+  text-align: center;
+  font-size: 20px;
+  height: 20px;
+  background-image: url("./Webp.net-resizeimage.png");
+  background-repeat: no-repeat;
+  cursor: pointer;
+  background-color: var(--gray);
+}
+
+.input {
+  width: 100%;
+  font-size: 20px;
+  padding: 5px;
+  outline: none;
+  border: 0px;
+  border-right: none;
+  color: #000;
+  background-color: var(--gray);
+}
+
+.gamesContainer {
+  margin-top: 10%;
+}

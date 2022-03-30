@@ -1,0 +1,58 @@
+.table {
+  border-collapse: collapse;
+}
+
+.gameTileContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: space-between;
+}
+
+.gameTile {
+  cursor: pointer;
+}
+
+.gameImageColumn {
+  width: 50%;
+  border-bottom: 1px solid black;
+  padding-bottom: 10px;
+  padding-top: 10px;
+}
+.gameImage {
+  width: 95%;
+  padding-right: 0px;
+  margin-right: 0;
+}
+
+.gameNameColumn {
+  width: 20%;
+  margin-right: 100;
+  border-bottom: 1px solid black;
+  padding-bottom: 10px;
+  padding-top: 10px;
+}
+
+.gameDescriptionColumn {
+  width: 30%;
+  border-bottom: 1px solid black;
+  padding-bottom: 10px;
+  padding-top: 10px;
+}
+
+.lastGameImageColumn {
+  width: 50%;
+  padding-top: 10px;
+}
+
+.lastGameNameColumn {
+  width: 20%;
+  margin-right: 100;
+  padding-top: 10px;
+}
+
+.lastGameDescriptionColumn {
+  width: 30%;
+  padding-top: 10px;
+}

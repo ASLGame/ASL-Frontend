@@ -1,0 +1,22 @@
+.container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  max-width: 950px;
+}
+
+.title {
+  align-self: flex-start;
+  margin-left: 5%;
+}
+
+.featuredGames {
+  display: flex;
+  flex-direction: column;
+  width: 96%;
+  background-color: var(--gray);
+  border-radius: 3%;
+  align-items: center;
+}

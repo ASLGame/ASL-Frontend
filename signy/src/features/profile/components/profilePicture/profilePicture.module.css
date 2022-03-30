@@ -1,0 +1,27 @@
+.profile_circle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 237px;
+  height: 237px;
+  margin-top: 30px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 8px solid var(--dark_purple);
+  flex-shrink: 0;
+}
+
+.image {
+  margin-top: 4.5px;
+  width: 240px;
+  height: 240px;
+  border-radius: 50%;
+}
+
+.edit_label {
+  cursor: pointer;
+}
+
+input[type="file"] {
+  display: none;
+}

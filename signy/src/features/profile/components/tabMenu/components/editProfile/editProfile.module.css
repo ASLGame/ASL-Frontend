@@ -1,0 +1,33 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50%;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.label {
+    padding-left: 25%;
+    margin-bottom: 20px;
+}
+
+.input {
+    font-size: 15px;
+    outline: none;
+    width: 65%;
+    margin-left: 25%;
+    max-width: 291.82px;
+    margin-bottom: 10%;
+    background-color: var(--light_purple);
+    border: none;
+    border-bottom: 3px solid #000000;;
+}
+
+.input:disabled:hover {
+    color: black;
+}
