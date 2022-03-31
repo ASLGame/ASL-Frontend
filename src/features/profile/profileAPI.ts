@@ -62,3 +62,17 @@ export const changePassword = async (userData: passwordChanges) => {
     return response;
   }
 };
+
+export const getAchievements = async (uid: number) => {
+  const response = await fetch(url + `user-account-achievement/${uid}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  if (response.ok) {
+    return response.json();
+  } else {
+    return response;
+  }
+};
