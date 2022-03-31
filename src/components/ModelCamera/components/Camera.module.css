@@ -1,0 +1,19 @@
+.webcamContainer {
+  display: flex;
+  background-color: var(--gray);
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  flex-direction: column;
+  height: 60%;
+}
+
+.webcam {
+  display: none;
+}
+
+.canvas {
+  margin-bottom: 2%;
+  width: 90%;
+  height: 82%;
+}

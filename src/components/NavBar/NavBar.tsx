@@ -43,9 +43,9 @@ const NavBar = (props: {
     });
   var DropLinks: any = () => {
     const links = [
-      <a href="/">Leaderboards</a>,
+      <a href="/leaderboard">Leaderboards</a>,
       <p></p>,
-      <a href="/">About Us</a>,
+      <a href="/about">About Us</a>,
     ];
     if (isAuth) {
       return [

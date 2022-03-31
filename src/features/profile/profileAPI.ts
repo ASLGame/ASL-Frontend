@@ -1,8 +1,9 @@
+import { apiURL } from "../../env/dev";
 import {
   passwordChanges,
   userChanges,
 } from "./components/tabMenu/components/editProfile/EditProfile";
-import { apiURL } from "../../env/dev";
+
 const url = apiURL;
 export const getLatestPlayed = async (uid: number) => {
   const response = await fetch(url + `scores/users/latest/${uid}/5`, {

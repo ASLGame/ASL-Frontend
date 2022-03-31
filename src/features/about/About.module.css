@@ -1,0 +1,43 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 91vh;
+  width: 100vw;
+}
+
+.backgroundImage {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-image: url("./blob-scene-haikei.svg");
+  height: 91vh;
+  width: 100vw;
+}
+
+.textContainer {
+  width: 50%;
+  text-align: center;
+  background-color: var(--gray);
+  border-radius: 3%;
+  padding: 3%;
+}
+
+.title {
+  margin-bottom: 10%;
+}
+
+.titleBackground {
+  color: white;
+  display: flex;
+  height: 50%;
+  align-self: center;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 900/600;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-image: url("./blob-haikei.svg");
+}

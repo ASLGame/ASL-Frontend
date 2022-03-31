@@ -1,0 +1,76 @@
+.container {
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+
+.background {
+  height: 100vh;
+  width: 100vw;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.layer1 {
+  background-image: url("./layered-waves-haikei.svg");
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  flex-direction: column;
+  flex: 1;
+  align-content: space-between;
+  max-width: 50%;
+  height: 100%;
+}
+
+.right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  flex-direction: column;
+  max-width: 50%;
+}
+
+.title {
+  margin-top: 10%;
+  align-self: center;
+}
+
+.gameboard {
+  margin-top: 20%;
+  display: flex;
+  border: 2px;
+  padding: 5%;
+  border-style: solid;
+  border-radius: 10px;
+  flex-direction: column;
+  justify-content: center;
+  width: 50%;
+}
+
+.gameboardTitle {
+  align-self: center;
+}
+
+.letterTable {
+  align-self: center;
+  width: 100%;
+}
+
+.letters {
+  display: flex;
+  flex-direction: row;
+}
+
+.answerCell {
+  float: right;
+}
+
+.divider {
+  width: 100%;
+}

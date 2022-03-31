@@ -1,4 +1,5 @@
 import { apiURL } from "../../env/dev";
+
 const url = apiURL;
 
 export async function newestGame() {

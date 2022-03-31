@@ -1,6 +1,6 @@
 .container {
   display: flex;
-  height: 92vh;
+  height: 91vh;
   width: 100vw;
   flex-direction: column;
 }
@@ -16,7 +16,7 @@
 
 .top {
   display: flex;
-  margin-top: 5%;
+  /* margin-top: 5%; */
   height: 60%;
   width: 100%;
   min-height: 300px;
@@ -38,6 +38,7 @@
 }
 
 .bottom {
+  margin-top: 4%;
   display: flex;
   height: 30%;
   min-height: 200px;

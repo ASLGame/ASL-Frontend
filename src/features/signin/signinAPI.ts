@@ -1,6 +1,6 @@
 import { apiURL } from "../../env/dev";
-const url = apiURL;
 
+const url = apiURL;
 export const signin = async (user: object): Promise<object> => {
   let errorMessage;
   let userSignin = {};
