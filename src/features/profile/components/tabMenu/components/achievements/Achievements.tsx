@@ -16,7 +16,11 @@ export function Achievements() {
           <div className={styles.achievement_name}>{achievement.name}</div>
           <ProgressBar
             className={styles.progress_bar_wrapper}
-            completed={achievement.value}
+            completed={
+              achievement.value >= achievement.task
+                ? String(achievement.task)
+                : String(achievement.value)
+            }
             maxCompleted={achievement.task}
             labelClassName={styles.progress_bar_label}
             baseBgColor="#F5F5FB"
