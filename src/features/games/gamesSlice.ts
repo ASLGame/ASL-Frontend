@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
-import { Game } from "../home/homeSlice";
+import { Game } from "../../types/Game";
 import { allGames } from "./gamesAPI";
 
 interface gamesState {
