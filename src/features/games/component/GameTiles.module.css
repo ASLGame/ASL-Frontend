@@ -21,9 +21,10 @@
   padding-top: 10px;
 }
 .gameImage {
-  width: 95%;
+  width: 20%;
+  height: 30%;
   padding-right: 0px;
-  margin-right: 0;
+  /* margin-right: 0; */
 }
 
 .gameNameColumn {

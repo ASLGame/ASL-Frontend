@@ -48,7 +48,7 @@
   margin-bottom: 2%;
   border: none;
   cursor: pointer;
-  font-size: 2em;  
+  font-size: 2em;
   background-color: var(--pinkred);
   border-radius: 100px;
   border: 2px solid #000000;
@@ -68,6 +68,14 @@
   width: 50%;
 }
 
+.topGameBar {
+  display: flex;
+  flex-direction: row;
+  justify-items: center;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .gameboardTitle {
   align-self: center;
 }
@@ -75,6 +83,20 @@
 .letterTable {
   align-self: center;
   width: 100%;
+}
+
+.modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 40vw;
+  position: absolute;
+  height: 40vh;
+  right: 30%;
+  bottom: 30%;
+  justify-self: center;
+  background-color: white;
+  border-radius: 3%;
 }
 
 .letters {

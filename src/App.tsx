@@ -7,7 +7,7 @@ import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { SignUp } from "./features/signup/SignUp";
 import Home from "./features/home/Home";
-import Game from "./features/game/game";
+import SpellingLetters from "./features/game/spellingLetters";
 import Games from "./features/games/Games";
 import NavBar from "./components/NavBar/NavBar";
 import { useSelector } from "react-redux";
@@ -49,7 +49,10 @@ function App() {
             <Route path="/signin" element={<SignIn />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/signup" element={<SignUp />} />
-            <Route path="/game" element={<Game />} />
+            <Route
+              path="/games/spellingLetters"
+              element={<SpellingLetters />}
+            />
             <Route path="/leaderboard" element={<Leaderboard />} />
             <Route path="/" element={<Home />} />
             <Route path="/games" element={<Games />} />
