@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
-import { game, postScore } from "./gameAPI";
+import { getGame, postScore } from "./gameAPI";
 import { Game } from "../../types/Game";
 import { scorePost } from "../../types/Score";
 
@@ -11,6 +11,14 @@ interface gameState {
 const initialState: gameState = {
   game: undefined,
 };
+
+export const getGameAsync = createAsyncThunk(
+  "game/selected",
+  async (name: String) => {
+    const response = await getGame(name);
+    return response;
+  }
+);
 
 export const postScoreAsync = createAsyncThunk(
   "score/post",
@@ -31,6 +39,13 @@ export const gameSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(postScoreAsync.rejected, (state, action) => {
       console.log(action.error);
+    });
+    builder.addCase(getGameAsync.rejected, (state, action) => {
+      console.log(action.error);
+    });
+    builder.addCase(getGameAsync.fulfilled, (state, action) => {
+      console.log(action.payload);
+      state.game = action.payload;
     });
   },
 });

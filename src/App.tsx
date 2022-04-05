@@ -1,4 +1,3 @@
-import logo from "./logo.svg";
 import { SignIn } from "./features/signin/SignIn";
 import { Profile } from "./features/profile/Profile";
 import About from "./features/about/About";

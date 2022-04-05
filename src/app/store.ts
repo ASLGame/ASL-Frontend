@@ -13,7 +13,7 @@ import latestPlayedReducer from "../features/profile/profileSlice";
 import getscoreReducer from "../features/leaderboard/leaderboardSlice";
 import gameReducer from "../features/game/gameSlice";
 
-import { persistStore, persistReducer } from "redux-persist";
+import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
 const reducers = combineReducers({

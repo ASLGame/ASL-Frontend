@@ -7,9 +7,11 @@ import LetterSpelled from "../../types/LetterSpelled";
 import Confetti from "react-confetti";
 import { useNavigate } from "react-router-dom";
 import Modal from "react-modal";
-import { useSelector } from "react-redux";
-import { selectGame } from "./gameSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { getGameAsync, postScoreAsync, selectGame } from "./gameSlice";
 import { Game } from "../../types/Game";
+import { selectSignIn, selectUser } from "../signin/signinSlice";
+import { scorePost } from "../../types/Score";
 
 const SpellingLetters: FunctionComponent = () => {
   const [buffer, setBuffer] = useState<String[]>([]);
@@ -22,14 +24,20 @@ const SpellingLetters: FunctionComponent = () => {
   const [timer, setTimer] = useState<number>(10);
   const [isTimerPaused, setIsTimerPaused] = useState(true);
   const [lettersSpelled, setLettersSpelled] = useState<LetterSpelled[]>([]);
+  const [isCameraLoading, setIsCameraLoading] = useState<boolean>(true);
+  const [isScorePosted, setIsScorePosted] = useState<boolean>(false);
   const [score, setScore] = useState<number>(0);
+  const user = useSelector(selectUser);
+  const isAuthorized = useSelector(selectSignIn);
+  const dispatch = useDispatch();
   //@ts-ignore
-  const game: Game = useSelector(selectGame).game!;
+  const game: Game = useSelector(selectGame).game;
   const navigate = useNavigate();
 
   const resetGame = () => {
     setLettersSpelled([]);
     setScore(0);
+    setIsScorePosted(false);
   };
 
   const renderModal = () => {
@@ -135,7 +143,18 @@ const SpellingLetters: FunctionComponent = () => {
   };
 
   useEffect(() => {
-    if (isLetterCorrect() && lettersSpelled.length !== 10 && !isTimerPaused) {
+    if (!game) {
+      dispatch(getGameAsync("Spelling Letters"));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (
+      isLetterCorrect() &&
+      lettersSpelled.length !== 10 &&
+      !isTimerPaused &&
+      !isCameraLoading
+    ) {
       //@ts-ignore
       const newLetter: LetterSpelled = { [currentLetter]: true };
 
@@ -158,7 +177,7 @@ const SpellingLetters: FunctionComponent = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      if (!isTimerPaused) {
+      if (!isTimerPaused && !isCameraLoading) {
         if (timer === 0) {
         } else if (lettersSpelled.length !== 10) {
           setTimer(timer - 1);
@@ -170,93 +189,114 @@ const SpellingLetters: FunctionComponent = () => {
     };
   });
 
-  return (
-    <>
-      <Modal
-        isOpen={isModalOpen}
-        onRequestClose={() => {
-          setIsModalOpen(false);
-          setIsTimerPaused(false);
-        }}
-        className={styles.modal}
-      >
-        {renderModal()}
-      </Modal>
-      <div className={styles.background + " " + styles.layer1}>
-        {lettersSpelled.length === 10 ? (
-          <Confetti width={window.innerWidth} height={window.innerHeight} />
-        ) : (
-          ""
-        )}
-        <section className={styles.container}>
-          <div className={styles.left}>
-            <div className={styles.topGameBar}>
-              <button
-                style={{ marginRight: "30px" }}
-                onClick={() => navigate("../")}
-                className={styles.backButton}
-              >
-                &#8249;
-              </button>
-              <h1 style={{ width: "40%" }}> {game.name}</h1>
-            </div>
-
-            <ModelCamera updateGameBuffer={updateBuffer}></ModelCamera>
-
-            {lettersSpelled.length !== 10
-              ? renderNextAndTimer(currentLetter, timer)
-              : ""}
-          </div>
-          <div className={styles.right}>
-            <div className={styles.gameboard}>
-              <h1 className={styles.gameboardTitle}> Score </h1>
-              <div className={styles.letters}>
-                {renderLetters(lettersSpelled)}
-              </div>
-              <hr className={styles.divider}></hr>
-              <table>
-                <tbody>
-                  <tr>
-                    <td>Total</td>
-                    <td className={styles.answerCell}> {score}</td>
-                  </tr>
-                </tbody>
-              </table>
-              {lettersSpelled.length === 10 ? (
-                <Button
-                  style={{
-                    width: "50%",
-                    minWidth: "100px",
-                    alignSelf: "center",
-                    fontSize: "20px",
-                    marginTop: "2%",
-                  }}
-                  onClick={resetGame}
+  useEffect(() => {
+    if (
+      lettersSpelled.length === 10 &&
+      isAuthorized &&
+      user &&
+      !isScorePosted
+    ) {
+      const scoreToPost: scorePost = {
+        account_id: user.account_id!,
+        game_id: game.id,
+        score: score,
+      };
+      dispatch(postScoreAsync(scoreToPost));
+      setIsScorePosted(true);
+    }
+  });
+  if (game) {
+    return (
+      <>
+        <Modal
+          isOpen={isModalOpen}
+          onRequestClose={() => {
+            setIsModalOpen(false);
+            setIsTimerPaused(false);
+          }}
+          className={styles.modal}
+        >
+          {renderModal()}
+        </Modal>
+        <div className={styles.background + " " + styles.layer1}>
+          {lettersSpelled.length === 10 ? (
+            <Confetti width={window.innerWidth} height={window.innerHeight} />
+          ) : (
+            ""
+          )}
+          <section className={styles.container}>
+            <div className={styles.left}>
+              <div className={styles.topGameBar}>
+                <button
+                  style={{ marginRight: "30px" }}
+                  onClick={() => navigate("../")}
+                  className={styles.backButton}
                 >
-                  Next
-                </Button>
-              ) : (
-                ""
-              )}
+                  &#8249;
+                </button>
+                <h1 style={{ alignSelf: "" }}> {game.name}</h1>
+              </div>
+              <ModelCamera
+                onUserMedia={setIsCameraLoading}
+                updateGameBuffer={updateBuffer}
+              ></ModelCamera>
+
+              {lettersSpelled.length !== 10
+                ? renderNextAndTimer(currentLetter, timer)
+                : ""}
             </div>
-            <button
-              style={{
-                alignSelf: "center",
-                fontSize: "20px",
-                marginLeft: "5px",
-              }}
-              className={styles.backButton}
-              onClick={() => {
-                setIsModalOpen(true);
-                setIsTimerPaused(true);
-              }}
-            >
-              See instructions
-            </button>
-          </div>
-        </section>
-      </div>
-    </>
-  );
+            <div className={styles.right}>
+              <div className={styles.gameboard}>
+                <h1 className={styles.gameboardTitle}> Score </h1>
+                <div className={styles.letters}>
+                  {renderLetters(lettersSpelled)}
+                </div>
+                <hr className={styles.divider}></hr>
+                <table>
+                  <tbody>
+                    <tr>
+                      <td>Total</td>
+                      <td className={styles.answerCell}> {score}</td>
+                    </tr>
+                  </tbody>
+                </table>
+                {lettersSpelled.length === 10 ? (
+                  <Button
+                    style={{
+                      width: "50%",
+                      minWidth: "100px",
+                      alignSelf: "center",
+                      fontSize: "20px",
+                      marginTop: "2%",
+                    }}
+                    onClick={resetGame}
+                  >
+                    Next
+                  </Button>
+                ) : (
+                  ""
+                )}
+              </div>
+              <button
+                style={{
+                  alignSelf: "center",
+                  fontSize: "20px",
+                  marginLeft: "5px",
+                }}
+                className={styles.backButton}
+                onClick={() => {
+                  setIsModalOpen(true);
+                  setIsTimerPaused(true);
+                }}
+              >
+                See instructions
+              </button>
+            </div>
+          </section>
+        </div>
+      </>
+    );
+  }
+  return <p>Loading...</p>;
 };
 export default SpellingLetters;

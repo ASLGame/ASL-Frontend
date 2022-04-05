@@ -13,11 +13,12 @@ import * as tf from "@tensorflow/tfjs";
 interface CameraProps {
   models: Models;
   updateGameBuffer?: Function;
+  onUserMedia?: Function;
 }
 
 const Camera: FunctionComponent<CameraProps> = (props) => {
   const { R_Model, L_Model } = props.models;
-  const { updateGameBuffer } = props;
+  const { updateGameBuffer, onUserMedia } = props;
 
   const webcamRef = useRef<Webcam>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -138,6 +139,7 @@ const Camera: FunctionComponent<CameraProps> = (props) => {
         screenshotFormat="image/jpeg"
         mirrored={true}
         ref={webcamRef}
+        onUserMedia={() => onUserMedia!(false)}
       ></Webcam>
       <canvas className={styles.canvas} ref={canvasRef} />
     </div>
