@@ -108,7 +108,6 @@ const Camera: FunctionComponent<CameraProps> = (props) => {
       minDetectionConfidence: 0.75,
       minTrackingConfidence: 0.5,
     });
-    console.log(L_Model);
     if (R_Model && L_Model) {
       hands.onResults(onResults);
     }

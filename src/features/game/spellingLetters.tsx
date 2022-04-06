@@ -14,6 +14,7 @@ import { selectSignIn, selectUser } from "../signin/signinSlice";
 import { scorePost } from "../../types/Score";
 
 const SpellingLetters: FunctionComponent = () => {
+  Modal.setAppElement("body");
   const [buffer, setBuffer] = useState<String[]>([]);
   const [flag, setFlag] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(true);
@@ -87,7 +88,6 @@ const SpellingLetters: FunctionComponent = () => {
                   <tr>
                     <td>{Object.keys(letter).pop()}</td>
                     <td className={styles.answerCell}>
-                      {" "}
                       {Object.values(letter).pop() === true ? "✓" : "x"}
                     </td>
                   </tr>
@@ -162,7 +162,6 @@ const SpellingLetters: FunctionComponent = () => {
       setScore((score) => {
         return (score = score + 1);
       });
-      console.log(lettersSpelled);
       //@ts-ignore
       reset();
     }
@@ -187,7 +186,7 @@ const SpellingLetters: FunctionComponent = () => {
     return () => {
       clearInterval(interval);
     };
-  });
+  }, [timer, isCameraLoading, isModalOpen]);
 
   useEffect(() => {
     if (
@@ -224,12 +223,15 @@ const SpellingLetters: FunctionComponent = () => {
           ) : (
             ""
           )}
-          <section className={styles.container}>
+          <section id="container" className={styles.container}>
             <div className={styles.left}>
               <div className={styles.topGameBar}>
                 <button
                   style={{ marginRight: "30px" }}
-                  onClick={() => navigate("../")}
+                  onClick={() => {
+                    navigate("../");
+                    window.location.reload();
+                  }}
                   className={styles.backButton}
                 >
                   &#8249;
