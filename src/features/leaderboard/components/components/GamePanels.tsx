@@ -1,13 +1,37 @@
-import styles from "../GamesTable.module.css"
+import styles from "../GamesTable.module.css";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
-import { Game1, Game2 } from "./Game";
-import { Fragment } from "react";
+import { Game } from "./Game";
+import { Game as GameType } from "../../../home/homeSlice";
 
-export const GamePanels = [<TabPanel className={styles.tab_panel} id="Game1">
-                                <h2 style={{paddingBottom: "30px"}}>Game 1</h2>
-                                <Game1 />
-                            </TabPanel>,
-                            <TabPanel className={styles.tab_panel}>
-                                <h2 style={{paddingBottom: "30px"}}>Game 2</h2>
-                                <Game2 />
-                            </TabPanel>]
+const generatePanels = (games: Array<GameType>) => {
+  let totalGames = games.length;
+  var panels = [];
+  for (var i = 0; i < totalGames; i++) {
+    panels.push(
+      <TabPanel className={styles.tab_panel}>
+        <h2 style={{ paddingBottom: "30px" }}>{games[i].name}</h2>
+        <Game gid={games[i].id} />
+      </TabPanel>
+    );
+  }
+  return panels;
+};
+
+const generateTabs = (games: Array<GameType>) => {
+  let totalGames = games.length;
+  //   totalGames = 7;
+
+  var tabs = [];
+  for (var i = 0; i < totalGames; i++) {
+    tabs.push(
+      <Tab selectedClassName={styles.tab_selected} className={styles.tab}>
+        {games[i].name}
+      </Tab>
+    );
+  }
+  return tabs;
+};
+
+export const GamePanels = generatePanels;
+export const GameTabs = generateTabs;
+//this works; exporting generate directly doesnt work, no idea why

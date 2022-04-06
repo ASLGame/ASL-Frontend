@@ -1,12 +1,13 @@
 .tables {
-    display: flex;
-    justify-content: space-evenly;
-    height: 100%;
-    width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  height: 100%;
+  width: 100%;
 }
 
-.bygame {
-    border: black;
-    border-width: 2px;
-    height: 100%;
+.right {
+  width: 50%;
+}
+.left {
+  width: 50%;
 }
