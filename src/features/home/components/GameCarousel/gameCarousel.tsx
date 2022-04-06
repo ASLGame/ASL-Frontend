@@ -5,7 +5,7 @@ import { Carousel } from "react-responsive-carousel";
 import styles from "./gameCarousel.module.css";
 import "./gameCarousel.css";
 import { selectFeaturedGames, selectFeaturedGamesState } from "../../homeSlice";
-import { Game } from "../../homeSlice";
+import { Game } from "../../../../types/Game";
 
 interface GameCarouselProps {}
 
@@ -23,7 +23,7 @@ const GameCarousel: FunctionComponent<GameCarouselProps> = () => {
           <div key={game.id} className={styles.imageContainer}>
             <img
               className={styles.image}
-              src={game.gameAssets[0].path}
+              src={game.gameAssets ? game.gameAssets[0].path : ""}
               alt="Whoops..."
             ></img>
             <div className={styles.middle}>

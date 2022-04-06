@@ -1,6 +1,8 @@
 import { FunctionComponent } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { Game, GameAsset } from "../../../types/Game";
+import { setGame } from "../../game/gameSlice";
 import {
   selectAllGames,
   selectAllGamesState,
@@ -14,16 +16,18 @@ const GameTiles: FunctionComponent<GameTilesProps> = () => {
   const allGames = useSelector(selectAllGames);
   const allGamesState = useSelector(selectAllGamesState);
   const searchText = useSelector(selectSearchText);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const renderGameTiles = () => {
     if (Array.isArray(allGames)) {
-      const filteredGames = allGames.filter((game) => {
+      let filteredGames: Array<Game> = [];
+      allGames.forEach((game) => {
         if (
           game.name.toLowerCase().includes(searchText.toLowerCase()) ||
           game.description?.toLowerCase().includes(searchText.toLowerCase())
         ) {
-          return game;
+          filteredGames.push(game);
         }
       });
       return (
@@ -37,7 +41,9 @@ const GameTiles: FunctionComponent<GameTilesProps> = () => {
                       <tr
                         className={styles.gameTile}
                         key={game.name}
-                        onClick={() => navigate(`../game/${game.name}`)}
+                        onClick={() =>
+                          navigate(`${game.name.split(" ").join("")}`)
+                        }
                       >
                         <td className={styles.gameImageColumn}>
                           <img
@@ -45,10 +51,12 @@ const GameTiles: FunctionComponent<GameTilesProps> = () => {
                             alt="whoops.."
                             src={
                               game.gameAssets
-                                .filter((asset) => {
-                                  return asset.name === "thumbnail";
-                                })
-                                .pop()?.path
+                                ? game.gameAssets
+                                    .filter((asset: GameAsset) => {
+                                      return asset.name === "thumbnail";
+                                    })
+                                    .pop()?.path
+                                : ""
                             }
                           ></img>
                         </td>
@@ -65,7 +73,10 @@ const GameTiles: FunctionComponent<GameTilesProps> = () => {
                       <tr
                         key={game.name}
                         className={styles.gameTile}
-                        onClick={() => navigate(`game/${game.name}`)}
+                        onClick={() => {
+                          navigate(`${game.name.split(" ").join("")}`);
+                          dispatch(setGame(game));
+                        }}
                       >
                         <td className={styles.lastGameImageColumn}>
                           <img
@@ -73,10 +84,12 @@ const GameTiles: FunctionComponent<GameTilesProps> = () => {
                             alt="whoops.."
                             src={
                               game.gameAssets
-                                .filter((asset) => {
-                                  return asset.name === "thumbnail";
-                                })
-                                .pop()?.path
+                                ? game.gameAssets
+                                    .filter((asset: GameAsset) => {
+                                      return asset.name === "thumbnail";
+                                    })
+                                    .pop()?.path
+                                : ""
                             }
                           ></img>
                         </td>

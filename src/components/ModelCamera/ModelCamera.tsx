@@ -6,6 +6,7 @@ import Camera from "./components/Camera";
 
 interface ModelCameraProps {
   updateGameBuffer?: Function;
+  onUserMedia?: Function;
 }
 
 const ModelCamera: FunctionComponent<ModelCameraProps> = (props) => {
@@ -13,12 +14,12 @@ const ModelCamera: FunctionComponent<ModelCameraProps> = (props) => {
     L_Model: undefined,
     R_Model: undefined,
   });
-  const { updateGameBuffer } = props;
+  const { updateGameBuffer, onUserMedia } = props;
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if(isLoading){
-        loadModel().then((models) => {
+    if (isLoading) {
+      loadModel().then((models) => {
         setModels(models);
         setIsLoading(false);
       });
@@ -27,7 +28,11 @@ const ModelCamera: FunctionComponent<ModelCameraProps> = (props) => {
 
   if (!isLoading) {
     return (
-      <Camera models={models} updateGameBuffer={updateGameBuffer}></Camera>
+      <Camera
+        onUserMedia={onUserMedia}
+        models={models}
+        updateGameBuffer={updateGameBuffer}
+      ></Camera>
     );
   } else {
     return <p>Loading...</p>;
