@@ -1,7 +1,7 @@
 import styles from "../GamesTable.module.css";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import { Game } from "./Game";
-import { Game as GameType } from "../../../home/homeSlice";
+import { Game as GameType } from "../../../../types/Game";
 
 const generatePanels = (games: Array<GameType>) => {
   let totalGames = games.length;
