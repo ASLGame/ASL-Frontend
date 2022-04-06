@@ -186,7 +186,7 @@ const SpellingLetters: FunctionComponent = () => {
     return () => {
       clearInterval(interval);
     };
-  }, [timer, isCameraLoading, isModalOpen]);
+  }, [timer, isCameraLoading, isModalOpen, lettersSpelled]);
 
   useEffect(() => {
     if (
