@@ -1,0 +1,111 @@
+.container {
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+
+.background {
+  height: 100vh;
+  width: 100vw;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.layer1 {
+  background-image: url("./layered-waves-haikei.svg");
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  flex-direction: column;
+  flex: 1;
+  align-content: space-between;
+  max-width: 50%;
+  height: 100%;
+}
+
+.right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  flex-direction: column;
+  max-width: 50%;
+}
+
+.title {
+  margin-top: 10%;
+  align-self: center;
+}
+
+.backButton {
+  align-self: flex-start;
+  margin-left: 4%;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  border: none;
+  cursor: pointer;
+  font-size: 2em;
+  background-color: var(--pinkred);
+  border-radius: 100px;
+  border: 2px solid #000000;
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+.gameboard {
+  margin-top: 20%;
+  display: flex;
+  border: 2px;
+  padding: 5%;
+  border-style: solid;
+  border-radius: 10px;
+  flex-direction: column;
+  justify-content: center;
+  width: 50%;
+}
+
+.topGameBar {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.gameboardTitle {
+  align-self: center;
+}
+
+.letterTable {
+  align-self: center;
+  width: 100%;
+}
+
+.modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 40vw;
+  position: absolute;
+  height: 40vh;
+  right: 30%;
+  bottom: 30%;
+  justify-self: center;
+  background-color: white;
+  border-radius: 3%;
+}
+
+.letters {
+  display: flex;
+  flex-direction: row;
+}
+
+.answerCell {
+  float: right;
+}
+
+.divider {
+  width: 100%;
+}

@@ -3,7 +3,7 @@ signinSlice.ts encompasses every action and reducer with respect to authorizatio
 This means that both signin and signup methods will be found here.
 */
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState, AppThunk } from "../../app/store";
+import { RootState } from "../../app/store";
 import { userChanges } from "../profile/components/tabMenu/components/editProfile/EditProfile";
 import { signup } from "../signup/signupAPI";
 import { signin } from "./signinAPI";
