@@ -6,10 +6,12 @@ import styles from "./gameCarousel.module.css";
 import "./gameCarousel.css";
 import { selectFeaturedGames, selectFeaturedGamesState } from "../../homeSlice";
 import { Game } from "../../../../types/Game";
+import { useNavigate } from "react-router-dom";
 
 interface GameCarouselProps {}
 
 const GameCarousel: FunctionComponent<GameCarouselProps> = () => {
+  const navigate = useNavigate();
   const featuredGames = useSelector(selectFeaturedGames)!;
   const featuredGamesState = useSelector(selectFeaturedGamesState);
   const [currentFeaturedGameName, setCurrentFeaturedGameName] = useState(
@@ -20,7 +22,11 @@ const GameCarousel: FunctionComponent<GameCarouselProps> = () => {
     if (Array.isArray(featuredGames)) {
       return featuredGames.map((game) => {
         return (
-          <div key={game.id} className={styles.imageContainer}>
+          <div
+            onClick={() => navigate(`games/${game.name.split(" ").join("")}`)}
+            key={game.id}
+            className={styles.imageContainer}
+          >
             <img
               className={styles.image}
               src={game.gameAssets ? game.gameAssets[0].path : ""}
