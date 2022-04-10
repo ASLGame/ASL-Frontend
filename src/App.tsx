@@ -3,6 +3,7 @@ import { Profile } from "./features/profile/Profile";
 import About from "./features/about/About";
 import { Leaderboard } from "./features/leaderboard/leadrboard";
 import SpellingWords from "./features/game/games/spellingWords/spellingWords";
+import HangMan from "./features/game/hangMan";
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { SignUp } from "./features/signup/SignUp";
@@ -60,6 +61,10 @@ function App() {
             />
             <Route path="/games/wordle" element={<Wordle />} />
             <Route path="/games/spellingWords" element={<SpellingWords />} />
+            <Route 
+              path="/games/hangMan"
+              element={<HangMan />}
+            />
             <Route path="/leaderboard" element={<Leaderboard />} />
             <Route path="/" element={<Home />} />
             <Route path="/games" element={<Games />} />
