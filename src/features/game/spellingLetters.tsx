@@ -56,6 +56,11 @@ const SpellingLetters: FunctionComponent = () => {
             onClick={() => {
               setIsModalOpen(false);
               setIsTimerPaused(false);
+              let emptyBuffer: String[] = buffer;
+              while (emptyBuffer.length !== 0) {
+                emptyBuffer.shift();
+              }
+              setBuffer(emptyBuffer);
             }}
           >
             Start Playing!
@@ -212,6 +217,11 @@ const SpellingLetters: FunctionComponent = () => {
           onRequestClose={() => {
             setIsModalOpen(false);
             setIsTimerPaused(false);
+            let emptyBuffer: String[] = buffer;
+            while (emptyBuffer.length !== 0) {
+              emptyBuffer.shift();
+            }
+            setBuffer(emptyBuffer);
           }}
           className={styles.modal}
         >
