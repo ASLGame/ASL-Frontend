@@ -1,0 +1,63 @@
+.container {
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+
+.background {
+  height: 90.5vh;
+  width: 100vw;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.layer1 {
+  background-image: url("../layered-waves-haikei.svg");
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  flex-direction: column;
+  flex: 1;
+  align-content: space-between;
+  max-width: 50%;
+  height: 100%;
+}
+
+.right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  flex-direction: column;
+  max-width: 50%;
+}
+
+.title {
+  margin-top: 10%;
+  align-self: center;
+}
+
+.backButton {
+  align-self: flex-start;
+  margin-left: 4%;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  border: none;
+  cursor: pointer;
+  font-size: 2em;
+  background-color: var(--pinkred);
+  border-radius: 100px;
+  border: 2px solid #000000;
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+.topGameBar {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
