@@ -14,6 +14,7 @@ import { selectSignIn, selectUser } from "../signin/signinSlice";
 import { scorePost } from "../../types/Score";
 import Figure from "./HM_components/figure"
 import WrongSection from "./HM_components/WrongSection";
+import { set } from "immer/dist/internal";
 
 const HangMan: FunctionComponent = () =>{
     Modal.setAppElement("body");
@@ -39,7 +40,9 @@ const HangMan: FunctionComponent = () =>{
   )
   const [wrongLetters, setWrongLetters] = useState<Array<String>>([]);
   const[correctLetters, setCorrectLetters] = useState<Array<String>>([]);
-
+  const [playable, setPlayable] = useState(true);
+  console.log(currentWord);
+ 
 
   const renderWord = (word:String) => {
       return (
@@ -53,7 +56,7 @@ const HangMan: FunctionComponent = () =>{
           
       )
   }
-
+ 
   const renderModal = () => {
     if (game) {
       return (
@@ -91,19 +94,23 @@ const HangMan: FunctionComponent = () =>{
     } else {
       bufferList.push(value);
       setBuffer(bufferList);
+      setBufferFlag((prev) => {
+        return !prev;
+      });
     }
   };
 
-  const checkInputLetter = () =>{
-    if(buffer.length < 20){
+  const checkInputLetter = (Buffer: string | any[]) =>{
+    const newBuffer = buffer;
+    if(newBuffer.length < 20){
       return null;
     }
     let modeMap = new Map();
-    let maxEl: String = buffer[0];
+    let maxEl: String = newBuffer[0];
     let maxCount:number = 1;
-    for(let i = 0; i < buffer.length; i++){
+    for(let i = 0; i < newBuffer.length; i++){
 
-      let element:String = buffer[i];
+      let element:String = newBuffer[i];
 
       if(modeMap.has(element)){
         modeMap.set(element, modeMap.get(element) + 1);
@@ -118,24 +125,85 @@ const HangMan: FunctionComponent = () =>{
     return maxEl;
   }
 
+  const reset = () => {
+    setCurrentWord(easyWords[Math.floor(Math.random()*easyWords.length - 1)]);
+    setCorrectLetters([]);
+    setWrongLetters([]);
+    setPlayable(true);
+    let emptyBuffer: String[] = buffer;
+    while (emptyBuffer.length !== 0) {
+      emptyBuffer.shift();
+    }
+    
+    setBuffer(emptyBuffer);
+    
+    
+  }
+  const checkWin = () =>{
+    let result = true
+    currentWord.split('').forEach(letter => {
+      if(!correctLetters.includes(letter)){
+        
+        result = false;
+      }
+    })
+    return result;
+  }
+
+  useEffect(() => {
+    
+    if(checkWin()){
+      
+      setPlayable(false);
+    }
+    if(wrongLetters.length === 10){
+      
+      setPlayable(false);
+
+    }
+  })
+
   useEffect(() =>{
-    let inputLetter: string | null = checkInputLetter() as string;
-    if (inputLetter !== null){
+    let inputLetter: string | null = checkInputLetter(buffer) as string;
+    if (inputLetter !== null && playable){
       if(currentWord.includes(inputLetter)){
         if(!correctLetters.includes(inputLetter)){
           setCorrectLetters([...correctLetters, inputLetter]);
+          let emptyBuffer: String[] = buffer;
+          while (emptyBuffer.length !== 0) {
+            emptyBuffer.shift();
+          }
+          
+          setBuffer(emptyBuffer);
+          
         }
+        
       }else{
         if(!wrongLetters.includes(inputLetter)){
           setWrongLetters([...wrongLetters, inputLetter]);
+          let emptyBuffer: String[] = buffer;
+          while (emptyBuffer.length !== 0) {
+            emptyBuffer.shift();
+          }
+          
+          setBuffer(emptyBuffer);
+          
+          
         }
       }
     }
-  }, [bufferFlag]);
+
+   
+  }, [bufferFlag, playable]);
+
+
+
   
   return (
       <>
       <div className={styles.background + ' ' + styles.layer1}>
+        {correctLetters.length === currentWord.length && 
+          <Confetti width={window.innerWidth} height={window.innerHeight}/>}
         <section id='container' className={styles.container}>
             <div className={styles.left}>
                 <div className={styles.topGameBar}>
@@ -166,8 +234,20 @@ const HangMan: FunctionComponent = () =>{
                     </div>
                     <hr className={styles.divider}></hr>
                     <WrongSection wrong={wrongLetters} />
+                    {!playable ? (
+                  <Button style={{
+                    width: "50%",
+                    minWidth: "10vh",
+                    alignSelf: "center",
+                    fontSize: "20px",
+                    marginTop: "2%",
+                   
+                  }}
+                  onClick={reset}
 
-                </div>
+                  >Next</Button>
+                ) : ''}
+                </div> 
             </div>
         </section>
 

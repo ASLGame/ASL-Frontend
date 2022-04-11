@@ -10,7 +10,7 @@ const WrongSection:FunctionComponent<wrongLetters> = (props) => {
       {props.wrong.length > 0 && <p>Wrong</p> }
       {props.wrong
       .map((letter, i) => 
-        i === 0 ? <span key={i}>{letter}</span> : <span key={i}>,{letter}</span>
+        i === 0 ? <span key={i}>{letter}</span> : <span key={i}>, {letter}</span>
         )}
     </div>
   )
