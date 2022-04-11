@@ -17,13 +17,10 @@ import WrongSection from "./HM_components/WrongSection";
 import { set } from "immer/dist/internal";
 
 const HangMan: FunctionComponent = () =>{
-    Modal.setAppElement("body");
+  Modal.setAppElement("body");
   const [buffer, setBuffer] = useState<String[]>([]);
   const [bufferFlag, setBufferFlag] = useState(true);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [timer, setTimer] = useState<number>(10);
-  const [isTimerPaused, setIsTimerPaused] = useState(true);
-  const [lettersSpelled, setLettersSpelled] = useState<LetterSpelled[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState(true);
   const [isCameraLoading, setIsCameraLoading] = useState<boolean>(true);
   const [isScorePosted, setIsScorePosted] = useState<boolean>(false);
   const [score, setScore] = useState<number>(0);
@@ -40,7 +37,7 @@ const HangMan: FunctionComponent = () =>{
   )
   const [wrongLetters, setWrongLetters] = useState<Array<String>>([]);
   const[correctLetters, setCorrectLetters] = useState<Array<String>>([]);
-  const [playable, setPlayable] = useState(true);
+  const [playable, setPlayable] = useState(false);
   console.log(currentWord);
  
 
@@ -71,7 +68,12 @@ const HangMan: FunctionComponent = () =>{
             style={{ marginTop: "20%" }}
             onClick={() => {
               setIsModalOpen(false);
-              setIsTimerPaused(false);
+              setPlayable(true);
+              let emptyBuffer: String[] = buffer;
+              while (emptyBuffer.length !== 0) {
+                emptyBuffer.shift();
+              }
+              setBuffer(emptyBuffer);
             }}
           >
             Start Playing!
@@ -83,21 +85,22 @@ const HangMan: FunctionComponent = () =>{
 
   const updateBuffer = (value: String) => {
     let bufferList = buffer;
-
-    if (buffer.length === 20) {
-      bufferList.shift();
-      bufferList.push(value);
-      setBuffer(bufferList);
-      setBufferFlag((prev) => {
-        return !prev;
-      });
-    } else {
-      bufferList.push(value);
-      setBuffer(bufferList);
-      setBufferFlag((prev) => {
-        return !prev;
-      });
-    }
+    
+      if (buffer.length === 20) {
+        bufferList.shift();
+        bufferList.push(value);
+        setBuffer(bufferList);
+        setBufferFlag((prev) => {
+          return !prev;
+        });
+      } else {
+        bufferList.push(value);
+        setBuffer(bufferList);
+        setBufferFlag((prev) => {
+          return !prev;
+        });
+      }
+    
   };
 
   const checkInputLetter = (Buffer: string | any[]) =>{
@@ -165,6 +168,7 @@ const HangMan: FunctionComponent = () =>{
 
   useEffect(() =>{
     let inputLetter: string | null = checkInputLetter(buffer) as string;
+    
     if (inputLetter !== null && playable){
       if(currentWord.includes(inputLetter)){
         if(!correctLetters.includes(inputLetter)){
@@ -201,6 +205,22 @@ const HangMan: FunctionComponent = () =>{
   
   return (
       <>
+      <Modal
+        isOpen={isModalOpen}
+        onRequestClose={() =>{
+          setIsModalOpen(false);
+          setPlayable(true);
+          let emptyBuffer: String[] = buffer;
+          while (emptyBuffer.length !== 0) {
+            emptyBuffer.shift();
+          }
+          setBuffer(emptyBuffer);
+        }} className={styles.modal}>
+
+        {renderModal()}
+        
+      </Modal>
+
       <div className={styles.background + ' ' + styles.layer1}>
         {correctLetters.length === currentWord.length && 
           <Confetti width={window.innerWidth} height={window.innerHeight}/>}
@@ -234,7 +254,7 @@ const HangMan: FunctionComponent = () =>{
                     </div>
                     <hr className={styles.divider}></hr>
                     <WrongSection wrong={wrongLetters} />
-                    {!playable ? (
+                    {!playable && !isModalOpen ? (
                   <Button style={{
                     width: "50%",
                     minWidth: "10vh",
@@ -248,6 +268,20 @@ const HangMan: FunctionComponent = () =>{
                   >Next</Button>
                 ) : ''}
                 </div> 
+                <button
+                style={{
+                  alignSelf: "center",
+                  fontSize: "20px",
+                  marginLeft: "5px",
+                }}
+                className={styles.backButton}
+                onClick={() => {
+                  setIsModalOpen(true);
+                  setPlayable(false);
+                }}
+              >
+                See instructions
+              </button>
             </div>
         </section>
 
