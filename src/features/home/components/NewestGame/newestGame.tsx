@@ -8,7 +8,7 @@ interface NewestGameProps {}
 const NewestGame: FunctionComponent<NewestGameProps> = () => {
   const newestGame = useSelector(selectNewestGame)!;
   const newestGameState = useSelector(selectNewestGameState)!;
-
+  console.log(newestGame);
   if (newestGameState !== "loading") {
     return (
       <div className={styles.container}>
@@ -18,7 +18,7 @@ const NewestGame: FunctionComponent<NewestGameProps> = () => {
           <div className={styles.imageContainer}>
             <img
               className={styles.gameImage}
-              src={newestGame.gameAssets ? newestGame.gameAssets[0].path : ""}
+              src={newestGame.gameAssets && newestGame.gameAssets.length > 0 ? newestGame.gameAssets[0].path : ""}
               alt="Failed to load."
             />
             <div className={styles.middle}>
