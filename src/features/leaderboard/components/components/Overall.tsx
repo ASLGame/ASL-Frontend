@@ -10,6 +10,7 @@ export function Overall(){
 
     const allscores = () => {
         return scores!.map((score) => {
+          while(counter < 15){
             return (
               <div key={score.id} style={{width: "100%"}}>
                 <div className={styles.row}>
@@ -19,7 +20,7 @@ export function Overall(){
                   <p>{score.score}</p>
                 </div>
               </div>
-            );
+            );}
           });
         };
         if (state !== "loading") {

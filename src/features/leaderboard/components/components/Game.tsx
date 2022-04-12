@@ -11,6 +11,7 @@ export function Game(props:any){
 
   const allscores = () => {
       return scores!.map((score) => {
+        while(counter < 15){
         if(score.game_id === gid){
           return (
             <div key={score.id} style={{width: "100%"}} >
@@ -24,7 +25,7 @@ export function Game(props:any){
             return (
               <></>
             )
-          };
+          };}
         });
       };
       if (state !== "loading") {
