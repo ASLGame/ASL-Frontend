@@ -23,7 +23,7 @@ const HangMan: FunctionComponent = () =>{
   const [isModalOpen, setIsModalOpen] = useState(true);
   const [isCameraLoading, setIsCameraLoading] = useState<boolean>(true);
   const [isScorePosted, setIsScorePosted] = useState<boolean>(false);
-  const [score, setScore] = useState<number>(0);
+  
   const user = useSelector(selectUser);
   const isAuthorized = useSelector(selectSignIn);
   const dispatch = useDispatch();
@@ -35,12 +35,13 @@ const HangMan: FunctionComponent = () =>{
   const [currentWord, setCurrentWord] = useState<String>(
       easyWords[Math.floor(Math.random()*easyWords.length - 1)]
   )
+  const [score, setScore] = useState<number>(1*currentWord.length);
   const [wrongLetters, setWrongLetters] = useState<Array<String>>([]);
   const[correctLetters, setCorrectLetters] = useState<Array<String>>([]);
   const [playable, setPlayable] = useState(false);
   console.log(currentWord);
  
-
+  //console.log(score);
   const renderWord = (word:String) => {
       return (
           <div>
@@ -133,6 +134,8 @@ const HangMan: FunctionComponent = () =>{
     setCorrectLetters([]);
     setWrongLetters([]);
     setPlayable(true);
+    setScore(0);
+    setIsScorePosted(false);
     let emptyBuffer: String[] = buffer;
     while (emptyBuffer.length !== 0) {
       emptyBuffer.shift();
@@ -152,6 +155,11 @@ const HangMan: FunctionComponent = () =>{
     })
     return result;
   }
+useEffect(() => {
+  if(!game){
+    dispatch(getGameAsync("Hang Man"));
+  }
+}, []);
 
   useEffect(() => {
     
@@ -200,95 +208,115 @@ const HangMan: FunctionComponent = () =>{
    
   }, [bufferFlag, playable]);
 
+  useEffect(() => {
+    
+    if (
+      checkWin() &&
+      isAuthorized &&
+      user &&
+      !isScorePosted
+    ) 
+    {
+    
+      const scoreToPost: scorePost = {
+        account_id: user.account_id!,
+        game_id: game.id,
+        score: 1*currentWord.length,
+      };
+      dispatch(postScoreAsync(scoreToPost));
+      setIsScorePosted(true);
+    }
+  });
 
+  if(game){
+    return (
+        <>
+        <Modal
+          isOpen={isModalOpen}
+          onRequestClose={() =>{
+            setIsModalOpen(false);
+            setPlayable(true);
+            let emptyBuffer: String[] = buffer;
+            while (emptyBuffer.length !== 0) {
+              emptyBuffer.shift();
+            }
+            setBuffer(emptyBuffer);
+          }} className={styles.modal}>
 
-  
-  return (
-      <>
-      <Modal
-        isOpen={isModalOpen}
-        onRequestClose={() =>{
-          setIsModalOpen(false);
-          setPlayable(true);
-          let emptyBuffer: String[] = buffer;
-          while (emptyBuffer.length !== 0) {
-            emptyBuffer.shift();
-          }
-          setBuffer(emptyBuffer);
-        }} className={styles.modal}>
+          {renderModal()}
+          
+        </Modal>
 
-        {renderModal()}
-        
-      </Modal>
-
-      <div className={styles.background + ' ' + styles.layer1}>
-        {correctLetters.length === currentWord.length && 
-          <Confetti width={window.innerWidth} height={window.innerHeight}/>}
-        <section id='container' className={styles.container}>
-            <div className={styles.left}>
-                <div className={styles.topGameBar}>
-                    <button
-                    style={{marginRight:'30px'}}
-                    onClick={() => {
-                        navigate('../');
-                        window.location.reload();
+        <div className={styles.background + ' ' + styles.layer1}>
+          {correctLetters.length === currentWord.length && 
+            <Confetti width={window.innerWidth} height={window.innerHeight}/>}
+          <section id='container' className={styles.container}>
+              <div className={styles.left}>
+                  <div className={styles.topGameBar}>
+                      <button
+                      style={{marginRight:'30px'}}
+                      onClick={() => {
+                          navigate('../');
+                          window.location.reload();
+                      }}
+                      className={styles.backButton}>
+                          &#8249;
+                      </button>
+                      <h1 style={{ alignSelf: "" }}>{game.name}</h1>
+                  </div>
+                  <ModelCamera
+                      onUserMedia={setIsCameraLoading}
+                      updateGameBuffer={updateBuffer}
+                  ></ModelCamera>
+              </div>
+              <div className={styles.right}>
+                  <div className={styles.gameboard}>
+                      <div className={styles.letters}>
+                          {renderWord(currentWord)}
+                      </div>
+                      <hr className={styles.divider}></hr>
+                      <div>
+                        <Figure wrong={wrongLetters} />
+                      </div>
+                      <hr className={styles.divider}></hr>
+                      <WrongSection wrong={wrongLetters} />
+                      {!playable && !isModalOpen ? (
+                    <Button style={{
+                      width: "50%",
+                      minWidth: "10vh",
+                      alignSelf: "center",
+                      fontSize: "20px",
+                      marginTop: "2%",
+                    
                     }}
-                    className={styles.backButton}>
-                        &#8249;
-                    </button>
-                    <h1 style={{ alignSelf: "" }}>HangMan</h1>
-                </div>
-                <ModelCamera
-                    onUserMedia={setIsCameraLoading}
-                    updateGameBuffer={updateBuffer}
-                ></ModelCamera>
-            </div>
-            <div className={styles.right}>
-                <div className={styles.gameboard}>
-                    <div className={styles.letters}>
-                        {renderWord(currentWord)}
-                    </div>
-                    <hr className={styles.divider}></hr>
-                    <div>
-                      <Figure wrong={wrongLetters} />
-                    </div>
-                    <hr className={styles.divider}></hr>
-                    <WrongSection wrong={wrongLetters} />
-                    {!playable && !isModalOpen ? (
-                  <Button style={{
-                    width: "50%",
-                    minWidth: "10vh",
+                    onClick={reset}
+
+                    >Next</Button>
+                  ) : ''}
+                  </div> 
+                  <button
+                  style={{
                     alignSelf: "center",
                     fontSize: "20px",
-                    marginTop: "2%",
-                   
+                    marginLeft: "5px",
                   }}
-                  onClick={reset}
-
-                  >Next</Button>
-                ) : ''}
-                </div> 
-                <button
-                style={{
-                  alignSelf: "center",
-                  fontSize: "20px",
-                  marginLeft: "5px",
-                }}
-                className={styles.backButton}
-                onClick={() => {
-                  setIsModalOpen(true);
-                  setPlayable(false);
-                }}
-              >
-                See instructions
-              </button>
-            </div>
-        </section>
-
-          
-      </div>
-      </>
-  )
+                  className={styles.backButton}
+                  onClick={() => {
+                    setIsModalOpen(true);
+                    setPlayable(false);
+                  }}
+                >
+                  See instructions
+                </button>
+              </div>
+          </section>  
+        </div>
+        </>
+    )
+  }
+  else{
+    return <p>Loading...</p>;
+  }
 
 }
 
