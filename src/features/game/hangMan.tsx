@@ -39,9 +39,9 @@ const HangMan: FunctionComponent = () =>{
   const [wrongLetters, setWrongLetters] = useState<Array<String>>([]);
   const[correctLetters, setCorrectLetters] = useState<Array<String>>([]);
   const [playable, setPlayable] = useState(false);
-  console.log(currentWord);
+  
  
-  //console.log(score);
+  
   const renderWord = (word:String) => {
       return (
           <div>
