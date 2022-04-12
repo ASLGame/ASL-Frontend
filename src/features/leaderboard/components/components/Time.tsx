@@ -88,7 +88,7 @@ export function Weekly(){
 
     const allscores = () => {
         return scores!.map((score) => {
-          if(new Date(score.date_achieved).toLocaleDateString() >= new Date(Date.now()-604800000).toLocaleDateString() && new Date(score.date_achieved).toLocaleDateString() <= new Date(Date.now()).toLocaleDateString()){
+          if(new Date(score.date_achieved) >= new Date(Date.now()-604800000) && new Date(score.date_achieved) <= new Date(Date.now())){
             return (
               <div key={score.id} style={{width: "100%"}} >
                 <div className={styles.row}>
