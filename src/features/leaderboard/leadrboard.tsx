@@ -9,7 +9,6 @@ import { getAllGamesAsync } from "../games/gamesSlice";
 export function Leaderboard() {
   const dispatch = useAppDispatch();
   useEffect(() => {
-    dispatch(getscoresAsync());
     dispatch(getAllGamesAsync());
     dispatch(getyesterdayAsync());
     dispatch(gettodayAsync());

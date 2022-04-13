@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { getscores, gettoday, getweekly, getyesterday } from './leaderboardAPI';
+import { byGames, getscores, gettoday, getweekly, getyesterday } from './leaderboardAPI';
 import { RootState } from '../../app/store';
 
 export interface Score {
@@ -18,6 +18,7 @@ export interface AllScores {
     yesterday: Array<Score> | undefined,
     weekly: Array<Score> | undefined,
     state: string,
+    timestate: string,
 }
 
 const initialState: AllScores = {
@@ -26,12 +27,21 @@ const initialState: AllScores = {
     yesterday: undefined,
     weekly: undefined,
     state: "loading",
+    timestate: "loading",
 }
 
 export const getscoresAsync = createAsyncThunk(
     'getscores',
     async () => {
         const response = await getscores();
+        return response;
+    }
+)
+
+export const bygamesAsync = createAsyncThunk(
+    'bygames',
+    async (gid: number) => {
+        const response = await byGames(gid);
         return response;
     }
 )
@@ -75,34 +85,44 @@ export const getscoresSlice = createSlice({
             state.state = "idle"
             state.scores = action.payload;
         })
+        builder.addCase(bygamesAsync.rejected, (state, action) => {
+            console.log(action.error)
+        })
+        builder.addCase(bygamesAsync.pending, (state, action) => {
+            state.state = "loading"
+        })
+        builder.addCase(bygamesAsync.fulfilled, (state, action) => {
+            state.state = "idle"
+            state.scores = action.payload;
+        })
         builder.addCase(getyesterdayAsync.rejected, (state, action) => {
             console.log(action.error)
         })
         builder.addCase(getyesterdayAsync.pending, (state, action) => {
-            state.state = "loading"
+            state.timestate = "loading"
         })
         builder.addCase(getyesterdayAsync.fulfilled, (state, action) => {
-            state.state = "idle"
+            state.timestate = "idle"
             state.yesterday = action.payload;
         })
         builder.addCase(gettodayAsync.rejected, (state, action) => {
             console.log(action.error)
         })
         builder.addCase(gettodayAsync.pending, (state, action) => {
-            state.state = "loading"
+            state.timestate = "loading"
         })
         builder.addCase(gettodayAsync.fulfilled, (state, action) => {
-            state.state = "idle"
+            state.timestate = "idle"
             state.today = action.payload;
         })
         builder.addCase(getweeklyAsync.rejected, (state, action) => {
             console.log(action.error)
         })
         builder.addCase(getweeklyAsync.pending, (state, action) => {
-            state.state = "loading"
+            state.timestate = "loading"
         })
         builder.addCase(getweeklyAsync.fulfilled, (state, action) => {
-            state.state = "idle"
+            state.timestate = "idle"
             state.weekly = action.payload;
         })
     }
@@ -115,4 +135,5 @@ export const selectYesterday = (state: RootState) => state.scores.yesterday
 export const selectToday = (state: RootState) => state.scores.today
 export const selectWeekly = (state: RootState) => state.scores.weekly
 export const scoreState = (state: RootState) => state.scores.state
+export const timeState = (state: RootState) => state.scores.timestate
 export default getscoresSlice.reducer;

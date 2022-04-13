@@ -1,11 +1,11 @@
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks"; 
-import { selectScores, scoreState, selectYesterday, selectToday, selectWeekly } from "../../leaderboardSlice";
+import { selectScores, scoreState, selectYesterday, selectToday, selectWeekly, timeState } from "../../leaderboardSlice";
 import styles from "../GamesTable.module.css"
 
 
 export function Today(){
     const scores = useAppSelector(selectToday);
-    const state = useAppSelector(scoreState);
+    const state = useAppSelector(timeState);
     let counter = 0;
 
     const allscores = () => {
@@ -39,7 +39,7 @@ export function Today(){
 
 export function Yesterday(){
     const scores = useAppSelector(selectYesterday);
-    const state = useAppSelector(scoreState);
+    const state = useAppSelector(timeState);
     let counter = 0;
 
     const allscores = () => {
@@ -73,7 +73,7 @@ export function Yesterday(){
 
 export function Weekly(){
     const scores = useAppSelector(selectWeekly);
-    const state = useAppSelector(scoreState);
+    const state = useAppSelector(timeState);
     let counter = 0;
 
     const allscores = () => {
