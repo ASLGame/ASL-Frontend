@@ -35,7 +35,7 @@ const HangMan: FunctionComponent = () =>{
   const [currentWord, setCurrentWord] = useState<String>(
       easyWords[Math.floor(Math.random()*easyWords.length - 1)]
   )
-  const [score, setScore] = useState<number>(1*currentWord.length);
+  
   const [wrongLetters, setWrongLetters] = useState<Array<String>>([]);
   const[correctLetters, setCorrectLetters] = useState<Array<String>>([]);
   const [playable, setPlayable] = useState(false);
