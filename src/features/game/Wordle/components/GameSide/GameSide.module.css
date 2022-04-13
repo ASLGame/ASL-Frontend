@@ -35,6 +35,20 @@
   cursor: pointer;
 }
 
+.gridColumnCurrent {
+  border: 2px solid black;
+  margin-right: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: aliceblue;
+  font-size: 3vmin;
+  width: 2em;
+  max-width: 100px;
+  height: 2em;
+  cursor: pointer;
+}
+
 .gridColumnIncorrect {
   margin-right: 5px;
   display: flex;

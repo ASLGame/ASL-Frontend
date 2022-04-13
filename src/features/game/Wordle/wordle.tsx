@@ -285,20 +285,12 @@ const Wordle: FunctionComponent = () => {
   ]);
 
   useEffect(() => {
-    if (difficulty && !currentWord) {
-      let word = "";
-      if (difficulty === "easy") {
-        word = easyWords[Math.floor(Math.random() * (easyWords.length - 1))];
-      } else if (difficulty === "medium") {
-        word =
-          mediumWords[Math.floor(Math.random() * (mediumWords.length - 1))];
-      } else {
-        word = hardWords[Math.floor(Math.random() * (hardWords.length - 1))];
-      }
-      setWordSize(word.length);
-      setCurrentWord(word);
+    if (difficulty) {
+      resetGame();
     }
+  }, [difficulty]);
 
+  useEffect(() => {
     if (currentWord && !emptyRows) {
       let empty = initEmptyRows();
       setEmptyRows(empty);
@@ -317,7 +309,7 @@ const Wordle: FunctionComponent = () => {
       setEmptyRows(empty);
       setCurrentRow(current);
     }
-  }, [difficulty, currentWord, letters, emptyRows, currentRow, initEmptyRows]);
+  }, [difficulty, letters, emptyRows, currentRow, currentWord, initEmptyRows]);
 
   useEffect(() => {
     if (currentRowIndex === wordSize) {
@@ -332,7 +324,8 @@ const Wordle: FunctionComponent = () => {
           game={game}
           setIsModalOpen={setIsModalOpen}
           setDifficulty={setDifficulty}
-          isModalOpen={isModalOpen}
+          isModalOpen={difficulty ? isModalOpen : true}
+          difficulty={difficulty}
         />
         <div className={styles.background + " " + styles.layer1}>
           {isGameWon ? (
@@ -371,6 +364,7 @@ const Wordle: FunctionComponent = () => {
                 reset={reset}
                 setCurrentRow={setCurrentRow}
                 setCurrentRowIndex={setCurrentRowIndex}
+                currentRowIndex={currentRowIndex}
               ></GameSide>
               <button
                 style={{

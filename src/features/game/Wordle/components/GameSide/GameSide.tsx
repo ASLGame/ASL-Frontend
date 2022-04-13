@@ -16,6 +16,7 @@ interface GameSideProps {
   reset: Function;
   setCurrentRowIndex: Function;
   setCurrentRow: Function;
+  currentRowIndex: number;
 }
 
 const GameSide: FunctionComponent<GameSideProps> = (props) => {
@@ -32,6 +33,7 @@ const GameSide: FunctionComponent<GameSideProps> = (props) => {
     reset,
     setCurrentRow,
     setCurrentRowIndex,
+    currentRowIndex,
   } = props;
 
   const renderGuessGrid = () => {
@@ -69,23 +71,44 @@ const GameSide: FunctionComponent<GameSideProps> = (props) => {
                 );
               }
             } else {
-              return (
-                <div
-                  onClick={() => {
-                    reset();
-                    setCurrentRowIndex(cell.position);
-                    currentRow?.forEach((row) => {
-                      if (row.position === cell.position) {
-                        row.letter = undefined;
-                      }
-                    });
-                    setCurrentRow(currentRow);
-                  }}
-                  className={styles.gridColumn}
-                >
-                  {cell.letter}
-                </div>
-              );
+              if (cell.position === currentRowIndex && row === currentRow) {
+                return (
+                  <div
+                    onClick={() => {
+                      reset();
+                      setCurrentRowIndex(cell.position);
+                      currentRow?.forEach((row) => {
+                        if (row.position === cell.position) {
+                          row.letter = undefined;
+                        }
+                      });
+                      setCurrentRow(currentRow);
+                    }}
+                    className={styles.gridColumnCurrent}
+                  >
+                    {cell.letter}
+                  </div>
+                );
+              } else if (row === currentRow) {
+                return (
+                  <div
+                    onClick={() => {
+                      reset();
+                      setCurrentRowIndex(cell.position);
+                      currentRow?.forEach((row) => {
+                        if (row.position === cell.position) {
+                          row.letter = undefined;
+                        }
+                      });
+                      setCurrentRow(currentRow);
+                    }}
+                    className={styles.gridColumn}
+                  >
+                    {cell.letter}
+                  </div>
+                );
+              }
+              return <div className={styles.gridColumn}>{cell.letter}</div>;
             }
           })}
         </div>
