@@ -14,7 +14,7 @@ import { selectSignIn, selectUser } from "../signin/signinSlice";
 import { scorePost } from "../../types/Score";
 import Figure from "./HM_components/figure"
 import WrongSection from "./HM_components/WrongSection";
-import { set } from "immer/dist/internal";
+import GameModal from "./HM_components/GameModal/modal";
 
 const HangMan: FunctionComponent = () =>{
   Modal.setAppElement("body");
@@ -32,20 +32,18 @@ const HangMan: FunctionComponent = () =>{
   const navigate = useNavigate();
 
   //hangMan States
-  const [currentWord, setCurrentWord] = useState<String>(
-      easyWords[Math.floor(Math.random()*easyWords.length - 1)]
-  )
+  const [currentWord, setCurrentWord] = useState<String>('')
   
   const [wrongLetters, setWrongLetters] = useState<Array<String>>([]);
   const[correctLetters, setCorrectLetters] = useState<Array<String>>([]);
   const [playable, setPlayable] = useState(false);
-  
+  const [difficulty, setDifficulty] = useState<String>();
  
-  
-  const renderWord = (word:String) => {
+  const renderWord = (word:String | undefined) => {
+    if(word !== 'undefined'){
       return (
           <div>
-            {word.split('').map((letter, i) =>
+            {word?.split('').map((letter, i) =>
                 <span className={styles.letter} key={i}>
                     {correctLetters.includes(letter) ? letter: ''} 
                 </span>
@@ -53,36 +51,10 @@ const HangMan: FunctionComponent = () =>{
           </div>
           
       )
-  }
- 
-  const renderModal = () => {
-    if (game) {
-      return (
-        <div className={styles.word}>
-          <h2>Rules</h2>
-          <p>{game.rules}</p>
-          <br />
-          <h2>Description</h2>
-          <p>{game.description}</p>
-          <button
-            className={styles.backButton}
-            style={{ marginTop: "20%" }}
-            onClick={() => {
-              setIsModalOpen(false);
-              setPlayable(true);
-              let emptyBuffer: String[] = buffer;
-              while (emptyBuffer.length !== 0) {
-                emptyBuffer.shift();
-              }
-              setBuffer(emptyBuffer);
-            }}
-          >
-            Start Playing!
-          </button>
-        </div>
-      );
+    }else{
+      return <p>CHOOSE DIFFICULTY</p>;
     }
-  };
+  }
 
   const updateBuffer = (value: String) => {
     let bufferList = buffer;
@@ -134,7 +106,15 @@ const HangMan: FunctionComponent = () =>{
     setCorrectLetters([]);
     setWrongLetters([]);
     setPlayable(true);
-    setScore(0);
+    let word = "";
+    if (difficulty === "easy") {
+      word = easyWords[Math.floor(Math.random() * (easyWords.length - 1))];
+    } else if (difficulty === "medium") {
+      word = mediumWords[Math.floor(Math.random() * (mediumWords.length - 1))];
+    } else {
+      word = hardWords[Math.floor(Math.random() * (hardWords.length - 1))];
+    }
+    setCurrentWord(word);
     setIsScorePosted(false);
     let emptyBuffer: String[] = buffer;
     while (emptyBuffer.length !== 0) {
@@ -146,8 +126,8 @@ const HangMan: FunctionComponent = () =>{
     
   }
   const checkWin = () =>{
-    let result = true
-    currentWord.split('').forEach(letter => {
+    let result = true;
+    currentWord?.split('').forEach(letter => {
       if(!correctLetters.includes(letter)){
         
         result = false;
@@ -178,7 +158,7 @@ useEffect(() => {
     let inputLetter: string | null = checkInputLetter(buffer) as string;
     
     if (inputLetter !== null && playable){
-      if(currentWord.includes(inputLetter)){
+      if(currentWord?.includes(inputLetter)){
         if(!correctLetters.includes(inputLetter)){
           setCorrectLetters([...correctLetters, inputLetter]);
           let emptyBuffer: String[] = buffer;
@@ -221,35 +201,46 @@ useEffect(() => {
       const scoreToPost: scorePost = {
         account_id: user.account_id!,
         game_id: game.id,
-        score: 1*currentWord.length,
+        score: 2*currentWord!.length,
       };
       dispatch(postScoreAsync(scoreToPost));
       setIsScorePosted(true);
     }
   });
 
+  useEffect(() => {
+    if(difficulty){
+      let word = "";
+      if (difficulty === "easy") {
+        word = easyWords[Math.floor(Math.random() * (easyWords.length - 1))];
+      } else if (difficulty === "medium") {
+        word =
+          mediumWords[Math.floor(Math.random() * (mediumWords.length - 1))];
+      } else {
+        word = hardWords[Math.floor(Math.random() * (hardWords.length - 1))];
+      }
+      setCurrentWord(word);
+      setPlayable(true);
+      setWrongLetters([]);
+      setCorrectLetters([]);
+    }
+  }, [difficulty])
+
   if(game){
     return (
         <>
-        <Modal
-          isOpen={isModalOpen}
-          onRequestClose={() =>{
-            setIsModalOpen(false);
-            setPlayable(true);
-            let emptyBuffer: String[] = buffer;
-            while (emptyBuffer.length !== 0) {
-              emptyBuffer.shift();
-            }
-            setBuffer(emptyBuffer);
-          }} className={styles.modal}>
-
-          {renderModal()}
-          
-        </Modal>
+        <GameModal
+          game={game}
+          setIsModalOpen={setIsModalOpen}
+          setDifficulty={setDifficulty}
+          isModalOpen={isModalOpen}
+          setPlayable={setPlayable}
+        />
 
         <div className={styles.background + ' ' + styles.layer1}>
-          {correctLetters.length === currentWord.length && 
-            <Confetti width={window.innerWidth} height={window.innerHeight}/>}
+          {checkWin() && !isModalOpen &&
+            <Confetti width={window.innerWidth} height={window.innerHeight}/>
+          }
           <section id='container' className={styles.container}>
               <div className={styles.left}>
                   <div className={styles.topGameBar}>
@@ -277,10 +268,11 @@ useEffect(() => {
                       <hr className={styles.divider}></hr>
                       <div>
                         <Figure wrong={wrongLetters} />
+                        {wrongLetters.length === 10 && <h1>YOU LOSE!</h1>}
                       </div>
                       <hr className={styles.divider}></hr>
                       <WrongSection wrong={wrongLetters} />
-                      {!playable && !isModalOpen ? (
+                      {!playable  ? (
                     <Button style={{
                       width: "50%",
                       minWidth: "10vh",
