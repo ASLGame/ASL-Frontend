@@ -9,10 +9,14 @@ import Home from "./features/home/Home";
 import SpellingLetters from "./features/game/spellingLetters";
 import Games from "./features/games/Games";
 import NavBar from "./components/NavBar/NavBar";
+import Wordle from "./features/game//Wordle/wordle";
 import { useSelector } from "react-redux";
 import { selectUser, signOut } from "./features/signin/signinSlice";
 import jwt_decode, { JwtPayload } from "jwt-decode";
 import { useAppDispatch } from "./app/hooks";
+import { ReactNotifications } from "react-notifications-component";
+import "react-notifications-component/dist/theme.css";
+
 const navigation = {
   brand: { name: "Signy", to: "/" },
   links: [
@@ -40,6 +44,7 @@ function App() {
     <Router>
       <div className="App">
         <NavBar brand={brand} links={links} />
+        <ReactNotifications />
         <header className="App-header">
           <Routes>
             {/* 
@@ -52,6 +57,7 @@ function App() {
               path="/games/spellingLetters"
               element={<SpellingLetters />}
             />
+            <Route path="/games/wordle" element={<Wordle />} />
             <Route path="/leaderboard" element={<Leaderboard />} />
             <Route path="/" element={<Home />} />
             <Route path="/games" element={<Games />} />
