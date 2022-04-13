@@ -17,6 +17,7 @@ interface GameSideProps {
   setCurrentRowIndex: Function;
   setCurrentRow: Function;
   currentRowIndex: number;
+  setIsCurrentRowFull: Function;
 }
 
 const GameSide: FunctionComponent<GameSideProps> = (props) => {
@@ -34,6 +35,7 @@ const GameSide: FunctionComponent<GameSideProps> = (props) => {
     setCurrentRow,
     setCurrentRowIndex,
     currentRowIndex,
+    setIsCurrentRowFull,
   } = props;
 
   const renderGuessGrid = () => {
@@ -77,6 +79,7 @@ const GameSide: FunctionComponent<GameSideProps> = (props) => {
                     onClick={() => {
                       reset();
                       setCurrentRowIndex(cell.position);
+                      setIsCurrentRowFull(false);
                       currentRow?.forEach((row) => {
                         if (row.position === cell.position) {
                           row.letter = undefined;
@@ -95,6 +98,7 @@ const GameSide: FunctionComponent<GameSideProps> = (props) => {
                     onClick={() => {
                       reset();
                       setCurrentRowIndex(cell.position);
+                      setIsCurrentRowFull(false);
                       currentRow?.forEach((row) => {
                         if (row.position === cell.position) {
                           row.letter = undefined;

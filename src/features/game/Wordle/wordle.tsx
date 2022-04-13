@@ -291,6 +291,12 @@ const Wordle: FunctionComponent = () => {
   }, [difficulty]);
 
   useEffect(() => {
+    if (isModalOpen) {
+      reset();
+    }
+  }, [isModalOpen, reset]);
+
+  useEffect(() => {
     if (currentWord && !emptyRows) {
       let empty = initEmptyRows();
       setEmptyRows(empty);
@@ -365,6 +371,7 @@ const Wordle: FunctionComponent = () => {
                 setCurrentRow={setCurrentRow}
                 setCurrentRowIndex={setCurrentRowIndex}
                 currentRowIndex={currentRowIndex}
+                setIsCurrentRowFull={setIsCurrentRowFull}
               ></GameSide>
               <button
                 style={{
