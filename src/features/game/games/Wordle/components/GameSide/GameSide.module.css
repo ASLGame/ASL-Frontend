@@ -15,7 +15,7 @@
 .gridRow {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
   padding: 5px;
   height: 100%;
   width: 100%;
@@ -27,7 +27,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: aliceblue;
+  background-color: var(--light_purple);
   font-size: 3vmin;
   width: 2em;
   max-width: 100px;
@@ -41,7 +41,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: aliceblue;
+  background-color: var(--light_purple);
   font-size: 3vmin;
   width: 2em;
   max-width: 100px;
