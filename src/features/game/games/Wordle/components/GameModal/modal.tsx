@@ -1,5 +1,5 @@
 import { FunctionComponent } from "react";
-import { Game } from "../../../../../types/Game";
+import { Game } from "../../../../../../types/Game";
 import Modal from "react-modal";
 import styles from "./modal.module.css";
 import { Store } from "react-notifications-component";

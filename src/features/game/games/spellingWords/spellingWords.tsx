@@ -12,6 +12,7 @@ import { getGameAsync, postScoreAsync, selectGame } from "../../gameSlice";
 import { Game } from "../../../../types/Game";
 import { selectSignIn, selectUser } from "../../../signin/signinSlice";
 import { scorePost } from "../../../../types/Score";
+import { Store } from "react-notifications-component";
 
 const SpellingWords: FunctionComponent = () => {
   Modal.setAppElement("body");
@@ -63,50 +64,88 @@ const SpellingWords: FunctionComponent = () => {
           <br />
           <h2>Description</h2>
           <p>{game.description}</p>
-          <h3 style={{ marginTop: "10%", marginLeft: "25%" }}>
-            Choose a difficulty:
-          </h3>
-          <button
-            className={styles.backButton}
-            style={{ marginTop: "5%", fontSize: "1.5em" }}
-            onClick={() => {
-              setIsModalOpen(false);
-              setIsTimerPaused(false);
-              setDifficulty("easy");
-            }}
-          >
-            Easy
-          </button>
-          <button
-            className={styles.backButton}
-            style={{ marginTop: "5%", fontSize: "1.5em" }}
-            onClick={() => {
-              setIsModalOpen(false);
-              setIsTimerPaused(false);
-              setDifficulty("medium");
-            }}
-          >
-            Medium
-          </button>
-          <button
-            className={styles.backButton}
-            style={{ marginTop: "5%", fontSize: "1.5em" }}
-            onClick={() => {
-              setIsModalOpen(false);
-              setIsTimerPaused(false);
-              setDifficulty("hard");
-            }}
-          >
-            Hard
-          </button>
+          <h3>Choose a difficulty:</h3>
+          <div className={styles.buttons}>
+            <button
+              className={styles.backButton}
+              style={{ fontSize: "1.5em" }}
+              onClick={() => {
+                setIsModalOpen(false);
+                setIsTimerPaused(false);
+                setDifficulty("easy");
+              }}
+            >
+              Easy
+            </button>
+            <button
+              className={styles.backButton}
+              style={{ fontSize: "1.5em" }}
+              onClick={() => {
+                setIsModalOpen(false);
+                setIsTimerPaused(false);
+                setDifficulty("medium");
+              }}
+            >
+              Medium
+            </button>
+            <button
+              className={styles.backButton}
+              style={{ fontSize: "1.5em" }}
+              onClick={() => {
+                setIsModalOpen(false);
+                setIsTimerPaused(false);
+                setDifficulty("hard");
+              }}
+            >
+              Hard
+            </button>
+          </div>
         </div>
       );
     }
   };
+
+  const closeModal = () => {
+    if (difficulty) {
+      setIsModalOpen(false);
+      setIsTimerPaused(false);
+    } else {
+      Store.addNotification({
+        content: difficultyNotification,
+        insert: "top",
+        container: "top-right",
+        animationIn: ["animated", "fadeIn"],
+        animationOut: ["animated", "fadeOut"],
+        dismiss: {
+          duration: 3000,
+        },
+      });
+    }
+  };
+
+  function difficultyNotification() {
+    return (
+      <div
+        style={{
+          width: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: "#9698D6",
+          borderLeft: "8px solid #4D4CAC",
+        }}
+      >
+        <div>
+          <h4>Please choose a difficulty first.</h4>
+        </div>
+      </div>
+    );
+  }
+
   const renderNextAndTimer = (next: String, timer: number) => {
     return (
       <>
-        <div className={styles.word}>
+        <div>
           <h3>Your next letter is: {next}</h3>
         </div>
         <div>
@@ -180,6 +219,12 @@ const SpellingWords: FunctionComponent = () => {
       setTimer(10);
     }
   };
+
+  useEffect(() => {
+    if (difficulty) {
+      resetGame();
+    }
+  }, [difficulty]);
 
   // If game hasn't loaded, fetch it.
   useEffect(() => {
@@ -271,10 +316,7 @@ const SpellingWords: FunctionComponent = () => {
       <>
         <Modal
           isOpen={isModalOpen}
-          onRequestClose={() => {
-            setIsModalOpen(false);
-            setIsTimerPaused(false);
-          }}
+          onRequestClose={() => closeModal()}
           className={styles.modal}
         >
           {renderModal()}

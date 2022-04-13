@@ -10,7 +10,7 @@ import Home from "./features/home/Home";
 import SpellingLetters from "./features/game/games/spellingLetters/spellingLetters";
 import Games from "./features/games/Games";
 import NavBar from "./components/NavBar/NavBar";
-import Wordle from "./features/game/Wordle/wordle";
+import Wordle from "./features/game/games/Wordle/wordle";
 import { useSelector } from "react-redux";
 import { selectUser, signOut } from "./features/signin/signinSlice";
 import jwt_decode, { JwtPayload } from "jwt-decode";
