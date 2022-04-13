@@ -1,17 +1,16 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
 import styles from "./hangMan.module.css";
-import { Button } from "../../components/Button.styled";
-import ModelCamera from "../../components/ModelCamera/ModelCamera";
-import { Alphabet, easyWords, mediumWords, hardWords } from "../../types/Models";
-import LetterSpelled from "../../types/LetterSpelled";
+import { Button } from "../../../../components/Button.styled";
+import ModelCamera from "../../../../components/ModelCamera/ModelCamera";
+import { easyWords, mediumWords, hardWords } from "../../../../types/Models";
 import Confetti from "react-confetti";
 import { useNavigate } from "react-router-dom";
 import Modal from "react-modal";
 import { useDispatch, useSelector } from "react-redux";
-import { getGameAsync, postScoreAsync, selectGame } from "./gameSlice";
-import { Game } from "../../types/Game";
-import { selectSignIn, selectUser } from "../signin/signinSlice";
-import { scorePost } from "../../types/Score";
+import { getGameAsync, postScoreAsync, selectGame } from "../../gameSlice";
+import { Game } from "../../../../types/Game";
+import { selectSignIn, selectUser } from "../../../signin/signinSlice";
+import { scorePost } from "../../../../types/Score";
 import Figure from "./HM_components/figure"
 import WrongSection from "./HM_components/WrongSection";
 import GameModal from "./HM_components/GameModal/modal";
@@ -235,6 +234,7 @@ useEffect(() => {
           setDifficulty={setDifficulty}
           isModalOpen={isModalOpen}
           setPlayable={setPlayable}
+          difficulty={difficulty}
         />
 
         <div className={styles.background + ' ' + styles.layer1}>

@@ -1,8 +1,8 @@
 import { FunctionComponent } from "react";
-import { Game } from "../../../../types/Game";
+import { Game } from "../../../../../../types/Game";
 import Modal from "react-modal";
 import styles from "./modal.module.css";
-import { resetIdCounter } from "react-tabs";
+import { Store } from "react-notifications-component";
 
 interface ModalProps {
     game: Game;
@@ -10,18 +10,58 @@ interface ModalProps {
     setDifficulty: Function;
     isModalOpen: boolean;
     setPlayable:Function;
+    difficulty: String | undefined;
 }
 
 const GameModal: FunctionComponent<ModalProps> = (props) => {
     Modal.setAppElement("body");
-    const { game, isModalOpen, setIsModalOpen, setDifficulty, setPlayable } = props;
+    const { game, isModalOpen, setIsModalOpen, setDifficulty, setPlayable, difficulty } = props;
+
+
+    const closeModal = () => {
+      if(difficulty){
+        setIsModalOpen(false);
+        setPlayable(true);
+      } else{
+        Store.addNotification({
+          content: difficultyNotification,
+          insert: "top",
+          container: "top-right",
+          animationIn: ["animated", "fadeIn"],
+          animationOut: ["animated", "fadeOut"],
+          dismiss: {
+            duration: 3000,
+          },
+        });
+      }
+      
+          
+    };
+
+    function difficultyNotification() {
+      return (
+        <div
+          style={{
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            backgroundColor: "#9698D6",
+            borderLeft: "8px solid #4D4CAC",
+          }}
+        >
+          <div>
+            <h4>Please choose a difficulty first.</h4>
+          </div>
+        </div>
+      );
+    }
     if (game) {
       return (
         <Modal
-          isOpen={isModalOpen}
+          isOpen={difficulty ? isModalOpen : true}
           onRequestClose={() => {
-            setIsModalOpen(false);
-            setPlayable(true);
+            closeModal();
           }}
           className={styles.modal}
         >

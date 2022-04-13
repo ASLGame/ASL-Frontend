@@ -3,7 +3,7 @@ import { Profile } from "./features/profile/Profile";
 import About from "./features/about/About";
 import { Leaderboard } from "./features/leaderboard/leadrboard";
 import SpellingWords from "./features/game/games/spellingWords/spellingWords";
-import HangMan from "./features/game/hangMan";
+import HangMan from "./features/game/games/HangMan/hangMan";
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { SignUp } from "./features/signup/SignUp";
