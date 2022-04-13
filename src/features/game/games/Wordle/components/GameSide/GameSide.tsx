@@ -1,6 +1,6 @@
 import { FunctionComponent } from "react";
-import { Button } from "../../../../../components/Button.styled";
-import { Cell } from "../../../../../types/Wordle";
+import { Button } from "../../../../../../components/Button.styled";
+import { Cell } from "../../../../../../types/Wordle";
 import styles from "./GameSide.module.css";
 
 interface GameSideProps {

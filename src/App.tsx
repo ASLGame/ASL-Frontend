@@ -2,14 +2,15 @@ import { SignIn } from "./features/signin/SignIn";
 import { Profile } from "./features/profile/Profile";
 import About from "./features/about/About";
 import { Leaderboard } from "./features/leaderboard/leadrboard";
+import SpellingWords from "./features/game/games/spellingWords/spellingWords";
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { SignUp } from "./features/signup/SignUp";
 import Home from "./features/home/Home";
-import SpellingLetters from "./features/game/spellingLetters";
+import SpellingLetters from "./features/game/games/spellingLetters/spellingLetters";
 import Games from "./features/games/Games";
 import NavBar from "./components/NavBar/NavBar";
-import Wordle from "./features/game//Wordle/wordle";
+import Wordle from "./features/game/games/Wordle/wordle";
 import { useSelector } from "react-redux";
 import { selectUser, signOut } from "./features/signin/signinSlice";
 import jwt_decode, { JwtPayload } from "jwt-decode";
@@ -58,6 +59,7 @@ function App() {
               element={<SpellingLetters />}
             />
             <Route path="/games/wordle" element={<Wordle />} />
+            <Route path="/games/spellingWords" element={<SpellingWords />} />
             <Route path="/leaderboard" element={<Leaderboard />} />
             <Route path="/" element={<Home />} />
             <Route path="/games" element={<Games />} />
