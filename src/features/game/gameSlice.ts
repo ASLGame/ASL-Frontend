@@ -1,15 +1,24 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
-import { getGame, postScore } from "./gameAPI";
+import { getGame, getStat, postScore } from "./gameAPI";
 import { Game } from "../../types/Game";
 import { scorePost } from "../../types/Score";
 
+export interface Stat {
+  stat_id: number,
+  name: string,
+  description: string,
+  type: string
+}
+
 interface gameState {
   game: Game | undefined;
+  stats: Array<Stat> | undefined
 }
 
 const initialState: gameState = {
   game: undefined,
+  stats: undefined
 };
 
 export const getGameAsync = createAsyncThunk(
@@ -27,6 +36,22 @@ export const postScoreAsync = createAsyncThunk(
     return response;
   }
 );
+
+export const getStatAsync = createAsyncThunk(
+  "stat/get",
+  async (stat: string) => {
+    const response = await getStat(stat);
+    return response
+  }
+) 
+
+// export const addToStatAsync = createAsyncThunk(
+//   "stat/post",
+//   async (stat: object) => {
+//     const response = await addToStat(stat);
+//     return response;
+//   }
+// )
 
 export const gameSlice = createSlice({
   name: "game",
@@ -46,6 +71,13 @@ export const gameSlice = createSlice({
     builder.addCase(getGameAsync.fulfilled, (state, action) => {
       console.log(action.payload);
       state.game = action.payload;
+    });
+    builder.addCase(getStatAsync.rejected, (state, action) => {
+      console.log(action.error);
+    });
+    builder.addCase(getStatAsync.fulfilled, (state, action) => {
+      console.log(action.payload);
+      state.stats = action.payload;
     });
   },
 });

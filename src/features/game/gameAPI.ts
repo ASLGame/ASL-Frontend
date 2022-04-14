@@ -34,3 +34,17 @@ export async function postScore(scorePost: scorePost) {
     });
   return success;
 }
+
+export const getStat = async (stat: string) => {
+  const response = await fetch(url + `stat/${stat}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+  })
+  if (response.ok) {
+    return response.json();
+  } else {
+    return response;
+  }
+}
