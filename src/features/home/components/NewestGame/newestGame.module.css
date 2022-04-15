@@ -11,6 +11,7 @@
 .title {
   align-self: flex-start;
   margin-left: 5%;
+  font-size: 1.2em;
 }
 
 .gameName {
@@ -25,13 +26,24 @@
   border-radius: 3%;
   background-color: var(--gray);
   align-items: center;
-  padding-bottom: 4.8%;
-  max-height: 490px;
+  height: 90%;
+  min-height: 470px;
+}
+
+.newestGamePhone {
+  display: flex;
+  flex-direction: column;
+  width: 96%;
+  border-radius: 3%;
+  background-color: var(--gray);
+  align-items: center;
+  height: 84%;
 }
 
 .imageContainer {
   display: flex;
   height: 100%;
+  max-height: 375px;
   width: 100%;
   align-items: center;
   flex-direction: column;

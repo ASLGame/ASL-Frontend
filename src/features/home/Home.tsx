@@ -1,9 +1,8 @@
-import React, { FunctionComponent, useEffect } from "react";
+import { FunctionComponent, useEffect } from "react";
 import styles from "./home.module.css";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { getNewestGameAsync, getFeaturedGamesAsync } from "./homeSlice";
 import NewGame from "./components/NewestGame/newestGame";
-import { Button } from "../../components/Button.styled";
 import { useNavigate } from "react-router-dom";
 import FeaturedGames from "./components/FeaturedGames/featuredGames";
 import { selectSignIn } from "../signin/signinSlice";
@@ -22,7 +21,11 @@ const Home: FunctionComponent<HomeProps> = () => {
 
   return (
     <>
-      <section className={styles.container + " " + styles.background}>
+      <section
+        className={
+          window.innerHeight > 800 ? styles.container : styles.containerPhone
+        }
+      >
         <div className={styles.top}>
           <div className={styles.left}>
             <NewGame />
@@ -42,18 +45,19 @@ const Home: FunctionComponent<HomeProps> = () => {
           {!isAuth ? (
             <div className={styles.right}>
               <p> Want to have fun and learn?</p>
-              <Button
-                style={{ width: "30%", height: "15%", minWidth: "100px" }}
+              <button
+                className={styles.button}
                 onClick={() => navigate("/signin")}
               >
                 Sign In
-              </Button>
+              </button>
               <p>or</p>
-              <Button
-                style={{ width: "30%", height: "15%", minWidth: "100px" }}
+              <button
+                className={styles.button}
+                onClick={() => navigate("/signup")}
               >
                 Sign Up
-              </Button>
+              </button>
             </div>
           ) : (
             ""

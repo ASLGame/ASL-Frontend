@@ -5,18 +5,11 @@
   height: 100%;
   width: 100%;
   max-width: 950px;
+  min-width: 200px;
 }
 
 .title {
   align-self: flex-start;
   margin-left: 5%;
-}
-
-.featuredGames {
-  display: flex;
-  flex-direction: column;
-  width: 96%;
-  background-color: var(--gray);
-  border-radius: 3%;
-  align-items: center;
+  font-size: 1.2em;
 }
