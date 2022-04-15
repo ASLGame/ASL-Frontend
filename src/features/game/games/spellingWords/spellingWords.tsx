@@ -8,10 +8,11 @@ import Confetti from "react-confetti";
 import { useNavigate } from "react-router-dom";
 import Modal from "react-modal";
 import { useDispatch, useSelector } from "react-redux";
-import { getGameAsync, postScoreAsync, selectGame } from "../../gameSlice";
+import { getGameAsync, postScoreAsync, selectGame, updateStatAsync } from "../../gameSlice";
 import { Game } from "../../../../types/Game";
 import { selectSignIn, selectUser } from "../../../signin/signinSlice";
 import { scorePost } from "../../../../types/Score";
+import { AccountStat } from "../../../../types/AccountStat";
 import { Store } from "react-notifications-component";
 
 const SpellingWords: FunctionComponent = () => {
@@ -34,6 +35,7 @@ const SpellingWords: FunctionComponent = () => {
   const dispatch = useDispatch();
   //@ts-ignore
   const game: Game = useSelector(selectGame).game;
+  const stats = useSelector(selectGame).stats;
   const navigate = useNavigate();
 
   const resetGame = () => {
@@ -229,7 +231,7 @@ const SpellingWords: FunctionComponent = () => {
   // If game hasn't loaded, fetch it.
   useEffect(() => {
     if (!game) {
-      dispatch(getGameAsync("Spelling Letters"));
+      dispatch(getGameAsync("Spelling Words"));
     }
   }, []);
 
@@ -282,6 +284,19 @@ const SpellingWords: FunctionComponent = () => {
       user &&
       !isScorePosted
     ) {
+      
+      stats?.map((stat)=> {
+        let accountStatToUpdate: AccountStat = {
+          account_id: 0,
+          stats_id: 0
+        };
+        if(stat.type === 'word') {
+          accountStatToUpdate.account_id = user.account_id!;
+          accountStatToUpdate.stats_id = stat.id!;
+        }
+        dispatch(updateStatAsync(accountStatToUpdate))
+      })
+
       const scoreToPost: scorePost = {
         account_id: user.account_id!,
         game_id: game.id,

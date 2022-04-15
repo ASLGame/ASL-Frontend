@@ -1,4 +1,5 @@
 import { apiURL } from "../../env/dev";
+import { AccountStat } from "../../types/AccountStat";
 import { scorePost } from "../../types/Score";
 
 const url = apiURL;
@@ -38,6 +39,20 @@ export async function postScore(scorePost: scorePost) {
 export const getStat = async (stat: string) => {
   const response = await fetch(url + `stat/${stat}`, {
     method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+  })
+  if (response.ok) {
+    return response.json();
+  } else {
+    return response;
+  }
+}
+
+export const updateStat = async (stat: AccountStat) => {
+  const response = await fetch(url + `account-stat/update/${stat.account_id}/${stat.stats_id}`, {
+    method: 'PUT',
     headers: {
       'Content-Type': 'application/json'
     },

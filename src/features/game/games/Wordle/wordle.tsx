@@ -6,7 +6,7 @@ import LetterSpelled from "../../../../types/LetterSpelled";
 import Confetti from "react-confetti";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getGameAsync, postScoreAsync, selectGame } from "../../gameSlice";
+import { getGameAsync, postScoreAsync, selectGame, updateStatAsync } from "../../gameSlice";
 import { Game } from "../../../../types/Game";
 import { selectSignIn, selectUser } from "../../../signin/signinSlice";
 import { scorePost } from "../../../../types/Score";
@@ -14,6 +14,7 @@ import { Cell } from "../../../../types/Wordle";
 import { Store } from "react-notifications-component";
 import GameModal from "./components/GameModal/modal";
 import GameSide from "./components/GameSide/GameSide";
+import { AccountStat } from "../../../../types/AccountStat";
 
 const Wordle: FunctionComponent = () => {
   const [buffer, setBuffer] = useState<string[]>([]);
@@ -40,8 +41,9 @@ const Wordle: FunctionComponent = () => {
   const dispatch = useDispatch();
   //@ts-ignore
   const game: Game = useSelector(selectGame).game;
+  const stats = useSelector(selectGame).stats;
   const navigate = useNavigate();
-
+  console.log(currentWord)
   const resetGame = () => {
     setLetters([]);
     let word = "";
@@ -259,12 +261,23 @@ const Wordle: FunctionComponent = () => {
 
   useEffect(() => {
     if (!game) {
-      dispatch(getGameAsync("Spelling Letters"));
+      dispatch(getGameAsync("Wordle"));
     }
   }, [game, dispatch]);
 
   useEffect(() => {
     if ((isGameLost || isGameWon) && isAuthorized && user && !isScorePosted) {
+      stats?.map((stat)=> {
+        let accountStatToUpdate: AccountStat = {
+          account_id: 0,
+          stats_id: 0
+        };
+        if(stat.type === 'wordle') {
+          accountStatToUpdate.account_id = user.account_id!;
+          accountStatToUpdate.stats_id = stat.id!;
+        }
+        dispatch(updateStatAsync(accountStatToUpdate))
+      })
       const scoreToPost: scorePost = {
         account_id: user.account_id!,
         game_id: game.id,

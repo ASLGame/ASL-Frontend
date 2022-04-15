@@ -1,11 +1,12 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
-import { getGame, getStat, postScore } from "./gameAPI";
+import { getGame, getStat, postScore, updateStat } from "./gameAPI";
 import { Game } from "../../types/Game";
 import { scorePost } from "../../types/Score";
+import { AccountStat } from "../../types/AccountStat";
 
 export interface Stat {
-  stat_id: number,
+  id: number,
   name: string,
   description: string,
   type: string
@@ -45,13 +46,13 @@ export const getStatAsync = createAsyncThunk(
   }
 ) 
 
-// export const addToStatAsync = createAsyncThunk(
-//   "stat/post",
-//   async (stat: object) => {
-//     const response = await addToStat(stat);
-//     return response;
-//   }
-// )
+export const updateStatAsync = createAsyncThunk(
+  "stat/update",
+  async (stat: AccountStat) => {
+    const response = await updateStat(stat);
+    return response
+  }
+)
 
 export const gameSlice = createSlice({
   name: "game",
@@ -65,6 +66,9 @@ export const gameSlice = createSlice({
     builder.addCase(postScoreAsync.rejected, (state, action) => {
       console.log(action.error);
     });
+    builder.addCase(updateStatAsync.rejected, (state, action) => {
+      console.log(action.error);
+    });
     builder.addCase(getGameAsync.rejected, (state, action) => {
       console.log(action.error);
     });
@@ -76,7 +80,6 @@ export const gameSlice = createSlice({
       console.log(action.error);
     });
     builder.addCase(getStatAsync.fulfilled, (state, action) => {
-      console.log(action.payload);
       state.stats = action.payload;
     });
   },

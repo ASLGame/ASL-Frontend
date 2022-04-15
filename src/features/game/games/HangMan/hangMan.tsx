@@ -7,13 +7,14 @@ import Confetti from "react-confetti";
 import { useNavigate } from "react-router-dom";
 import Modal from "react-modal";
 import { useDispatch, useSelector } from "react-redux";
-import { getGameAsync, postScoreAsync, selectGame } from "../../gameSlice";
+import { getGameAsync, postScoreAsync, selectGame, updateStatAsync } from "../../gameSlice";
 import { Game } from "../../../../types/Game";
 import { selectSignIn, selectUser } from "../../../signin/signinSlice";
 import { scorePost } from "../../../../types/Score";
 import Figure from "./HM_components/figure"
 import WrongSection from "./HM_components/WrongSection";
 import GameModal from "./HM_components/GameModal/modal";
+import { AccountStat } from "../../../../types/AccountStat";
 
 const HangMan: FunctionComponent = () =>{
   Modal.setAppElement("body");
@@ -28,6 +29,7 @@ const HangMan: FunctionComponent = () =>{
   const dispatch = useDispatch();
   //@ts-ignore
   const game: Game = useSelector(selectGame).game;
+  const stats = useSelector(selectGame).stats;
   const navigate = useNavigate();
 
   //hangMan States
@@ -37,7 +39,7 @@ const HangMan: FunctionComponent = () =>{
   const[correctLetters, setCorrectLetters] = useState<Array<String>>([]);
   const [playable, setPlayable] = useState(false);
   const [difficulty, setDifficulty] = useState<String>();
- 
+  
   const renderWord = (word:String | undefined) => {
     if(word !== 'undefined'){
       return (
@@ -125,14 +127,17 @@ const HangMan: FunctionComponent = () =>{
     
   }
   const checkWin = () =>{
-    let result = true;
-    currentWord?.split('').forEach(letter => {
-      if(!correctLetters.includes(letter)){
-        
-        result = false;
-      }
-    })
-    return result;
+    if(difficulty) {
+      let result = true;
+      currentWord?.split('').forEach(letter => {
+        if(!correctLetters.includes(letter)){
+          result = false;
+        }
+      })
+      return result;
+    } else {
+      return false;
+    }
   }
 useEffect(() => {
   if(!game){
@@ -193,10 +198,22 @@ useEffect(() => {
       checkWin() &&
       isAuthorized &&
       user &&
-      !isScorePosted
+      !isScorePosted &&
+      currentWord.length > 0
     ) 
     {
-    
+      stats?.map((stat)=> {
+        let accountStatToUpdate: AccountStat = {
+          account_id: 0,
+          stats_id: 0
+        };
+        if(stat.type === 'hangman') {
+          accountStatToUpdate.account_id = user.account_id!;
+          accountStatToUpdate.stats_id = stat.id!;
+        }
+        dispatch(updateStatAsync(accountStatToUpdate))
+      })
+      
       const scoreToPost: scorePost = {
         account_id: user.account_id!,
         game_id: game.id,
