@@ -15,21 +15,20 @@
 }
 
 .gameImageColumn {
-  width: 50%;
+  width: 20%;
   border-bottom: 1px solid black;
   padding-bottom: 10px;
   padding-top: 10px;
+  max-width: 40px;
 }
 .gameImage {
-  width: 20%;
-  height: 30%;
-  padding-right: 0px;
-  /* margin-right: 0; */
+  width: 7em;
+  height: 7em;
 }
 
 .gameNameColumn {
   width: 20%;
-  margin-right: 100;
+  /* margin-right: 100; */
   border-bottom: 1px solid black;
   padding-bottom: 10px;
   padding-top: 10px;
@@ -43,7 +42,7 @@
 }
 
 .lastGameImageColumn {
-  width: 50%;
+  width: 20%;
   padding-top: 10px;
 }
 
