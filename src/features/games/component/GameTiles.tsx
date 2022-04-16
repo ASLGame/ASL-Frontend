@@ -2,7 +2,7 @@ import { FunctionComponent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Game, GameAsset } from "../../../types/Game";
-import { getStatAsync, setGame } from "../../game/gameSlice";
+import { getGameAchievementsAsync, getStatAsync, setGame } from "../../game/gameSlice";
 import {
   selectAllGames,
   selectAllGamesState,
@@ -44,7 +44,8 @@ const GameTiles: FunctionComponent<GameTilesProps> = () => {
                         onClick={() => {
                           navigate(`${game.name.split(" ").join("")}`);
                           dispatch(setGame(game));
-                          dispatch(getStatAsync(game.type))
+                          dispatch(getStatAsync(game.type));
+                          dispatch(getGameAchievementsAsync(game.id));
                         }}
                       >
                         <td className={styles.gameImageColumn}>

@@ -63,3 +63,17 @@ export const updateStat = async (stat: AccountStat) => {
     return response;
   }
 }
+
+export const getGameAchievements = async (gameID: string) => {
+  const response = await fetch(url + `game_achievement/${parseInt(gameID, 10)}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  if (response.ok) {
+    return response.json();
+  } else {
+    return response;
+  }
+};
