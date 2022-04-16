@@ -28,6 +28,7 @@
   align-items: center;
   height: 90%;
   min-height: 470px;
+  max-width: 600px;
 }
 
 .newestGamePhone {

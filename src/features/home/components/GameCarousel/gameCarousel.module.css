@@ -5,6 +5,7 @@
   background-color: var(--gray);
   height: 90%;
   min-height: 471px;
+  max-width: 600px;
   border-radius: 3%;
 }
 

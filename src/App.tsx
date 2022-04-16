@@ -22,7 +22,6 @@ import "react-notifications-component/dist/theme.css";
 const navigation = {
   brand: { name: "Signy", to: "/" },
   links: [
-    { name: "Home", to: "/" },
     { name: "Games", to: "/games" },
     { name: "Account", to: "/profile" },
   ],
