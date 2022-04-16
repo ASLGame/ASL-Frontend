@@ -62,7 +62,7 @@ export const DropCont = styled.ul`
   width: 120px;
   color: black;
   position: absolute;
-  left: 1400px;
+  left: 77%;
   padding: 12px 16px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
