@@ -14,6 +14,9 @@ import { selectSignIn, selectUser } from "../../../signin/signinSlice";
 import { scorePost } from "../../../../types/Score";
 import { AccountStat } from "../../../../types/AccountStat";
 import { Store } from "react-notifications-component";
+import { getAchievements } from "../../../profile/profileAPI";
+import { UserAchievements } from "../../../profile/profileSlice";
+import { updateAccountAchievement } from "../../gameAPI";
 
 const SpellingWords: FunctionComponent = () => {
   Modal.setAppElement("body");
@@ -294,7 +297,7 @@ const SpellingWords: FunctionComponent = () => {
           accountStatToUpdate.account_id = user.account_id!;
           accountStatToUpdate.stats_id = stat.id!;
         }
-        dispatch(updateStatAsync(accountStatToUpdate))
+        dispatch(updateStatAsync({"stat": accountStatToUpdate, "value": 1}))
       })
 
       const scoreToPost: scorePost = {
@@ -304,6 +307,20 @@ const SpellingWords: FunctionComponent = () => {
       };
       dispatch(postScoreAsync(scoreToPost));
       setIsScorePosted(true);
+
+      const fetchAch = async () => {
+        const data = await getAchievements(user.account_id!, parseInt(game.id!, 10))
+        data.map((ach: UserAchievements) => {
+          if (!ach.has_achieved) {
+            //Check if value greater or equal to task
+            if(ach.value >= ach.task) {
+              //Update has_achieved to true and date_achieved
+              updateAccountAchievement(ach.acc_ach_id);
+            }
+          }
+        })
+      }
+      fetchAch();
     }
   });
 

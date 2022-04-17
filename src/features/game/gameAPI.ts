@@ -50,9 +50,10 @@ export const getStat = async (stat: string) => {
   }
 }
 
-export const updateStat = async (stat: AccountStat) => {
+export const updateStat = async (stat: AccountStat, value: number) => {
   const response = await fetch(url + `account-stat/update/${stat.account_id}/${stat.stats_id}`, {
     method: 'PUT',
+    body: JSON.stringify(value),
     headers: {
       'Content-Type': 'application/json'
     },
@@ -77,3 +78,21 @@ export const getGameAchievements = async (gameID: string) => {
     return response;
   }
 };
+
+export const updateAccountAchievement = async (accAchievementID: number) => {
+  const response = await fetch(url + `account-achievement/${accAchievementID}`, {
+    method: "PUT",
+    body: JSON.stringify({
+      "has_achieved": true,
+      "date_achieved": new Date()
+    }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  if (response.ok) {
+    return response.json();
+  } else {
+    return response;
+  }
+}

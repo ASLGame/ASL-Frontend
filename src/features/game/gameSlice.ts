@@ -60,8 +60,8 @@ export const getStatAsync = createAsyncThunk(
 
 export const updateStatAsync = createAsyncThunk(
   "stat/update",
-  async (stat: AccountStat) => {
-    const response = await updateStat(stat);
+  async ({stat, value}: {stat: AccountStat, value: number}) => {
+    const response = await updateStat(stat, value);
     return response
   }
 )

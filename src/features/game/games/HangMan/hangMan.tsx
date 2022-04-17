@@ -15,6 +15,9 @@ import Figure from "./HM_components/figure"
 import WrongSection from "./HM_components/WrongSection";
 import GameModal from "./HM_components/GameModal/modal";
 import { AccountStat } from "../../../../types/AccountStat";
+import { getAchievements } from "../../../profile/profileAPI";
+import { UserAchievements } from "../../../profile/profileSlice";
+import { updateAccountAchievement } from "../../gameAPI";
 
 const HangMan: FunctionComponent = () =>{
   Modal.setAppElement("body");
@@ -211,7 +214,7 @@ useEffect(() => {
           accountStatToUpdate.account_id = user.account_id!;
           accountStatToUpdate.stats_id = stat.id!;
         }
-        dispatch(updateStatAsync(accountStatToUpdate))
+        dispatch(updateStatAsync({"stat": accountStatToUpdate, "value": 1}))
       })
       
       const scoreToPost: scorePost = {
@@ -221,6 +224,20 @@ useEffect(() => {
       };
       dispatch(postScoreAsync(scoreToPost));
       setIsScorePosted(true);
+
+      const fetchAch = async () => {
+        const data = await getAchievements(user.account_id!, parseInt(game.id!, 10))
+        data.map((ach: UserAchievements) => {
+          if (!ach.has_achieved) {
+            //Check if value greater or equal to task
+            if(ach.value >= ach.task) {
+              //Update has_achieved to true and date_achieved
+              updateAccountAchievement(ach.acc_ach_id);
+            }
+          }
+        })
+      }
+      fetchAch();
     }
   });
 
