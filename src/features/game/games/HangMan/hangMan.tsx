@@ -268,7 +268,7 @@ useEffect(() => {
                       <hr className={styles.divider}></hr>
                       <div>
                         <Figure wrong={wrongLetters} />
-                        {wrongLetters.length === 10 && <h1>YOU LOSE!</h1>}
+                        {wrongLetters.length === 10 && <h1>YOU LOSE! The word was: {currentWord}</h1>}
                       </div>
                       <hr className={styles.divider}></hr>
                       <WrongSection wrong={wrongLetters} />
