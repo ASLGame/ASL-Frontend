@@ -5,13 +5,11 @@ import styles from "../GamesTable.module.css"
 
 export function Game(props:any){
   const gid = props.gid;
-  console.log("It starts", gid, props)
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(bygamesAsync(gid));
   }, []);
   const scores = useAppSelector(selectScores);
-  console.log(scores)
   const state = useAppSelector(scoreState);
   let counter = 0;
 
