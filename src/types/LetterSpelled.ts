@@ -1,4 +1,3 @@
-
-export default interface LetterSpelled  {
-    String:Boolean;
-};
+export default interface LetterSpelled {
+  [letter: string]: Boolean;
+}

@@ -41,9 +41,10 @@ const GameTiles: FunctionComponent<GameTilesProps> = () => {
                       <tr
                         className={styles.gameTile}
                         key={game.name}
-                        onClick={() =>
-                          navigate(`${game.name.split(" ").join("")}`)
-                        }
+                        onClick={() => {
+                          navigate(`${game.name.split(" ").join("")}`);
+                          dispatch(setGame(game));
+                        }}
                       >
                         <td className={styles.gameImageColumn}>
                           <img

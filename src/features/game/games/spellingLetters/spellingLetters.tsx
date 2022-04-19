@@ -1,17 +1,17 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
 import styles from "./spellingLetters.module.css";
-import { Button } from "../../components/Button.styled";
-import ModelCamera from "../../components/ModelCamera/ModelCamera";
-import { Alphabet } from "../../types/Models";
-import LetterSpelled from "../../types/LetterSpelled";
+import { Button } from "../../../../components/Button.styled";
+import ModelCamera from "../../../../components/ModelCamera/ModelCamera";
+import { Alphabet } from "../../../../types/Models";
+import LetterSpelled from "../../../../types/LetterSpelled";
 import Confetti from "react-confetti";
 import { useNavigate } from "react-router-dom";
 import Modal from "react-modal";
 import { useDispatch, useSelector } from "react-redux";
-import { getGameAsync, postScoreAsync, selectGame } from "./gameSlice";
-import { Game } from "../../types/Game";
-import { selectSignIn, selectUser } from "../signin/signinSlice";
-import { scorePost } from "../../types/Score";
+import { getGameAsync, postScoreAsync, selectGame } from "../../gameSlice";
+import { Game } from "../../../../types/Game";
+import { selectSignIn, selectUser } from "../../../signin/signinSlice";
+import { scorePost } from "../../../../types/Score";
 
 const SpellingLetters: FunctionComponent = () => {
   Modal.setAppElement("body");
@@ -56,6 +56,11 @@ const SpellingLetters: FunctionComponent = () => {
             onClick={() => {
               setIsModalOpen(false);
               setIsTimerPaused(false);
+              let emptyBuffer: String[] = buffer;
+              while (emptyBuffer.length !== 0) {
+                emptyBuffer.shift();
+              }
+              setBuffer(emptyBuffer);
             }}
           >
             Start Playing!
@@ -212,6 +217,11 @@ const SpellingLetters: FunctionComponent = () => {
           onRequestClose={() => {
             setIsModalOpen(false);
             setIsTimerPaused(false);
+            let emptyBuffer: String[] = buffer;
+            while (emptyBuffer.length !== 0) {
+              emptyBuffer.shift();
+            }
+            setBuffer(emptyBuffer);
           }}
           className={styles.modal}
         >

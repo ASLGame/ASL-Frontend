@@ -1,0 +1,86 @@
+.gameboard {
+  margin-top: 13%;
+  display: flex;
+  border: 2px;
+  padding: 5%;
+  border-style: solid;
+  border-radius: 10px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 85%;
+  height: 50%;
+}
+
+.gridRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 5px;
+  height: 100%;
+  width: 100%;
+  max-width: 100%;
+}
+
+.gridColumn {
+  margin-right: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--light_purple);
+  font-size: 3vmin;
+  width: 2em;
+  max-width: 100px;
+  height: 2em;
+  cursor: pointer;
+}
+
+.gridColumnCurrent {
+  border: 2px solid black;
+  margin-right: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--light_purple);
+  font-size: 3vmin;
+  width: 2em;
+  max-width: 100px;
+  height: 2em;
+  cursor: pointer;
+}
+
+.gridColumnIncorrect {
+  margin-right: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: gray;
+  font-size: 3vmin;
+  max-width: 100px;
+  width: 2em;
+  height: 2em;
+}
+
+.gridColumnIncorrectLocation {
+  margin-right: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: orange;
+  font-size: 3vmin;
+  max-width: 100px;
+  width: 2em;
+  height: 2em;
+}
+
+.gridColumnCorrect {
+  margin-right: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: greenyellow;
+  font-size: 3vmin;
+  max-width: 100px;
+  width: 2em;
+  height: 2em;
+}
