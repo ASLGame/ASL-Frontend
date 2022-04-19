@@ -17,14 +17,10 @@ export function Leaderboard() {
 
   return (
     <div>
-      <h1>Leaderboards</h1>
+      <h1 className={styles.title}>Leaderboards</h1>
       <div className={styles.tables}>
-        <div className={styles.right}>
           <ByGames />
-        </div>
-        <div className={styles.left}>
           <ByTime />
-        </div>
       </div>
     </div>
   );
