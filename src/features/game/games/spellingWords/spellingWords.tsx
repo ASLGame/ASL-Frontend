@@ -55,15 +55,26 @@ const SpellingWords: FunctionComponent = () => {
     setCurrentLetter(undefined);
   };
 
+  const displayGameRules = (rules:string) => {
+    return(
+      <>
+        {rules.split('/n').map((rule) => {
+         return <p className={styles.rules}>{rule}</p>
+        })}
+      </>
+    )
+
+  }
+
   const renderModal = () => {
     if (game) {
       return (
         <div className={styles.word}>
           <h2>Rules</h2>
-          <p>{game.rules}</p>
+          {displayGameRules(game.rules)}
           <br />
           <h2>Description</h2>
-          <p>{game.description}</p>
+          <p className={styles.rules}>{game.description}</p>
           <h3>Choose a difficulty:</h3>
           <div className={styles.buttons}>
             <button
@@ -149,7 +160,7 @@ const SpellingWords: FunctionComponent = () => {
           <h3>Your next letter is: {next}</h3>
         </div>
         <div>
-          Timer: {timer} second{timer === 1 ? "" : "s"}
+          <h3>Timer: {timer} second{timer === 1 ? "" : "s"}</h3>
         </div>
       </>
     );
@@ -352,9 +363,9 @@ const SpellingWords: FunctionComponent = () => {
             <div className={styles.right}>
               <div className={styles.gameboard}>
                 <h1 className={styles.gameboardTitle}> Score </h1>
-                <p style={{ alignSelf: "center" }}>
+                <h3 style={{ alignSelf: "center" }}>
                   Spell the word: {currentWord}
-                </p>
+                </h3>
                 <div className={styles.letters}>
                   {renderLetters(lettersSpelled)}
                 </div>

@@ -81,12 +81,12 @@ const Camera: FunctionComponent<CameraProps> = (props) => {
 
         //@ts-ignore
         drawConnectors(canvasCtx!, landmarks, Hands.HAND_CONNECTIONS, {
-          color: "#00CC00",
+          color: "#4D4CAC",
           lineWidth: 5,
         });
         // @ts-ignore
         drawLandmarks(canvasCtx, landmarks, {
-          color: "#FF0000",
+          color: "#6f6dec",
           lineWidth: 2,
         });
       }

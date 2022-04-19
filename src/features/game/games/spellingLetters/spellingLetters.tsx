@@ -76,7 +76,7 @@ const SpellingLetters: FunctionComponent = () => {
           <h3>Your next letter is: {next}</h3>
         </div>
         <div>
-          Timer: {timer} second{timer === 1 ? "" : "s"}
+          <h3>Timer: {timer} second{timer === 1 ? "" : "s"}</h3>
         </div>
       </>
     );

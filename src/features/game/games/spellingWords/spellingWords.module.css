@@ -1,3 +1,6 @@
+h3{
+  margin: 0.5em;
+}
 .container {
   display: flex;
   height: 100%;
@@ -91,12 +94,17 @@
   min-width: 400px;
   min-height: 450px;
   position: absolute;
+  top: 18%;
+  left:20%;
   height: 40%;
   right: 30%;
   bottom: 30%;
   justify-self: center;
   background-color: white;
   border-radius: 3%;
+  border: 0.25em solid #4D4CAC;
+  padding: 1.2em;
+  padding-top: 2em;
 }
 .word {
   display: flex;
@@ -134,8 +142,15 @@
 
 .answerCell {
   float: right;
+  font-family: 'Verdana', 'sans-serif';
 }
 
 .divider {
   width: 100%;
+}
+
+
+.rules{
+  font-size: 1.2em;
+  font-family: 'Verdana', 'sans-serif';
 }

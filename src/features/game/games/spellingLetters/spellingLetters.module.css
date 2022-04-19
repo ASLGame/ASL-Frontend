@@ -1,3 +1,6 @@
+h3{
+  margin: 0.5em;
+}
 .container {
   display: flex;
   height: 100%;
@@ -87,14 +90,22 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 40vw;
+  width: 50%;
+  min-width: 400px;
+  min-height: 450px;
   position: absolute;
-  height: 40vh;
+  top: 18%;
+  left:20%;
+  height: 40%;
   right: 30%;
   bottom: 30%;
   justify-self: center;
   background-color: white;
   border-radius: 3%;
+  border:none;
+  border: 0.25em solid #4D4CAC;
+  padding: 1.2em;
+  padding-top: 2em;
 }
 
 .letters {

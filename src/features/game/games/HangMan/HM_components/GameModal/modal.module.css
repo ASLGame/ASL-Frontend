@@ -1,18 +1,25 @@
 .modal {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 50%;
-    min-width: 400px;
-    min-height: 450px;
-    position: absolute;
-    height: 40%;
-    right: 30%;
-    bottom: 30%;
-    justify-self: center;
-    background-color: white;
-    border-radius: 3%;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 50%;
+  min-width: 400px;
+  min-height: 450px;
+  position: absolute;
+  top: 18%;
+  left:20%;
+  height: 40%;
+  right: 30%;
+  bottom: 30%;
+  justify-self: center;
+  background-color: white;
+  border-radius: 3%;
+  border-color: #4D4CAC;
+  border-width: 0.25em;
+  border-style:solid;
+  padding: 1.2em;
+  padding-top: 2em;
+}
   .word {
     display: flex;
     justify-content: center;
@@ -40,4 +47,9 @@
     border: 2px solid #000000;
     padding-left: 5%;
     padding-right: 5%;
+  }
+
+  .rules{
+    font-size: 1.2em;
+    font-family: 'Verdana', 'sans-serif';
   }
