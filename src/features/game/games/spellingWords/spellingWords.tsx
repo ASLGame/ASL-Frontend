@@ -39,12 +39,15 @@ const SpellingWords: FunctionComponent = () => {
   const [isScorePosted, setIsScorePosted] = useState<boolean>(false);
   const [score, setScore] = useState<number>(0);
   const [difficulty, setDifficulty] = useState<String>();
+  const [isStatUpdated, setIsStatUpdated] = useState<boolean>(false);
   const user = useSelector(selectUser);
   const isAuthorized = useSelector(selectSignIn);
   const dispatch = useDispatch();
   //@ts-ignore
   const game: Game = useSelector(selectGame).game;
   const stats = useSelector(selectGame).stats;
+  const accountStatLoading = useSelector(selectGame).accountStatLoading;
+  const accountStat = useSelector(selectGame).accountStat;
   const navigate = useNavigate();
 
   const resetGame = () => {
@@ -302,7 +305,13 @@ const SpellingWords: FunctionComponent = () => {
           userStatToUpdate.account_id = user.account_id!;
           userStatToUpdate.stats_id = stat.id!;
         }
-        dispatch(updateAccountStatAsync({ stat: userStatToUpdate, value: 1 }));
+        dispatch(
+          updateAccountStatAsync({
+            stat: userStatToUpdate,
+            value: { value: 1 },
+          })
+        );
+        setIsStatUpdated(true);
       });
 
       const scoreToPost: scorePost = {
@@ -312,35 +321,47 @@ const SpellingWords: FunctionComponent = () => {
       };
       dispatch(postScoreAsync(scoreToPost));
       setIsScorePosted(true);
+    }
+  });
 
+  useEffect(() => {
+    console.log(
+      "inside useEffect",
+      isScorePosted,
+      accountStatLoading,
+      isStatUpdated
+    );
+    if (isScorePosted && !accountStatLoading && isStatUpdated) {
+      setIsStatUpdated(false);
+      console.log("inside if");
       const fetchAch = async () => {
         const data = await getAchievements(
-          user.account_id!,
+          user!.account_id!,
           parseInt(game.id!, 10)
         );
         Promise.all(
           data.map(async (ach: UserAchievements) => {
-            if (!ach.has_achieved) {
+            console.log(ach.task, accountStat?.value);
+            if (!ach.has_achieved && accountStat && accountStat.value) {
+              console.log("Inside first if statement");
               //Check if value greater or equal to task
-              if (ach.value + 1 >= ach.task) {
+              if (accountStat.value >= ach.task) {
                 //Update has_achieved to true and date_achieved
                 let result = await updateAccountAchievement(ach.acc_ach_id);
-                if (await result) {
-                  Store.addNotification({
-                    content: achievementNotification(
-                      ach.name,
-                      ach.value + 1,
-                      ach.task
-                    ),
-                    insert: "top",
-                    container: "top-right",
-                    animationIn: ["animated", "fadeIn"],
-                    animationOut: ["animated", "fadeOut"],
-                    dismiss: {
-                      duration: 3000,
-                    },
-                  });
-                }
+                Store.addNotification({
+                  content: achievementNotification(
+                    ach.name,
+                    accountStat.value,
+                    ach.task
+                  ),
+                  insert: "top",
+                  container: "top-right",
+                  animationIn: ["animated", "fadeIn"],
+                  animationOut: ["animated", "fadeOut"],
+                  dismiss: {
+                    duration: 3000,
+                  },
+                });
               }
             }
           })
@@ -348,7 +369,7 @@ const SpellingWords: FunctionComponent = () => {
       };
       fetchAch();
     }
-  });
+  }, [isScorePosted, isStatUpdated, accountStatLoading]);
 
   // Set the word.
   useEffect(() => {

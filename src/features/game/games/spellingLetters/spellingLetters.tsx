@@ -224,7 +224,7 @@ const SpellingLetters: FunctionComponent = () => {
         dispatch(
           updateAccountStatAsync({
             stat: userStatToUpdate,
-            value: lettersSpelled.length,
+            value: { value: lettersSpelled.length },
           })
         );
       });

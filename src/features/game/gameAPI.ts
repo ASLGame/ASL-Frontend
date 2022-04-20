@@ -50,7 +50,7 @@ export const getStat = async (stat: string) => {
   }
 };
 
-export const updateAccountStat = async (stat: accountStat, value: number) => {
+export const updateAccountStat = async (stat: accountStat, value: object) => {
   const response = await fetch(
     url + `account-stat/${stat.account_id}/${stat.stats_id}`,
     {

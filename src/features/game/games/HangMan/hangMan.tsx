@@ -204,7 +204,12 @@ const HangMan: FunctionComponent = () => {
           userStatToUpdate.account_id = user.account_id!;
           userStatToUpdate.stats_id = stat.id!;
         }
-        dispatch(updateAccountStatAsync({ stat: userStatToUpdate, value: 1 }));
+        dispatch(
+          updateAccountStatAsync({
+            stat: userStatToUpdate,
+            value: { value: 1 },
+          })
+        );
       });
 
       const scoreToPost: scorePost = {

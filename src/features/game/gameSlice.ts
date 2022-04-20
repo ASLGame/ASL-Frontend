@@ -37,12 +37,16 @@ interface GameAchievement {
 interface gameState {
   game: Game | undefined;
   stats: Array<Stat> | undefined;
+  accountStatLoading: boolean;
+  accountStat: accountStat | undefined;
   achievements: Array<GameAchievement> | undefined;
 }
 
 const initialState: gameState = {
   game: undefined,
   stats: undefined,
+  accountStatLoading: false,
+  accountStat: undefined,
   achievements: undefined,
 };
 
@@ -72,7 +76,7 @@ export const getStatAsync = createAsyncThunk(
 
 export const updateAccountStatAsync = createAsyncThunk(
   "accountStat/update",
-  async ({ stat, value }: { stat: accountStat; value: number }) => {
+  async ({ stat, value }: { stat: accountStat; value: object }) => {
     const response = await updateAccountStat(stat, value);
     return response;
   }
@@ -100,6 +104,13 @@ export const gameSlice = createSlice({
     });
     builder.addCase(updateAccountStatAsync.rejected, (state, action) => {
       console.log(action.error);
+    });
+    builder.addCase(updateAccountStatAsync.pending, (state, action) => {
+      state.accountStatLoading = true;
+    });
+    builder.addCase(updateAccountStatAsync.fulfilled, (state, action) => {
+      state.accountStat = action.payload;
+      state.accountStatLoading = false;
     });
     builder.addCase(getGameAsync.rejected, (state, action) => {
       console.log(action.error);
