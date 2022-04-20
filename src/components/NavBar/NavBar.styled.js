@@ -52,17 +52,12 @@ export const MobileBrand = styled.a`
 //   // -webkit-overflow-scrolling: touch;
 // `;
 
-export const Dropdown = styled.ul``;
-
 export const DropCont = styled.ul`
   background: ${Theme.colors.dropdown};
   border: solid ${Theme.colors.purple};
   display: none;
-  height: 110px;
-  width: 120px;
   color: black;
   position: absolute;
-  left: 77%;
   padding: 12px 16px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
@@ -72,7 +67,17 @@ export const DropCont = styled.ul`
   }
 `;
 
+export const Dropdown = styled.ul`
+  position: relative;
+  display: inline-block;
+  &:hover .dropContent {
+    display: block;
+  }
+`;
+
 export const Input = styled.input`
+  position: relative;
+  display: inline-block;
   align-items: center;
   cursor: pointer;
   justify-content: space-between;
@@ -82,6 +87,9 @@ export const Input = styled.input`
   border-radius: 0px;
   font-size: 1.5em;
   color: white;
+  &:hover ${DropCont} {
+    display: block;
+  }
 `;
 
 // export const Ur = styled.ul`

@@ -1,7 +1,7 @@
 .container {
   overflow-y: hidden;
   display: flex;
-  height: 92%;
+  height: 90%;
   width: 100%;
   flex-direction: column;
   background-repeat: no-repeat;
@@ -66,5 +66,6 @@
 
 .paragraph {
   text-align: center;
-  width: 70%;
+  width: 90%;
+  font-size: 1.1em;
 }

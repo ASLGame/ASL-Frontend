@@ -14,6 +14,8 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { selectSignIn, signOut } from "../../features/signin/signinSlice"; //use to check if user is signed in
 import { ReactComponent as Signy } from "./signy.svg";
 import { useNavigate } from "react-router-dom";
+import styles from "./NavBar.module.css";
+import { useEffect, useState } from "react";
 
 const NavBar = (props: {
   brand: { name: string; to: string };
@@ -23,6 +25,7 @@ const NavBar = (props: {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { brand, links } = props;
+  const [width, setWidth] = useState(window.innerWidth);
   const NavLinks: any = () => {
     return (
       <>
@@ -30,7 +33,6 @@ const NavBar = (props: {
           style={{
             width: "100%",
             display: "flex",
-            cursor: "pointer",
             marginLeft: "5%",
             justifyContent: "space-evenly",
           }}
@@ -66,12 +68,18 @@ const NavBar = (props: {
               }
             }
           })}
-          <Input
-            type="button"
-            id="..."
-            onClick={() => dropdown()}
-            value="..."
-          />
+          <div className={styles.dropdown}>
+            <span style={{ cursor: "pointer", fontSize: "2em" }}>...</span>
+            {window.innerWidth > 1019 ? (
+              <div className={styles.dropContentRight}>
+                <DropLinks />
+              </div>
+            ) : (
+              <div className={styles.dropContentLeft}>
+                <DropLinks />
+              </div>
+            )}
+          </div>
         </div>
       </>
     );
@@ -120,6 +128,13 @@ const NavBar = (props: {
       return links;
     }
   };
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWidth(window.innerWidth);
+    };
+    window.addEventListener("resize", handleResize);
+  });
   return (
     <>
       <Navbar>
@@ -128,7 +143,6 @@ const NavBar = (props: {
             display: "flex",
             flexDirection: "row",
             alignItems: "center",
-            cursor: "pointer",
             marginLeft: "2%",
             marginTop: "1%",
             paddingBottom: "1%",
@@ -144,9 +158,6 @@ const NavBar = (props: {
         </div>
         <NavLinks />
       </Navbar>
-      <DropCont id="content">
-        <DropLinks />
-      </DropCont>
     </>
   );
 };

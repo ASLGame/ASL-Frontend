@@ -36,7 +36,15 @@ const Home: FunctionComponent<HomeProps> = () => {
         </div>
         <div className={styles.bottom}>
           <div className={styles.left}>
-            <h1>Mission</h1>
+            <h1
+              style={{
+                textAlign: "center",
+                fontSize: "2.5em",
+                marginBottom: "0px",
+              }}
+            >
+              Mission
+            </h1>
             <p className={styles.paragraph}>
               Teach the basics of ASL and spread awareness of the community, all
               while having fun and competing with other users.
@@ -44,7 +52,14 @@ const Home: FunctionComponent<HomeProps> = () => {
           </div>
           {!isAuth ? (
             <div className={styles.right}>
-              <p> Want to have fun and learn?</p>
+              <p
+                style={{
+                  textAlign: "center",
+                  fontSize: "1.5em",
+                }}
+              >
+                Want to have fun and learn?
+              </p>
               <button
                 className={styles.button}
                 onClick={() => navigate("/signin")}
