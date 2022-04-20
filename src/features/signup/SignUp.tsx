@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./signup.module.css";
-import { BackButton, Button } from "../../components/Button.styled";
+import { BackButton, ButtonSignInUp } from "../../components/Button.styled";
 import { signupAsync } from "../signin/signinSlice";
 import { useAppDispatch } from "../../app/hooks";
 
@@ -22,7 +22,7 @@ export function SignUp() {
 
   if (formPhase) {
     content = (
-      <div className={styles.row}>
+      <div className={styles.container + " " + styles.background}>
         <div className={styles.signupBoxv2}>
           <div className={styles.heading}>
             <BackButton onClick={() => setFormPhase(false)}>&#8249;</BackButton>
@@ -74,7 +74,7 @@ export function SignUp() {
             </a>
           </div>
           <div className={styles.button_container}>
-            <Button
+            <ButtonSignInUp
               onClick={() =>
                 dispatch(
                   signupAsync({
@@ -90,14 +90,14 @@ export function SignUp() {
               }
             >
               Sign Up
-            </Button>
+            </ButtonSignInUp>
           </div>
         </div>
       </div>
     );
   } else {
     content = (
-      <div className={styles.row}>
+      <div className={styles.container + " " + styles.background}>
         <div className={styles.signupBox}>
           <div className={styles.heading}>
             <h1 className={styles.h1}>Sign Up</h1>
@@ -139,7 +139,9 @@ export function SignUp() {
             </a>
           </div>
           <div className={styles.button_container}>
-            <Button onClick={() => setFormPhase(true)}>Continue</Button>
+            <ButtonSignInUp onClick={() => setFormPhase(true)}>
+              Continue
+            </ButtonSignInUp>
           </div>
         </div>
       </div>
