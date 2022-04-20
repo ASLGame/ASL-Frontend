@@ -2,7 +2,12 @@ import { FunctionComponent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Game, GameAsset } from "../../../types/Game";
-import { getGameAchievementsAsync, getStatAsync, setGame } from "../../game/gameSlice";
+import {
+  getGameAchievementsAsync,
+  getStatAsync,
+  setGame,
+} from "../../game/gameSlice";
+import { selectSignIn } from "../../signin/signinSlice";
 import {
   selectAllGames,
   selectAllGamesState,
@@ -18,6 +23,12 @@ const GameTiles: FunctionComponent<GameTilesProps> = () => {
   const searchText = useSelector(selectSearchText);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  //User, stats, and achievement stuff
+  const isAuthorized = useSelector(selectSignIn);
+  const getStats = async (game: { type: string }) => {
+    return dispatch(getStatAsync(game.type));
+  };
 
   const renderGameTiles = () => {
     if (Array.isArray(allGames)) {
@@ -42,10 +53,12 @@ const GameTiles: FunctionComponent<GameTilesProps> = () => {
                         className={styles.gameTile}
                         key={game.name}
                         onClick={() => {
-                          navigate(`${game.name.split(" ").join("")}`);
                           dispatch(setGame(game));
-                          dispatch(getStatAsync(game.type));
-                          dispatch(getGameAchievementsAsync(game.id));
+                          if (isAuthorized) {
+                            getStats(game);
+                            dispatch(getGameAchievementsAsync(game.id));
+                          }
+                          navigate(`${game.name.split(" ").join("")}`);
                         }}
                       >
                         <td className={styles.gameImageColumn}>
@@ -77,9 +90,12 @@ const GameTiles: FunctionComponent<GameTilesProps> = () => {
                         key={game.name}
                         className={styles.gameTile}
                         onClick={() => {
-                          navigate(`${game.name.split(" ").join("")}`);
                           dispatch(setGame(game));
-                          dispatch(getStatAsync(game.type))
+                          if (isAuthorized) {
+                            getStats(game);
+                            dispatch(getGameAchievementsAsync(game.id));
+                          }
+                          navigate(`${game.name.split(" ").join("")}`);
                         }}
                       >
                         <td className={styles.lastGameImageColumn}>

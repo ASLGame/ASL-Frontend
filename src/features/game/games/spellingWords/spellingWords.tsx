@@ -8,15 +8,21 @@ import Confetti from "react-confetti";
 import { useNavigate } from "react-router-dom";
 import Modal from "react-modal";
 import { useDispatch, useSelector } from "react-redux";
-import { getGameAsync, postScoreAsync, selectGame, updateStatAsync } from "../../gameSlice";
+import {
+  getGameAsync,
+  postScoreAsync,
+  selectGame,
+  updateAccountStatAsync,
+  accountStat,
+} from "../../gameSlice";
 import { Game } from "../../../../types/Game";
 import { selectSignIn, selectUser } from "../../../signin/signinSlice";
 import { scorePost } from "../../../../types/Score";
-import { AccountStat } from "../../../../types/AccountStat";
 import { Store } from "react-notifications-component";
 import { getAchievements } from "../../../profile/profileAPI";
 import { UserAchievements } from "../../../profile/profileSlice";
 import { updateAccountAchievement } from "../../gameAPI";
+import { achievementNotification } from "../../../../components/notifications";
 
 const SpellingWords: FunctionComponent = () => {
   Modal.setAppElement("body");
@@ -287,18 +293,17 @@ const SpellingWords: FunctionComponent = () => {
       user &&
       !isScorePosted
     ) {
-      
-      stats?.map((stat)=> {
-        let accountStatToUpdate: AccountStat = {
+      stats?.map((stat) => {
+        let userStatToUpdate: accountStat = {
           account_id: 0,
-          stats_id: 0
+          stats_id: 0,
         };
-        if(stat.type === 'word') {
-          accountStatToUpdate.account_id = user.account_id!;
-          accountStatToUpdate.stats_id = stat.id!;
+        if (stat.type === "word") {
+          userStatToUpdate.account_id = user.account_id!;
+          userStatToUpdate.stats_id = stat.id!;
         }
-        dispatch(updateStatAsync({"stat": accountStatToUpdate, "value": 1}))
-      })
+        dispatch(updateAccountStatAsync({ stat: userStatToUpdate, value: 1 }));
+      });
 
       const scoreToPost: scorePost = {
         account_id: user.account_id!,
@@ -309,17 +314,38 @@ const SpellingWords: FunctionComponent = () => {
       setIsScorePosted(true);
 
       const fetchAch = async () => {
-        const data = await getAchievements(user.account_id!, parseInt(game.id!, 10))
-        data.map((ach: UserAchievements) => {
-          if (!ach.has_achieved) {
-            //Check if value greater or equal to task
-            if(ach.value >= ach.task) {
-              //Update has_achieved to true and date_achieved
-              updateAccountAchievement(ach.acc_ach_id);
+        const data = await getAchievements(
+          user.account_id!,
+          parseInt(game.id!, 10)
+        );
+        Promise.all(
+          data.map(async (ach: UserAchievements) => {
+            if (!ach.has_achieved) {
+              //Check if value greater or equal to task
+              if (ach.value + 1 >= ach.task) {
+                //Update has_achieved to true and date_achieved
+                let result = await updateAccountAchievement(ach.acc_ach_id);
+                if (await result) {
+                  Store.addNotification({
+                    content: achievementNotification(
+                      ach.name,
+                      ach.value + 1,
+                      ach.task
+                    ),
+                    insert: "top",
+                    container: "top-right",
+                    animationIn: ["animated", "fadeIn"],
+                    animationOut: ["animated", "fadeOut"],
+                    dismiss: {
+                      duration: 3000,
+                    },
+                  });
+                }
+              }
             }
-          }
-        })
-      }
+          })
+        );
+      };
       fetchAch();
     }
   });

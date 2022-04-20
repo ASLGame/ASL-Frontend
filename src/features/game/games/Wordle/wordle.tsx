@@ -6,7 +6,13 @@ import LetterSpelled from "../../../../types/LetterSpelled";
 import Confetti from "react-confetti";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getGameAsync, postScoreAsync, selectGame, updateStatAsync } from "../../gameSlice";
+import {
+  getGameAsync,
+  postScoreAsync,
+  selectGame,
+  updateAccountStatAsync,
+  accountStat,
+} from "../../gameSlice";
 import { Game } from "../../../../types/Game";
 import { selectSignIn, selectUser } from "../../../signin/signinSlice";
 import { scorePost } from "../../../../types/Score";
@@ -14,10 +20,10 @@ import { Cell } from "../../../../types/Wordle";
 import { Store } from "react-notifications-component";
 import GameModal from "./components/GameModal/modal";
 import GameSide from "./components/GameSide/GameSide";
-import { AccountStat } from "../../../../types/AccountStat";
 import { getAchievements } from "../../../profile/profileAPI";
 import { UserAchievements } from "../../../profile/profileSlice";
 import { updateAccountAchievement } from "../../gameAPI";
+import { achievementNotification } from "../../../../components/notifications";
 
 const Wordle: FunctionComponent = () => {
   const [buffer, setBuffer] = useState<string[]>([]);
@@ -46,7 +52,7 @@ const Wordle: FunctionComponent = () => {
   const game: Game = useSelector(selectGame).game;
   const stats = useSelector(selectGame).stats;
   const navigate = useNavigate();
-  console.log(currentWord)
+  console.log(currentWord);
   const resetGame = () => {
     setLetters([]);
     let word = "";
@@ -270,17 +276,17 @@ const Wordle: FunctionComponent = () => {
 
   useEffect(() => {
     if ((isGameLost || isGameWon) && isAuthorized && user && !isScorePosted) {
-      stats?.map((stat)=> {
-        let accountStatToUpdate: AccountStat = {
+      stats?.map((stat) => {
+        let userStatToUpdate: accountStat = {
           account_id: 0,
-          stats_id: 0
+          stats_id: 0,
         };
-        if(stat.type === 'wordle') {
-          accountStatToUpdate.account_id = user.account_id!;
-          accountStatToUpdate.stats_id = stat.id!;
+        if (stat.type === "wordle") {
+          userStatToUpdate.account_id = user.account_id!;
+          userStatToUpdate.stats_id = stat.id!;
         }
-        dispatch(updateStatAsync({"stat": accountStatToUpdate, "value": 1}))
-      })
+        dispatch(updateAccountStatAsync({ stat: userStatToUpdate, value: 1 }));
+      });
       const scoreToPost: scorePost = {
         account_id: user.account_id!,
         game_id: game.id,
@@ -288,19 +294,40 @@ const Wordle: FunctionComponent = () => {
       };
       dispatch(postScoreAsync(scoreToPost));
       setIsScorePosted(true);
-      
+
       const fetchAch = async () => {
-        const data = await getAchievements(user.account_id!, parseInt(game.id!, 10))
-        data.map((ach: UserAchievements) => {
-          if (!ach.has_achieved) {
-            //Check if value greater or equal to task
-            if(ach.value >= ach.task) {
-              //Update has_achieved to true and date_achieved
-              updateAccountAchievement(ach.acc_ach_id);
+        const data = await getAchievements(
+          user.account_id!,
+          parseInt(game.id!, 10)
+        );
+        Promise.all(
+          data.map(async (ach: UserAchievements) => {
+            if (!ach.has_achieved) {
+              //Check if value greater or equal to task
+              if (ach.value + 1 >= ach.task) {
+                //Update has_achieved to true and date_achieved
+                let result = await updateAccountAchievement(ach.acc_ach_id);
+                if (await result) {
+                  Store.addNotification({
+                    content: achievementNotification(
+                      ach.name,
+                      ach.value + 1,
+                      ach.task
+                    ),
+                    insert: "top",
+                    container: "top-right",
+                    animationIn: ["animated", "fadeIn"],
+                    animationOut: ["animated", "fadeOut"],
+                    dismiss: {
+                      duration: 3000,
+                    },
+                  });
+                }
+              }
             }
-          }
-        })
-      }
+          })
+        );
+      };
       fetchAch();
     }
   }, [

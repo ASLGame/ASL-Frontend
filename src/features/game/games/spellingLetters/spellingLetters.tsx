@@ -8,14 +8,21 @@ import Confetti from "react-confetti";
 import { useNavigate } from "react-router-dom";
 import Modal from "react-modal";
 import { useDispatch, useSelector } from "react-redux";
-import { getGameAsync, postScoreAsync, selectGame, updateStatAsync } from "../../gameSlice";
+import {
+  getGameAsync,
+  postScoreAsync,
+  selectGame,
+  updateAccountStatAsync,
+  accountStat,
+} from "../../gameSlice";
 import { Game } from "../../../../types/Game";
 import { selectSignIn, selectUser } from "../../../signin/signinSlice";
 import { scorePost } from "../../../../types/Score";
-import { AccountStat } from "../../../../types/AccountStat";
 import { getAchievements } from "../../../profile/profileAPI";
 import { UserAchievements } from "../../../profile/profileSlice";
 import { updateAccountAchievement } from "../../gameAPI";
+import { achievementNotification } from "../../../../components/notifications";
+import { Store } from "react-notifications-component";
 
 const SpellingLetters: FunctionComponent = () => {
   Modal.setAppElement("body");
@@ -205,17 +212,22 @@ const SpellingLetters: FunctionComponent = () => {
       user &&
       !isScorePosted
     ) {
-      stats?.map((stat)=> {
-        let accountStatToUpdate: AccountStat = {
+      stats?.map((stat) => {
+        let userStatToUpdate: accountStat = {
           account_id: 0,
-          stats_id: 0
+          stats_id: 0,
         };
-        if(stat.type === 'letter') {
-          accountStatToUpdate.account_id = user.account_id!;
-          accountStatToUpdate.stats_id = stat.id!;
+        if (stat.type === "letter") {
+          userStatToUpdate.account_id = user.account_id!;
+          userStatToUpdate.stats_id = stat.id!;
         }
-        dispatch(updateStatAsync({"stat": accountStatToUpdate, "value": lettersSpelled.length}))
-      })
+        dispatch(
+          updateAccountStatAsync({
+            stat: userStatToUpdate,
+            value: lettersSpelled.length,
+          })
+        );
+      });
       const scoreToPost: scorePost = {
         account_id: user.account_id!,
         game_id: game.id,
@@ -225,17 +237,38 @@ const SpellingLetters: FunctionComponent = () => {
       setIsScorePosted(true);
 
       const fetchAch = async () => {
-        const data = await getAchievements(user.account_id!, parseInt(game.id!, 10))
-        data.map((ach: UserAchievements) => {
-          if (!ach.has_achieved) {
-            //Check if value greater or equal to task
-            if(ach.value >= ach.task) {
-              //Update has_achieved to true and date_achieved
-              updateAccountAchievement(ach.acc_ach_id);
+        const data = await getAchievements(
+          user.account_id!,
+          parseInt(game.id!, 10)
+        );
+        Promise.all(
+          data.map(async (ach: UserAchievements) => {
+            if (!ach.has_achieved) {
+              //Check if value greater or equal to task
+              if (ach.value + lettersSpelled.length >= ach.task) {
+                //Update has_achieved to true and date_achieved
+                let result = await updateAccountAchievement(ach.acc_ach_id);
+                if (await result) {
+                  Store.addNotification({
+                    content: achievementNotification(
+                      ach.name,
+                      ach.value + lettersSpelled.length,
+                      ach.task
+                    ),
+                    insert: "top",
+                    container: "top-right",
+                    animationIn: ["animated", "fadeIn"],
+                    animationOut: ["animated", "fadeOut"],
+                    dismiss: {
+                      duration: 3000,
+                    },
+                  });
+                }
+              }
             }
-          }
-        })
-      }
+          })
+        );
+      };
       fetchAch();
     }
   });

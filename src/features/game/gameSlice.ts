@@ -1,37 +1,49 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
-import { getGame, getGameAchievements, getStat, postScore, updateStat } from "./gameAPI";
+import {
+  getGame,
+  getGameAchievements,
+  getStat,
+  postScore,
+  updateAccountStat,
+} from "./gameAPI";
 import { Game } from "../../types/Game";
 import { scorePost } from "../../types/Score";
-import { AccountStat } from "../../types/AccountStat";
 
 export interface Stat {
-  id: number,
-  name: string,
-  description: string,
-  type: string
+  id: number;
+  name: string;
+  description: string;
+  type: string;
+}
+
+export interface accountStat {
+  id?: number;
+  account_id: number;
+  stats_id: number;
+  value?: number;
 }
 
 interface GameAchievement {
-  id: number,
-  name: string,
-  stats_id: number,
-  game_id: number,
-  type: string,
-  task: number,
-  description: string
+  id: number;
+  name: string;
+  stats_id: number;
+  game_id: number;
+  type: string;
+  task: number;
+  description: string;
 }
 
 interface gameState {
   game: Game | undefined;
-  stats: Array<Stat> | undefined
-  achievements: Array<GameAchievement> | undefined
+  stats: Array<Stat> | undefined;
+  achievements: Array<GameAchievement> | undefined;
 }
 
 const initialState: gameState = {
   game: undefined,
   stats: undefined,
-  achievements: undefined
+  achievements: undefined,
 };
 
 export const getGameAsync = createAsyncThunk(
@@ -54,25 +66,25 @@ export const getStatAsync = createAsyncThunk(
   "stat/get",
   async (stat: string) => {
     const response = await getStat(stat);
-    return response
+    return response;
   }
-) 
+);
 
-export const updateStatAsync = createAsyncThunk(
-  "stat/update",
-  async ({stat, value}: {stat: AccountStat, value: number}) => {
-    const response = await updateStat(stat, value);
-    return response
+export const updateAccountStatAsync = createAsyncThunk(
+  "accountStat/update",
+  async ({ stat, value }: { stat: accountStat; value: number }) => {
+    const response = await updateAccountStat(stat, value);
+    return response;
   }
-)
+);
 
 export const getGameAchievementsAsync = createAsyncThunk(
-  "game_achievement/get",
+  "gameAchievement/get",
   async (gameID: string) => {
     const response = await getGameAchievements(gameID);
     return response;
   }
-)
+);
 
 export const gameSlice = createSlice({
   name: "game",
@@ -86,7 +98,7 @@ export const gameSlice = createSlice({
     builder.addCase(postScoreAsync.rejected, (state, action) => {
       console.log(action.error);
     });
-    builder.addCase(updateStatAsync.rejected, (state, action) => {
+    builder.addCase(updateAccountStatAsync.rejected, (state, action) => {
       console.log(action.error);
     });
     builder.addCase(getGameAsync.rejected, (state, action) => {
