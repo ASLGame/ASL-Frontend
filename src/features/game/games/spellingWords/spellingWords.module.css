@@ -1,4 +1,4 @@
-h3{
+h3 {
   margin: 0.5em;
 }
 .container {
@@ -90,12 +90,11 @@ h3{
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 50%;
   min-width: 400px;
   min-height: 450px;
   position: absolute;
   top: 18%;
-  left:20%;
+  left: 20%;
   height: 40%;
   right: 30%;
   bottom: 30%;
@@ -142,15 +141,15 @@ h3{
 
 .answerCell {
   float: right;
-  font-family: 'Verdana', 'sans-serif';
+  font-family: "Verdana", "sans-serif";
 }
 
 .divider {
   width: 100%;
 }
 
-
-.rules{
+.rules {
   font-size: 1.2em;
-  font-family: 'Verdana', 'sans-serif';
+  font-family: "Verdana", "sans-serif";
+  text-align: center;
 }
