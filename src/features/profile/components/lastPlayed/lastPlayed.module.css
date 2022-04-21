@@ -6,9 +6,7 @@
   background-color: var(--gray);
   border-radius: 18px;
   width: 15%;
-  height: 30%;
   min-width: 273px;
-  min-height: 335px;
 }
 
 .games {
