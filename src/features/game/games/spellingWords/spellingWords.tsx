@@ -325,15 +325,8 @@ const SpellingWords: FunctionComponent = () => {
   });
 
   useEffect(() => {
-    console.log(
-      "inside useEffect",
-      isScorePosted,
-      accountStatLoading,
-      isStatUpdated
-    );
     if (isScorePosted && !accountStatLoading && isStatUpdated) {
       setIsStatUpdated(false);
-      console.log("inside if");
       const fetchAch = async () => {
         const data = await getAchievements(
           user!.account_id!,
@@ -341,13 +334,11 @@ const SpellingWords: FunctionComponent = () => {
         );
         Promise.all(
           data.map(async (ach: UserAchievements) => {
-            console.log(ach.task, accountStat?.value);
             if (!ach.has_achieved && accountStat && accountStat.value) {
-              console.log("Inside first if statement");
               //Check if value greater or equal to task
               if (accountStat.value >= ach.task) {
                 //Update has_achieved to true and date_achieved
-                let result = await updateAccountAchievement(ach.acc_ach_id);
+                await updateAccountAchievement(ach.acc_ach_id);
                 Store.addNotification({
                   content: achievementNotification(
                     ach.name,
