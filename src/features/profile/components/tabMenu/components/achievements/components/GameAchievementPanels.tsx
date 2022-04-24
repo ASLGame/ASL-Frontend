@@ -9,7 +9,7 @@ const generatePanels = (games: Array<GameType>) => {
   for (var i = 0; i < totalGames; i++) {
     panels.push(
       <TabPanel className={styles.tab_panel}>
-        <h2 style={{ paddingBottom: "30px" }}>{games[i].name}</h2>
+        <h2 className={styles.game_title}>{games[i].name}</h2>
         <Achievement gid={games[i].id} />
       </TabPanel>
     );

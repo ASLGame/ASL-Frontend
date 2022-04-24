@@ -27,7 +27,9 @@ export function Achievements() {
           selectedIndex={tabIndex}
           onSelect={(indx) => setTabIndex(indx)}
         >
-          <TabList>{GameAchievementTabs(games)}</TabList>
+          <TabList className={styles.tab_list}>
+            {GameAchievementTabs(games)}
+          </TabList>
           {GameAchievementPanels(games)}
         </Tabs>
       </div>
