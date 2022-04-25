@@ -1,0 +1,42 @@
+.dropdown {
+  position: relative;
+  display: inline-block;
+  align-self: center;
+}
+
+.dropContentRight {
+  background: #f5f5fb;
+  border: solid var(--purple);
+  visibility: hidden;
+  color: black;
+  position: absolute;
+  top: 50px;
+  padding: 12px 16px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  transition: all 0.5s;
+}
+
+.dropContentLeft {
+  background: #f5f5fb;
+  border: solid var(--purple);
+  visibility: hidden;
+  color: black;
+  position: absolute;
+  right: 0px;
+  top: 50px;
+  padding: 12px 16px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  transition: all 0.5s;
+}
+
+.dropdown:hover .dropContentLeft {
+  visibility: visible;
+  transition: 1s;
+}
+.dropdown:hover .dropContentRight {
+  visibility: visible;
+
+  transition: 1s;
+}

@@ -22,7 +22,6 @@ import "react-notifications-component/dist/theme.css";
 const navigation = {
   brand: { name: "Signy", to: "/" },
   links: [
-    { name: "Home", to: "/" },
     { name: "Games", to: "/games" },
     { name: "Account", to: "/profile" },
   ],
@@ -47,30 +46,22 @@ function App() {
       <div className="App">
         <NavBar brand={brand} links={links} />
         <ReactNotifications />
-        <header className="App-header">
-          <Routes>
-            {/* 
+        <Routes>
+          {/* 
                 List of routes with respective views
             */}
-            <Route path="/signin" element={<SignIn />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route
-              path="/games/spellingLetters"
-              element={<SpellingLetters />}
-            />
-            <Route path="/games/wordle" element={<Wordle />} />
-            <Route path="/games/spellingWords" element={<SpellingWords />} />
-            <Route 
-              path="/games/hangMan"
-              element={<HangMan />}
-            />
-            <Route path="/leaderboard" element={<Leaderboard />} />
-            <Route path="/" element={<Home />} />
-            <Route path="/games" element={<Games />} />
-            <Route path="/about" element={<About />} />
-          </Routes>
-        </header>
+          <Route path="/signin" element={<SignIn />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/games/spellingLetters" element={<SpellingLetters />} />
+          <Route path="/games/wordle" element={<Wordle />} />
+          <Route path="/games/spellingWords" element={<SpellingWords />} />
+          <Route path="/games/hangMan" element={<HangMan />} />
+          <Route path="/leaderboard" element={<Leaderboard />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/games" element={<Games />} />
+          <Route path="/about" element={<About />} />
+        </Routes>
       </div>
     </Router>
   );

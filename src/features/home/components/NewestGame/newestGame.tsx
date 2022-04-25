@@ -14,8 +14,14 @@ const NewestGame: FunctionComponent<NewestGameProps> = () => {
   if (newestGameState !== "loading") {
     return (
       <div className={styles.container}>
-        <h1 className={styles.title}>Newest Game</h1>
-        <div className={styles.newestGame}>
+        <h2 className={styles.title}>Newest Game</h2>
+        <div
+          className={
+            window.innerHeight > 800
+              ? styles.newestGame
+              : styles.newestGamePhone
+          }
+        >
           <h2 className={styles.gameName}>{newestGame.name}</h2>
           <div
             onClick={() =>
@@ -25,7 +31,11 @@ const NewestGame: FunctionComponent<NewestGameProps> = () => {
           >
             <img
               className={styles.gameImage}
-              src={newestGame.gameAssets && newestGame.gameAssets.length > 0 ? newestGame.gameAssets[0].path : ""}
+              src={
+                newestGame.gameAssets && newestGame.gameAssets.length > 0
+                  ? newestGame.gameAssets[0].path
+                  : ""
+              }
               alt="Failed to load."
             />
             <div className={styles.middle}>
