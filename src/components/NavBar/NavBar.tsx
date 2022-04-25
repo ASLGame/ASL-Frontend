@@ -116,6 +116,7 @@ const NavBar = (props: {
         links,
         <p></p>,
         <p
+          style={{ cursor: "pointer" }}
           onClick={() => {
             dispatch(signOut());
             navigate("/");
