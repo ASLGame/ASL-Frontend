@@ -2,27 +2,27 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 50%;
   min-width: 400px;
   min-height: 450px;
   position: absolute;
-  height: 40%;
+  top: 18%;
+  left: 20%;
   right: 30%;
   bottom: 30%;
   justify-self: center;
   background-color: white;
   border-radius: 3%;
+  border: 0.15em solid black;
+  padding: 1.2em;
+  padding-top: 2em;
 }
 .word {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  width: 80%;
-  height: 90%;
 }
 .buttons {
-  width: 100%;
   display: flex;
   justify-content: center;
 }
@@ -40,4 +40,16 @@
   border: 2px solid #000000;
   padding-left: 5%;
   padding-right: 5%;
+}
+
+.rules {
+  font-size: 1.2em;
+  font-family: "Verdana", "sans-serif";
+  margin-bottom: 1em;
+  margin-top: 0em;
+  text-align: center;
+}
+.title {
+  margin-top: 0em;
+  margin-bottom: 0em;
 }

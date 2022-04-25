@@ -58,10 +58,10 @@ const SpellingLetters: FunctionComponent = () => {
       return (
         <div className={styles.word}>
           <h2>Rules</h2>
-          <p>{game.rules}</p>
+          <p className={styles.rules}>{game.rules}</p>
           <br />
           <h2>Description</h2>
-          <p>{game.description}</p>
+          <p className={styles.rules}>{game.description}</p>
           <button
             className={styles.backButton}
             style={{ marginTop: "20%" }}
@@ -88,7 +88,9 @@ const SpellingLetters: FunctionComponent = () => {
           <h3>Your next letter is: {next}</h3>
         </div>
         <div>
-          Timer: {timer} second{timer === 1 ? "" : "s"}
+          <h3>
+            Timer: {timer} second{timer === 1 ? "" : "s"}
+          </h3>
         </div>
       </>
     );

@@ -17,7 +17,16 @@ const GameModal: FunctionComponent<ModalProps> = (props) => {
     Modal.setAppElement("body");
     const { game, isModalOpen, setIsModalOpen, setDifficulty, setPlayable, difficulty } = props;
 
+    const displayGameRules = (rules:string) => {
+      return(
+        <>
+          {rules.split('/n').map((rule) => {
+           return <p className={styles.rules}>{rule}</p>
+          })}
+        </>
+      )
 
+    }
     const closeModal = () => {
       if(difficulty){
         setIsModalOpen(false);
@@ -67,11 +76,11 @@ const GameModal: FunctionComponent<ModalProps> = (props) => {
         >
           <div className={styles.word}>
             <h2>Rules</h2>
-            <p>{game.rules}</p>
+            {displayGameRules(game.rules)}
             <br />
             <h2>Description</h2>
-            <p>{game.description}</p>
-            <h3 style={{}}>Choose a difficulty:</h3>
+            <p className={styles.rules}>{game.description}</p>
+            <h2 style={{}}>Choose a difficulty:</h2>
             <div className={styles.buttons}>
               <button
                 className={styles.backButton}
