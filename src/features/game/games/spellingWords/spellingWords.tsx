@@ -8,11 +8,21 @@ import Confetti from "react-confetti";
 import { useNavigate } from "react-router-dom";
 import Modal from "react-modal";
 import { useDispatch, useSelector } from "react-redux";
-import { getGameAsync, postScoreAsync, selectGame } from "../../gameSlice";
+import {
+  getGameAsync,
+  postScoreAsync,
+  selectGame,
+  updateAccountStatAsync,
+  accountStat,
+} from "../../gameSlice";
 import { Game } from "../../../../types/Game";
 import { selectSignIn, selectUser } from "../../../signin/signinSlice";
 import { scorePost } from "../../../../types/Score";
 import { Store } from "react-notifications-component";
+import { getAchievements } from "../../../profile/profileAPI";
+import { UserAchievements } from "../../../profile/profileSlice";
+import { updateAccountAchievement } from "../../gameAPI";
+import { achievementNotification } from "../../../../components/notifications";
 
 const SpellingWords: FunctionComponent = () => {
   Modal.setAppElement("body");
@@ -29,11 +39,15 @@ const SpellingWords: FunctionComponent = () => {
   const [isScorePosted, setIsScorePosted] = useState<boolean>(false);
   const [score, setScore] = useState<number>(0);
   const [difficulty, setDifficulty] = useState<String>();
+  const [isStatUpdated, setIsStatUpdated] = useState<boolean>(false);
   const user = useSelector(selectUser);
   const isAuthorized = useSelector(selectSignIn);
   const dispatch = useDispatch();
   //@ts-ignore
   const game: Game = useSelector(selectGame).game;
+  const stats = useSelector(selectGame).stats;
+  const accountStatLoading = useSelector(selectGame).accountStatLoading;
+  const accountStat = useSelector(selectGame).accountStat;
   const navigate = useNavigate();
 
   const resetGame = () => {
@@ -55,15 +69,26 @@ const SpellingWords: FunctionComponent = () => {
     setCurrentLetter(undefined);
   };
 
+  const displayGameRules = (rules:string) => {
+    return(
+      <>
+        {rules.split('/n').map((rule) => {
+         return <p className={styles.rules}>{rule}</p>
+        })}
+      </>
+    )
+
+  }
+
   const renderModal = () => {
     if (game) {
       return (
         <div className={styles.word}>
           <h2>Rules</h2>
-          <p>{game.rules}</p>
+          {displayGameRules(game.rules)}
           <br />
           <h2>Description</h2>
-          <p>{game.description}</p>
+          <p className={styles.rules}>{game.description}</p>
           <h3>Choose a difficulty:</h3>
           <div className={styles.buttons}>
             <button
@@ -149,7 +174,7 @@ const SpellingWords: FunctionComponent = () => {
           <h3>Your next letter is: {next}</h3>
         </div>
         <div>
-          Timer: {timer} second{timer === 1 ? "" : "s"}
+          <h3>Timer: {timer} second{timer === 1 ? "" : "s"}</h3>
         </div>
       </>
     );
@@ -229,7 +254,7 @@ const SpellingWords: FunctionComponent = () => {
   // If game hasn't loaded, fetch it.
   useEffect(() => {
     if (!game) {
-      dispatch(getGameAsync("Spelling Letters"));
+      dispatch(getGameAsync("Spelling Words"));
     }
   }, []);
 
@@ -282,6 +307,24 @@ const SpellingWords: FunctionComponent = () => {
       user &&
       !isScorePosted
     ) {
+      stats?.map((stat) => {
+        let userStatToUpdate: accountStat = {
+          account_id: 0,
+          stats_id: 0,
+        };
+        if (stat.type === "word") {
+          userStatToUpdate.account_id = user.account_id!;
+          userStatToUpdate.stats_id = stat.id!;
+        }
+        dispatch(
+          updateAccountStatAsync({
+            stat: userStatToUpdate,
+            value: { value: 1 },
+          })
+        );
+        setIsStatUpdated(true);
+      });
+
       const scoreToPost: scorePost = {
         account_id: user.account_id!,
         game_id: game.id,
@@ -291,6 +334,44 @@ const SpellingWords: FunctionComponent = () => {
       setIsScorePosted(true);
     }
   });
+
+  useEffect(() => {
+    if (isScorePosted && !accountStatLoading && isStatUpdated) {
+      setIsStatUpdated(false);
+      const fetchAch = async () => {
+        const data = await getAchievements(
+          user!.account_id!,
+          parseInt(game.id!, 10)
+        );
+        Promise.all(
+          data.map(async (ach: UserAchievements) => {
+            if (!ach.has_achieved && accountStat && accountStat.value) {
+              //Check if value greater or equal to task
+              if (accountStat.value >= ach.task) {
+                //Update has_achieved to true and date_achieved
+                await updateAccountAchievement(ach.acc_ach_id);
+                Store.addNotification({
+                  content: achievementNotification(
+                    ach.name,
+                    accountStat.value,
+                    ach.task
+                  ),
+                  insert: "top",
+                  container: "top-right",
+                  animationIn: ["animated", "fadeIn"],
+                  animationOut: ["animated", "fadeOut"],
+                  dismiss: {
+                    duration: 3000,
+                  },
+                });
+              }
+            }
+          })
+        );
+      };
+      fetchAch();
+    }
+  }, [isScorePosted, isStatUpdated, accountStatLoading]);
 
   // Set the word.
   useEffect(() => {
@@ -352,9 +433,9 @@ const SpellingWords: FunctionComponent = () => {
             <div className={styles.right}>
               <div className={styles.gameboard}>
                 <h1 className={styles.gameboardTitle}> Score </h1>
-                <p style={{ alignSelf: "center" }}>
+                <h3 style={{ alignSelf: "center" }}>
                   Spell the word: {currentWord}
-                </p>
+                </h3>
                 <div className={styles.letters}>
                   {renderLetters(lettersSpelled)}
                 </div>

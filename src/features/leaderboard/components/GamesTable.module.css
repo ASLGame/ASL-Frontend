@@ -1,5 +1,6 @@
 .container {
   display: flex;
+  justify-content: space-evenly;
   height: 100%;
   width: 100%;
 }
@@ -20,18 +21,22 @@
   display: flex;
   width: 80%;
   list-style-type: none;
+  justify-content: space-evenly;
   margin-top: 20px;
-  overflow-x: scroll;
-  overflow: scroll;
+  overflow: auto;
 }
 
 .tab {
   cursor: pointer;
   margin-left: 10px;
+  width: 5em;
+  text-align: center;
 }
 
 .tab_selected {
   border-bottom: 2px solid var(--dark_purple);
+  width: 5em;
+  text-align: center;
 }
 
 .tab_panel {

@@ -32,7 +32,11 @@ const GameCarousel: FunctionComponent<GameCarouselProps> = () => {
               src={game.gameAssets ? game.gameAssets[0].path : ""}
               alt="Whoops..."
             ></img>
-            <div className={styles.middle}>
+            <div
+              className={
+                window.innerHeight > 800 ? styles.middle : styles.middlePhone
+              }
+            >
               <div className={styles.text}> {game.description} </div>
             </div>
           </div>
@@ -43,14 +47,23 @@ const GameCarousel: FunctionComponent<GameCarouselProps> = () => {
 
   if (featuredGamesState !== "loading" && featuredGames) {
     return (
-      <div className={styles.carouselContainer}>
+      <div
+        className={
+          window.innerHeight > 800
+            ? styles.carouselContainer
+            : styles.carouselContainerPhone
+        }
+      >
         <h2 className={styles.gameName}>{currentFeaturedGameName}</h2>
         <Carousel
-          autoPlay={true}
+          className={styles.carousel}
+          // autoPlay={true}
           infiniteLoop={true}
           stopOnHover={true}
           showThumbs={false}
-          showStatus={true}
+          showStatus={false}
+          showArrows={false}
+          showIndicators={window.innerHeight > 800 ? true : false}
           onChange={(e) => setCurrentFeaturedGameName(featuredGames[e].name)}
         >
           {renderCarouselGames(featuredGames)}

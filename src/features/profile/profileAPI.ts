@@ -63,16 +63,30 @@ export const changePassword = async (userData: passwordChanges) => {
   }
 };
 
-export const getAchievements = async (uid: number) => {
-  const response = await fetch(url + `user-account-achievement/${uid}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-  if (response.ok) {
-    return response.json();
+export const getAchievements = async (uid: number, gid?: number) => {
+  if (typeof gid !== 'undefined') {
+    const response = await fetch(url + `user-account-achievement/${uid}/${gid}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (response.ok) {
+      return response.json();
+    } else {
+      return response;
+    }
   } else {
-    return response;
+    const response = await fetch(url + `user-account-achievement/${uid}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (response.ok) {
+      return response.json();
+    } else {
+      return response;
+    }
   }
 };

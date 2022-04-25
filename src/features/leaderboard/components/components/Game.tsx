@@ -1,17 +1,20 @@
+import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks"; 
-import { selectScores, scoreState } from "../../leaderboardSlice";
+import { selectScores, scoreState, bygamesAsync } from "../../leaderboardSlice";
 import styles from "../GamesTable.module.css"
 
 export function Game(props:any){
   const gid = props.gid;
-  console.log("It starts", gid, props)
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(bygamesAsync(gid));
+  }, []);
   const scores = useAppSelector(selectScores);
   const state = useAppSelector(scoreState);
   let counter = 0;
 
   const allscores = () => {
       return scores!.map((score) => {
-        if(score.game_id === gid){
           return (
             <div key={score.id} style={{width: "100%"}} >
               <div className={styles.row}>
@@ -20,11 +23,7 @@ export function Game(props:any){
                 <p>{score.score}</p>
               </div>
             </div>
-          )}else{
-            return (
-              <></>
-            )
-          };
+          );
         });
       };
       if (state !== "loading") {

@@ -1,8 +1,21 @@
 .carouselContainer {
   display: flex;
   flex-direction: column;
-  margin-bottom: 5%;
   width: 96%;
+  background-color: var(--gray);
+  height: 90%;
+  min-height: 471px;
+  max-width: 600px;
+  border-radius: 3%;
+}
+
+.carouselContainerPhone {
+  display: flex;
+  flex-direction: column;
+  width: 96%;
+  background-color: var(--gray);
+  height: 84%;
+  border-radius: 3%;
 }
 
 .gameName {
@@ -12,17 +25,21 @@
 
 .imageContainer {
   display: flex;
-  height: 100%;
-  width: 100%;
+  width: 95%;
   align-items: center;
   flex-direction: column;
+  margin-left: 2.5%;
+  max-height: 375px;
+}
+
+.carousel {
   cursor: pointer;
 }
 
 .image {
-  height: 100%;
-  width: 80%;
+  max-height: 422px;
   border-radius: 3%;
+  max-height: 375px;
   opacity: 1;
   display: block;
   transition: 0.5s ease;
@@ -37,7 +54,20 @@
   opacity: 0.9;
 }
 
+.imageContainer:hover .middlePhone {
+  opacity: 0.9;
+}
+
 .middle {
+  transition: 0.5s ease;
+  opacity: 0;
+  height: 90%;
+  width: 98%;
+  transform: translate(-0%, -200%);
+  text-align: center;
+}
+
+.middlePhone {
   transition: 0.5s ease;
   opacity: 0;
   height: 90%;

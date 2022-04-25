@@ -13,10 +13,8 @@ const FeaturedGames: FunctionComponent<FeaturedGamesProps> = () => {
   if (featuredGamesState !== "loading" && featuredGames) {
     return (
       <div className={styles.container}>
-        <h1 className={styles.title}>Featured Games</h1>
-        <div className={styles.featuredGames}>
-          <GameCarousel />
-        </div>
+        <h2 className={styles.title}>Featured Games</h2>
+        <GameCarousel />
       </div>
     );
   }

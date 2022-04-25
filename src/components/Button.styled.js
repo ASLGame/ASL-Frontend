@@ -15,6 +15,20 @@ export const Button = styled.button`
   background-image: linear-gradient(to right, var(--pinkred), var(--pink));
 `;
 
+export const ButtonSignInUp = styled.button`
+  font-size: 20px;
+  border: 2px solid #000000;
+  box-sizing: border-box;
+  border-radius: 23px;
+  width: 100%;
+  cursor: pointer;
+  &:hover {
+    opacity: 0.8;
+    trasnform: scale(0.8);
+  }
+  background-image: linear-gradient(to right, var(--pinkred), var(--pink));
+`;
+
 export const ButtonProfile = styled.button`
   border: 2px solid #000000;
   box-sizing: border-box;
