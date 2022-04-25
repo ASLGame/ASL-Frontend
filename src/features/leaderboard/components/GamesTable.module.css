@@ -29,10 +29,14 @@
 .tab {
   cursor: pointer;
   margin-left: 10px;
+  width: 5em;
+  text-align: center;
 }
 
 .tab_selected {
   border-bottom: 2px solid var(--dark_purple);
+  width: 5em;
+  text-align: center;
 }
 
 .tab_panel {
