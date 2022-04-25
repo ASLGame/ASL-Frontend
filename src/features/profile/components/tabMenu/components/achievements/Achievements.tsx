@@ -12,7 +12,10 @@ export function Achievements() {
   const renderAchievements = () => {
     return achievements!.map((achievement) => {
       return (
-        <div className={styles.achievement_container}>
+        <div
+          key={achievement.acc_ach_id}
+          className={styles.achievement_container}
+        >
           <div className={styles.achievement_name}>{achievement.name}</div>
           <ProgressBar
             className={styles.progress_bar_wrapper}

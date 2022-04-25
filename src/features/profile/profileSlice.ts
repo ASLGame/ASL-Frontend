@@ -13,6 +13,7 @@ export interface UserAchievements {
   name: string;
   stats_id: number;
   achievement_id: number;
+  acc_ach_id: number;
   game_id: number;
   task: number;
   value: number;
