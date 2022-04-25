@@ -1,16 +1,15 @@
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks"; 
-import { selectScores, scoreState } from "../../leaderboardSlice";
+import { selectScores, scoreState, selectYesterday, selectToday, selectWeekly, timeState } from "../../leaderboardSlice";
 import styles from "../GamesTable.module.css"
 
 
 export function Today(){
-    const scores = useAppSelector(selectScores);
-    const state = useAppSelector(scoreState);
+    const scores = useAppSelector(selectToday);
+    const state = useAppSelector(timeState);
     let counter = 0;
 
     const allscores = () => {
         return scores!.map((score) => {
-          if(new Date(score.date_achieved).toLocaleDateString() === new Date(Date.now()).toLocaleDateString()){
             return (
               <div key={score.id} style={{width: "100%"}}>
                 <div className={styles.row}>
@@ -19,11 +18,7 @@ export function Today(){
                   <p>{score.score}</p>
                 </div>
               </div>
-            )}else{
-              return (
-                <></>
-              )
-            };
+            );
           });
         };
         if (state !== "loading") {
@@ -43,13 +38,12 @@ export function Today(){
 }
 
 export function Yesterday(){
-    const scores = useAppSelector(selectScores);
-    const state = useAppSelector(scoreState);
+    const scores = useAppSelector(selectYesterday);
+    const state = useAppSelector(timeState);
     let counter = 0;
 
     const allscores = () => {
         return scores!.map((score) => {
-          if(new Date(score.date_achieved).toLocaleDateString() === new Date(Date.now()-86400000).toLocaleDateString()){
             return (
               <div key={score.id} style={{width: "100%"}} >
                 <div className={styles.row}>
@@ -58,11 +52,7 @@ export function Yesterday(){
                   <p>{score.score}</p>
                 </div>
               </div>
-            )}else{
-              return (
-                <></>
-              )
-            };
+            );
           });
         };
         if (state !== "loading") {
@@ -82,13 +72,12 @@ export function Yesterday(){
 }
 
 export function Weekly(){
-    const scores = useAppSelector(selectScores);
-    const state = useAppSelector(scoreState);
+    const scores = useAppSelector(selectWeekly);
+    const state = useAppSelector(timeState);
     let counter = 0;
 
     const allscores = () => {
         return scores!.map((score) => {
-          if(new Date(score.date_achieved).toLocaleDateString() >= new Date(Date.now()-604800000).toLocaleDateString() && new Date(score.date_achieved).toLocaleDateString() <= new Date(Date.now()).toLocaleDateString()){
             return (
               <div key={score.id} style={{width: "100%"}} >
                 <div className={styles.row}>
@@ -98,11 +87,7 @@ export function Weekly(){
                   <p>{score.score}</p>
                 </div>
               </div>
-            )}else{
-              return (
-                <></>
-              )
-            };
+            );
           });
         };
         if (state !== "loading") {

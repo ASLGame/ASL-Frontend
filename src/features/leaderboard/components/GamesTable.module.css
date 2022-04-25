@@ -1,5 +1,6 @@
 .container {
   display: flex;
+  justify-content: space-evenly;
   height: 100%;
   width: 100%;
 }
@@ -20,9 +21,9 @@
   display: flex;
   width: 80%;
   list-style-type: none;
+  justify-content: space-evenly;
   margin-top: 20px;
-  overflow-x: scroll;
-  overflow: scroll;
+  overflow: auto;
 }
 
 .tab {
