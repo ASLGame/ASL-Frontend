@@ -41,6 +41,7 @@ const Home: FunctionComponent<HomeProps> = () => {
                 textAlign: "center",
                 fontSize: "2.5em",
                 marginBottom: "0px",
+                marginTop: "10%",
               }}
             >
               Mission
@@ -56,6 +57,7 @@ const Home: FunctionComponent<HomeProps> = () => {
                 style={{
                   textAlign: "center",
                   fontSize: "1.5em",
+                  marginTop: "10%",
                 }}
               >
                 Want to have fun and learn?
