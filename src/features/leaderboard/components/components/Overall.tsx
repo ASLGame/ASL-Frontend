@@ -1,9 +1,15 @@
+import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks"; 
-import { selectScores, scoreState } from "../../leaderboardSlice";
+import { getscores } from "../../leaderboardAPI";
+import { selectScores, scoreState, getscoresAsync } from "../../leaderboardSlice";
 import styles from "../GamesTable.module.css"
 
 
 export function Overall(){
+    const dispatch = useAppDispatch();
+    useEffect(() => {
+      dispatch(getscoresAsync());
+    }, []);
     const scores = useAppSelector(selectScores);
     const state = useAppSelector(scoreState);
     let counter = 0;
