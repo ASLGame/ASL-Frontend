@@ -1,0 +1,12 @@
+.tab {
+  cursor: pointer;
+}
+
+.game_title {
+  display: flex;
+  justify-content: center;
+}
+
+.tab_selected {
+  border-bottom: 2px solid var(--dark_purple);
+}

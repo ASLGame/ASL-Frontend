@@ -48,8 +48,28 @@
 .line {
   align-self: center;
   width: 90%;
-  /* margin-top: 0.5em; */
   margin-bottom: 0.5em;
   height: 1px;
   background-color: black;
+}
+
+.pagination {
+  display: flex;
+  list-style: none;
+  justify-content: space-between;
+  padding: 0px;
+  width: 30%;
+}
+
+.active {
+  border-bottom: 2px solid var(--dark_purple);
+}
+
+.disabled {
+  opacity: 0.5;
+  cursor: not-allowed !important;
+}
+
+.page_link {
+  cursor: pointer;
 }

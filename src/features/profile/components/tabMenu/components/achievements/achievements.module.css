@@ -4,6 +4,17 @@
   align-items: center;
   width: 100%;
 }
+
+.tab_container {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  margin-top: 40px;
+  margin-left: 30px;
+  margin-right: 30px;
+  margin-bottom: 15px;
+}
+
 .achievement_name {
   margin-bottom: 8px;
 }
@@ -19,4 +30,33 @@
 .progress_bar_label {
   color: black;
   margin-right: 8px;
+}
+
+.tab_list {
+  display: flex;
+  justify-content: space-evenly;
+  list-style-type: none;
+  padding: 0;
+  margin-top: 20px;
+}
+
+.pagination {
+  display: flex;
+  list-style: none;
+  justify-content: space-evenly;
+  padding: 0px;
+  width: 100%;
+}
+
+.active {
+  border-bottom: 2px solid var(--dark_purple);
+}
+
+.disabled {
+  opacity: 0.5;
+  cursor: not-allowed !important;
+}
+
+.page_link {
+  cursor: pointer;
 }

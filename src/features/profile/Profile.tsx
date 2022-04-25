@@ -11,6 +11,7 @@ import {
 } from "./profileSlice";
 import { TabMenu } from "./components/tabMenu/TabMenu";
 import { LastPlayed } from "./components/lastPlayed/LastPlayed";
+import { getAllGamesAsync } from "../games/gamesSlice";
 
 export function Profile() {
   const dispatch = useAppDispatch();
@@ -22,6 +23,7 @@ export function Profile() {
     dispatch(lastestPlayedAsync(user.account_id!));
     dispatch(scoresAsync(user.account_id!));
     dispatch(achievementsAsync(user.account_id!));
+    dispatch(getAllGamesAsync());
   }, []);
 
   return (
