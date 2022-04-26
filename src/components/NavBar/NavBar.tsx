@@ -98,6 +98,11 @@ const NavBar = (props: {
       <p style={{ cursor: "pointer" }} onClick={() => navigate("/signup")}>
         Sign Up
       </p>,
+      <p></p>,
+      <p style={{ cursor: "pointer" }} onClick={() => navigate("/HandSigns")}>
+        Hand Signs
+      </p>
+
     ];
     if (isAuth) {
       const links = [
