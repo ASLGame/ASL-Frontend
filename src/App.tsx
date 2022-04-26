@@ -12,6 +12,7 @@ import HangMan from "./features/game/games/HangMan/hangMan";
 import Games from "./features/games/Games";
 import NavBar from "./components/NavBar/NavBar";
 import Wordle from "./features/game/games/Wordle/wordle";
+import HandSign from "./features/HandSigns/HandSign";
 import { useSelector } from "react-redux";
 import { selectUser, signOut } from "./features/signin/signinSlice";
 import jwt_decode, { JwtPayload } from "jwt-decode";
@@ -61,6 +62,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/games" element={<Games />} />
           <Route path="/about" element={<About />} />
+          <Route path="/HandSigns" element={<HandSign />}/>
         </Routes>
       </div>
     </Router>
