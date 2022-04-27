@@ -23,6 +23,7 @@ import { UserAchievements } from "../../../profile/profileSlice";
 import { updateAccountAchievement } from "../../gameAPI";
 import { achievementNotification } from "../../../../components/notifications";
 import { Store } from "react-notifications-component";
+import GameModal from "./GameModal/modal";
 
 const SpellingLetters: FunctionComponent = () => {
   Modal.setAppElement("body");
@@ -46,6 +47,7 @@ const SpellingLetters: FunctionComponent = () => {
   const game: Game = useSelector(selectGame).game;
   const stats = useSelector(selectGame).stats;
   const navigate = useNavigate();
+  const [difficulty, setDifficulty] = useState<String>();
 
   const resetGame = () => {
     setLettersSpelled([]);
@@ -158,7 +160,15 @@ const SpellingLetters: FunctionComponent = () => {
       emptyBuffer.shift();
     }
     setBuffer(emptyBuffer);
-    setTimer(10);
+    let timer:number = 0
+    if(difficulty === 'easy'){
+      timer = 10;
+    } else if (difficulty === 'medium') {
+      timer = 6;
+    } else{
+      timer = 3;
+    }
+    setTimer(timer);
   };
 
   useEffect(() => {
@@ -274,24 +284,39 @@ const SpellingLetters: FunctionComponent = () => {
       fetchAch();
     }
   });
+
+
+  useEffect(() => {
+    if(difficulty){
+      let timer:number = 0
+      if(difficulty === 'easy'){
+        timer = 10;
+      } else if (difficulty === 'medium') {
+        timer = 6;
+      } else{
+        timer = 3;
+      }
+      setTimer(timer);
+      setScore(0);
+      setLettersSpelled([])
+      let emptyBuffer: String[] = buffer;
+      while (emptyBuffer.length !== 0) {
+        emptyBuffer.shift();
+      }
+      setBuffer(emptyBuffer);
+    }
+  }, [difficulty])
   if (game) {
     return (
       <>
-        <Modal
-          isOpen={isModalOpen}
-          onRequestClose={() => {
-            setIsModalOpen(false);
-            setIsTimerPaused(false);
-            let emptyBuffer: String[] = buffer;
-            while (emptyBuffer.length !== 0) {
-              emptyBuffer.shift();
-            }
-            setBuffer(emptyBuffer);
-          }}
-          className={styles.modal}
-        >
-          {renderModal()}
-        </Modal>
+        <GameModal
+          game={game}
+          setIsModalOpen={setIsModalOpen}
+          setDifficulty={setDifficulty}
+          isModalOpen={isModalOpen}
+          difficulty={difficulty}
+          setIsTimerPaused={setIsTimerPaused}
+        />  
         <div className={styles.background + " " + styles.layer1}>
           {lettersSpelled.length === 10 ? (
             <Confetti width={window.innerWidth} height={window.innerHeight} />
