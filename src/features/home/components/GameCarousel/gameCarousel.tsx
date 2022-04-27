@@ -1,5 +1,5 @@
 import { FunctionComponent, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
 import styles from "./gameCarousel.module.css";
@@ -7,11 +7,13 @@ import "./gameCarousel.css";
 import { selectFeaturedGames, selectFeaturedGamesState } from "../../homeSlice";
 import { Game } from "../../../../types/Game";
 import { useNavigate } from "react-router-dom";
+import { setGame } from "../../../game/gameSlice";
 
 interface GameCarouselProps {}
 
 const GameCarousel: FunctionComponent<GameCarouselProps> = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const featuredGames = useSelector(selectFeaturedGames)!;
   const featuredGamesState = useSelector(selectFeaturedGamesState);
   const [currentFeaturedGameName, setCurrentFeaturedGameName] = useState(
@@ -23,7 +25,10 @@ const GameCarousel: FunctionComponent<GameCarouselProps> = () => {
       return featuredGames.map((game) => {
         return (
           <div
-            onClick={() => navigate(`games/${game.name.split(" ").join("")}`)}
+            onClick={() => {
+              dispatch(setGame(game));
+              navigate(`games/${game.name.split(" ").join("")}`);
+            }}
             key={game.id}
             className={styles.imageContainer}
           >
