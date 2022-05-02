@@ -18,6 +18,7 @@ export interface User {
   account_username?: string;
   account_created?: string;
   account_dob?: string;
+  account_profile_picture?: string;
 }
 
 export interface SignInState {
@@ -65,6 +66,9 @@ export const signinSlice = createSlice({
       state.user = {};
       state.isAuth = false;
     },
+    profilePictureChange: (state, action) => {
+      state.user!.account_profile_picture = action.payload.path;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(signinAsync.rejected, (state, action) => {
@@ -85,7 +89,8 @@ export const signinSlice = createSlice({
 });
 
 //Export actions
-export const { saveChanges, signOut } = signinSlice.actions;
+export const { saveChanges, signOut, profilePictureChange } =
+  signinSlice.actions;
 
 //Selecter allows us to select a value of the state
 export const selectSignIn = (state: RootState) => state.signin.isAuth;

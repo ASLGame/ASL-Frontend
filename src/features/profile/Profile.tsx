@@ -16,8 +16,6 @@ import { getAllGamesAsync } from "../games/gamesSlice";
 export function Profile() {
   const dispatch = useAppDispatch();
   const user = useAppSelector(selectUser)!;
-  const [profileImage, setProfileImage] = useState<string>("");
-  const [imageActive, setImageActive] = useState<boolean>(false);
 
   useEffect(() => {
     dispatch(lastestPlayedAsync(user.account_id!));
@@ -30,10 +28,9 @@ export function Profile() {
     <section className={styles.container}>
       <div className={styles.left}>
         <ProfilePicture
-          profileImage={profileImage}
-          setProfileImage={setProfileImage}
-          imageActive={imageActive}
-          setImageActive={setImageActive}
+          userID={user.account_id!}
+          userName={user.account_username!}
+          profilePicture={user.account_profile_picture!}
         />
         <div className={styles.user_info}>
           <p>{user.account_username}</p>
