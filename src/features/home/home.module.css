@@ -1,7 +1,7 @@
 .container {
   overflow-y: hidden;
   display: flex;
-  height: 91%;
+  height: calc(100vh - 5.5rem);
   width: 100%;
   flex-direction: column;
   background-repeat: no-repeat;
