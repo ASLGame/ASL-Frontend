@@ -33,6 +33,9 @@ const HangMan: FunctionComponent = () => {
   const [isModalOpen, setIsModalOpen] = useState(true);
   const [isCameraLoading, setIsCameraLoading] = useState<boolean>(true);
   const [isScorePosted, setIsScorePosted] = useState<boolean>(false);
+  const [timer, setTimer] = useState(0);
+  const [hintShowed, setHintShowed] = useState(false);
+  const [hintsUsed, setHintsUsed] = useState(0);
 
   const user = useSelector(selectUser);
   const isAuthorized = useSelector(selectSignIn);
@@ -44,7 +47,6 @@ const HangMan: FunctionComponent = () => {
 
   //hangMan States
   const [currentWord, setCurrentWord] = useState<String>("");
-
   const [wrongLetters, setWrongLetters] = useState<Array<String>>([]);
   const [correctLetters, setCorrectLetters] = useState<Array<String>>([]);
   const [playable, setPlayable] = useState(false);
@@ -68,7 +70,6 @@ const HangMan: FunctionComponent = () => {
 
   const updateBuffer = (value: String) => {
     let bufferList = buffer;
-
     if (buffer.length === 20) {
       bufferList.shift();
       bufferList.push(value);
@@ -110,6 +111,9 @@ const HangMan: FunctionComponent = () => {
   };
 
   const reset = () => {
+    setHintsUsed(0);
+    setHintShowed(false);
+    Store.removeAllNotifications();
     setCurrentWord(easyWords[Math.floor(Math.random() * easyWords.length - 1)]);
     setCorrectLetters([]);
     setWrongLetters([]);
@@ -150,6 +154,103 @@ const HangMan: FunctionComponent = () => {
     }
   }, []);
 
+  function MyNotification() {
+    return (
+      <div
+        style={{
+          width: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: "#9698D6",
+          borderLeft: "8px solid #4D4CAC",
+        }}
+        onClick={() => {
+          setTimer(0);
+          Store.addNotification({
+            content: hintNotification,
+            insert: "top",
+            container: "top-right",
+            animationIn: ["animated", "fadeIn"],
+            animationOut: ["animated", "fadeOut"],
+            onRemoval: () => setTimer(0),
+            dismiss: {
+              duration: 8000,
+            },
+          });
+          Store.removeNotification("hintPopup");
+        }}
+      >
+        <div onClick={() => setHintsUsed(hintsUsed + 1)}>
+          <h4 style={{ textAlign: "center" }}>Need a hint?</h4>
+          <p style={{ textAlign: "center" }}>
+            Using a hint will deduct from your score.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  function hintNotification() {
+    return (
+      <div
+        style={{
+          width: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: "#9698D6",
+          borderLeft: "8px solid #4D4CAC",
+        }}
+      >
+        <div>
+          <img
+            style={{
+              height: "100%",
+              width: "100%",
+            }}
+            alt="hint..."
+            src="https://signy-asl-models.s3.amazonaws.com/alphabet/alphabet-transparent.png"
+          />
+        </div>
+      </div>
+    );
+  }
+
+  useEffect(() => {
+    if (timer === 10 && !hintShowed) {
+      Store.addNotification({
+        content: MyNotification,
+        insert: "top",
+        container: "top-right",
+        animationIn: ["animated", "fadeIn"],
+        animationOut: ["animated", "fadeOut"],
+        onRemoval: () => setTimer(0),
+        dismiss: {
+          duration: 5000,
+        },
+        id: "hintPopup",
+      });
+    }
+  });
+
+  useEffect(() => {
+    if (!game) {
+      dispatch(getGameAsync("Hang Man"));
+    }
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (!isCameraLoading) {
+        setTimer(timer + 1);
+      }
+    }, 1000);
+    return () => {
+      clearInterval(interval);
+    };
+  }, [timer, isCameraLoading, isModalOpen]);
+
   useEffect(() => {
     if (checkWin()) {
       setPlayable(false);
@@ -185,6 +286,7 @@ const HangMan: FunctionComponent = () => {
         }
       }
     }
+    setTimer(0);
   }, [bufferFlag, playable]);
 
   useEffect(() => {
@@ -216,6 +318,19 @@ const HangMan: FunctionComponent = () => {
         account_id: user.account_id!,
         game_id: game.id,
         score: 2 * currentWord!.length,
+      };
+    }
+  });
+
+  useEffect(() => {
+    if (checkWin() && isAuthorized && user && !isScorePosted) {
+      const scoreToPost: scorePost = {
+        account_id: user.account_id!,
+        game_id: game.id,
+        score:
+          2 * currentWord!.length - hintsUsed < 0
+            ? 0
+            : 2 * currentWord!.length - hintsUsed,
       };
       dispatch(postScoreAsync(scoreToPost));
       setIsScorePosted(true);
@@ -256,6 +371,14 @@ const HangMan: FunctionComponent = () => {
       fetchAch();
     }
   });
+
+  useEffect(() => {
+    if (!playable) {
+      setHintShowed(true);
+    } else {
+      setHintShowed(false);
+    }
+  }, [playable]);
 
   useEffect(() => {
     if (difficulty) {
@@ -317,7 +440,9 @@ const HangMan: FunctionComponent = () => {
                 <hr className={styles.divider}></hr>
                 <div>
                   <Figure wrong={wrongLetters} />
-                  {wrongLetters.length === 10 && <h1>YOU LOSE!</h1>}
+                  {wrongLetters.length === 10 && (
+                    <h1>YOU LOSE! The word was: {currentWord}</h1>
+                  )}
                 </div>
                 <hr className={styles.divider}></hr>
                 <WrongSection wrong={wrongLetters} />
@@ -353,6 +478,8 @@ const HangMan: FunctionComponent = () => {
                 See instructions
               </button>
             </div>
+            <p>{currentWord}</p>
+            <p>{timer}</p>
           </section>
         </div>
       </>
