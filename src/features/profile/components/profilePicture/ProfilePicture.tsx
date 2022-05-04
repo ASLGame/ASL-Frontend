@@ -1,6 +1,6 @@
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useAppDispatch } from "../../../../app/hooks";
-import { profilePictureChange } from "../../../signin/signinSlice";
+import { profilePictureUplaodAsync } from "../../../signin/signinSlice";
 import { uploadProfilePicture } from "../../profileAPI";
 import styles from "./profilePicture.module.css";
 
@@ -14,7 +14,6 @@ export function ProfilePicture(props: ProfilePictureProps) {
   let editLabel;
   const uploadRef = useRef<HTMLInputElement>(null);
   const dispatch = useAppDispatch();
-  const [imageChanged, setImageChanged] = useState(false);
 
   const onImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files === null) {
@@ -34,15 +33,13 @@ export function ProfilePicture(props: ProfilePictureProps) {
 
     var form = new FormData();
     form.append("userpic", e.target.files[0]);
-    const res = await uploadProfilePicture(form, props.userID, props.userName);
-    if (res === "Success") {
-      await dispatch(
-        profilePictureChange({
-          path: `https://signy-asl-models.s3.amazonaws.com/profileImages/${props.userName}`,
-        })
-      );
-      window.location.reload(); //Try to find another way, problem is that url does not change, but content does.
-    }
+    await dispatch(
+      profilePictureUplaodAsync({
+        form: form,
+        uid: props.userID,
+        username: props.userName,
+      })
+    );
   };
 
   if (props.profilePicture) {
@@ -55,7 +52,10 @@ export function ProfilePicture(props: ProfilePictureProps) {
             type="file"
             accept="image/png, image/jpeg, image/jpg"
           />
-          <img className={styles.image} src={props.profilePicture} />
+          <img
+            className={styles.image}
+            src={`${props.profilePicture}?${new Date().getTime()}`}
+          />
         </label>
       </div>
     );
