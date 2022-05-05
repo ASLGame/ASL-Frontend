@@ -5,7 +5,7 @@ import { BackButton, ButtonSignInUp } from "../../components/Button.styled";
 import { signupAsync } from "../signin/signinSlice";
 import { useAppDispatch } from "../../app/hooks";
 
-export function SignUp() {
+export default function SignUp() {
   const [formPhase, setFormPhase] = useState(false);
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");

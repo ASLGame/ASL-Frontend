@@ -5,7 +5,7 @@ import { signinAsync, selectSignIn } from "./signinSlice";
 import styles from "./signin.module.css";
 import { ButtonSignInUp } from "../../components/Button.styled";
 
-export function SignIn() {
+export default function SignIn() {
   const auth = useAppSelector(selectSignIn);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
