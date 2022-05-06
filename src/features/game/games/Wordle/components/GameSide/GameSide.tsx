@@ -18,6 +18,7 @@ interface GameSideProps {
   setCurrentRow: Function;
   currentRowIndex: number;
   setIsCurrentRowFull: Function;
+  hintsUsed: number;
 }
 
 const GameSide: FunctionComponent<GameSideProps> = (props) => {
@@ -36,6 +37,7 @@ const GameSide: FunctionComponent<GameSideProps> = (props) => {
     setCurrentRowIndex,
     currentRowIndex,
     setIsCurrentRowFull,
+    hintsUsed,
   } = props;
 
   const renderGuessGrid = () => {
@@ -143,7 +145,11 @@ const GameSide: FunctionComponent<GameSideProps> = (props) => {
     <div className={styles.gameboard}>
       {renderGuessGrid()}
       {renderSubmitButton()}
-      {isGameLost || isGameWon ? <p>Score: {score}</p> : ""}
+      {isGameLost || isGameWon ? (
+        <p>Score: {score - hintsUsed * 10 < 0 ? 0 : score - hintsUsed * 10}</p>
+      ) : (
+        ""
+      )}
       {isGameLost || isGameWon ? (
         <Button
           style={{

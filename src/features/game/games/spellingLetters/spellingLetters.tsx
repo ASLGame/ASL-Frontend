@@ -39,6 +39,8 @@ const SpellingLetters: FunctionComponent = () => {
   const [lettersSpelled, setLettersSpelled] = useState<LetterSpelled[]>([]);
   const [isCameraLoading, setIsCameraLoading] = useState<boolean>(true);
   const [isScorePosted, setIsScorePosted] = useState<boolean>(false);
+  const [hintShowed, setHintShowed] = useState(false);
+  const [hintsUsed, setHintsUsed] = useState(0);
   const [score, setScore] = useState<number>(0);
   const user = useSelector(selectUser);
   const isAuthorized = useSelector(selectSignIn);
@@ -169,13 +171,95 @@ const SpellingLetters: FunctionComponent = () => {
       timer = 3;
     }
     setTimer(timer);
+    setHintShowed(false);
+    Store.removeAllNotifications();
+
   };
+
+  function MyNotification() {
+    return (
+      <div
+        style={{
+          width: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: "#9698D6",
+          borderLeft: "8px solid #4D4CAC",
+        }}
+        onClick={() => {
+          setTimer(10);
+          setHintShowed(true);
+          Store.addNotification({
+            content: hintNotification,
+            insert: "top",
+            container: "top-right",
+            animationIn: ["animated", "fadeIn"],
+            animationOut: ["animated", "fadeOut"],
+            dismiss: {
+              duration: 10000,
+            },
+          });
+          Store.removeNotification("hintPopup");
+        }}
+      >
+        <div onClick={() => setHintsUsed(hintsUsed + 1)}>
+          <h4 style={{ textAlign: "center" }}>Need a hint?</h4>
+          <p style={{ textAlign: "center" }}>
+            Using a hint will deduct from your score.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  function hintNotification() {
+    return (
+      <div
+        style={{
+          width: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: "#9698D6",
+          borderLeft: "8px solid #4D4CAC",
+        }}
+      >
+        <div>
+          <img
+            style={{
+              height: "100%",
+              width: "100%",
+            }}
+            alt="hint..."
+            src="https://signy-asl-models.s3.amazonaws.com/alphabet/alphabet-transparent.png"
+          />
+        </div>
+      </div>
+    );
+  }
 
   useEffect(() => {
     if (!game) {
       dispatch(getGameAsync("Spelling Letters"));
     }
   }, []);
+
+  useEffect(() => {
+    if (timer === 5 && !hintShowed) {
+      Store.addNotification({
+        content: MyNotification,
+        insert: "top",
+        container: "top-right",
+        animationIn: ["animated", "fadeIn"],
+        animationOut: ["animated", "fadeOut"],
+        dismiss: {
+          duration: 3000,
+        },
+        id: "hintPopup",
+      });
+    }
+  });
 
   useEffect(() => {
     if (
@@ -243,7 +327,7 @@ const SpellingLetters: FunctionComponent = () => {
       const scoreToPost: scorePost = {
         account_id: user.account_id!,
         game_id: game.id,
-        score: score,
+        score: score - hintsUsed < 0 ? 0 : score - hintsUsed,
       };
       dispatch(postScoreAsync(scoreToPost));
       setIsScorePosted(true);
@@ -358,7 +442,10 @@ const SpellingLetters: FunctionComponent = () => {
                   <tbody>
                     <tr>
                       <td>Total</td>
-                      <td className={styles.answerCell}> {score}</td>
+                      <td className={styles.answerCell}>
+                        {score} - {hintsUsed} ={" "}
+                        {score - hintsUsed < 0 ? 0 : score - hintsUsed}
+                      </td>
                     </tr>
                   </tbody>
                 </table>

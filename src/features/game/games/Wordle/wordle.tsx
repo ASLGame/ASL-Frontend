@@ -43,6 +43,10 @@ const Wordle: FunctionComponent = () => {
   const [completedRows, setCompletedRows] = useState<Cell[][]>();
   const [isGameWon, setIsGameWon] = useState<Boolean>(false);
   const [isGameLost, setIsGameLost] = useState<Boolean>(false);
+  const [timer, setTimer] = useState(0);
+  const [hintShowed, setHintShowed] = useState(false);
+  const [hintsUsed, setHintsUsed] = useState(0);
+  const [isCameraLoading, setIsCameraLoading] = useState<boolean>(true);
   const [isCurrentRowFull, setIsCurrentRowFull] = useState<Boolean>(false);
   const [currentRowIndex, setCurrentRowIndex] = useState<number>(0);
   const user = useSelector(selectUser);
@@ -52,8 +56,10 @@ const Wordle: FunctionComponent = () => {
   const game: Game = useSelector(selectGame).game;
   const stats = useSelector(selectGame).stats;
   const navigate = useNavigate();
-  console.log(currentWord);
   const resetGame = () => {
+    setTimer(0);
+    setHintsUsed(0);
+    setHintShowed(false);
     setLetters([]);
     let word = "";
     if (difficulty === "easy") {
@@ -222,6 +228,69 @@ const Wordle: FunctionComponent = () => {
     [buffer]
   );
 
+  function HintPopUpNotification() {
+    return (
+      <div
+        style={{
+          width: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: "#9698D6",
+          borderLeft: "8px solid #4D4CAC",
+        }}
+        onClick={() => {
+          setTimer(0);
+          Store.addNotification({
+            content: hintNotification,
+            insert: "top",
+            container: "top-right",
+            animationIn: ["animated", "fadeIn"],
+            animationOut: ["animated", "fadeOut"],
+            onRemoval: () => setTimer(0),
+            dismiss: {
+              duration: 8000,
+            },
+          });
+          Store.removeNotification("hintPopup");
+        }}
+      >
+        <div onClick={() => setHintsUsed(hintsUsed + 1)}>
+          <h4 style={{ textAlign: "center" }}>Need a hint?</h4>
+          <p style={{ textAlign: "center" }}>
+            Using a hint will deduct from your score.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  function hintNotification() {
+    return (
+      <div
+        style={{
+          width: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: "#9698D6",
+          borderLeft: "8px solid #4D4CAC",
+        }}
+      >
+        <div>
+          <img
+            style={{
+              height: "100%",
+              width: "100%",
+            }}
+            alt="hint..."
+            src="https://signy-asl-models.s3.amazonaws.com/alphabet/alphabet-transparent.png"
+          />
+        </div>
+      </div>
+    );
+  }
+
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const reset = () => {
     let emptyBuffer: string[] = buffer;
@@ -229,7 +298,19 @@ const Wordle: FunctionComponent = () => {
       emptyBuffer.pop();
     }
     setBuffer(emptyBuffer);
+    Store.removeAllNotifications();
   };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (!isCameraLoading) {
+        setTimer(timer + 1);
+      }
+    }, 1000);
+    return () => {
+      clearInterval(interval);
+    };
+  }, [timer, isCameraLoading, isModalOpen]);
 
   useEffect(() => {
     if (completedRows?.length === rowSize) {
@@ -253,6 +334,7 @@ const Wordle: FunctionComponent = () => {
           setCurrentRow(currentRow);
           setCurrentRowIndex(currentRowIndex + 1);
           reset();
+          setTimer(0);
         }
       }
     }
@@ -275,6 +357,12 @@ const Wordle: FunctionComponent = () => {
   }, [game, dispatch]);
 
   useEffect(() => {
+    if (isGameLost || isGameWon) {
+      setHintShowed(true);
+    }
+  });
+
+  useEffect(() => {
     if ((isGameLost || isGameWon) && isAuthorized && user && !isScorePosted) {
       stats?.map((stat) => {
         let userStatToUpdate: accountStat = {
@@ -295,7 +383,7 @@ const Wordle: FunctionComponent = () => {
       const scoreToPost: scorePost = {
         account_id: user.account_id!,
         game_id: game.id,
-        score: score,
+        score: score - hintsUsed < 0 ? 0 : score - hintsUsed,
       };
       dispatch(postScoreAsync(scoreToPost));
       setIsScorePosted(true);
@@ -345,6 +433,23 @@ const Wordle: FunctionComponent = () => {
     score,
     user,
   ]);
+
+  useEffect(() => {
+    if (timer === 10 && !hintShowed) {
+      Store.addNotification({
+        content: HintPopUpNotification,
+        insert: "top",
+        container: "top-right",
+        animationIn: ["animated", "fadeIn"],
+        animationOut: ["animated", "fadeOut"],
+        onRemoval: () => setTimer(0),
+        dismiss: {
+          duration: 5000,
+        },
+        id: "hintPopup",
+      });
+    }
+  });
 
   useEffect(() => {
     if (difficulty) {
@@ -416,11 +521,15 @@ const Wordle: FunctionComponent = () => {
                 </button>
                 <h1> {game.name}</h1>
               </div>
-              <ModelCamera updateGameBuffer={updateBuffer}></ModelCamera>
+              <ModelCamera
+                updateGameBuffer={updateBuffer}
+                onUserMedia={setIsCameraLoading}
+              ></ModelCamera>
             </div>
             <div className={styles.right}>
               <GameSide
                 score={score}
+                hintsUsed={hintsUsed}
                 isGameLost={isGameLost}
                 isGameWon={isGameWon}
                 resetGame={resetGame}
@@ -435,6 +544,8 @@ const Wordle: FunctionComponent = () => {
                 currentRowIndex={currentRowIndex}
                 setIsCurrentRowFull={setIsCurrentRowFull}
               ></GameSide>
+              <p>{currentWord}</p>
+              <p>{timer}</p>
               <button
                 style={{
                   alignSelf: "center",

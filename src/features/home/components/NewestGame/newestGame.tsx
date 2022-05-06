@@ -1,6 +1,7 @@
 import { FunctionComponent } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { setGame } from "../../../game/gameSlice";
 import { selectNewestGame, selectNewestGameState } from "../../homeSlice";
 import styles from "./newestGame.module.css";
 
@@ -8,9 +9,9 @@ interface NewestGameProps {}
 
 const NewestGame: FunctionComponent<NewestGameProps> = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const newestGame = useSelector(selectNewestGame)!;
   const newestGameState = useSelector(selectNewestGameState)!;
-  console.log(newestGame);
   if (newestGameState !== "loading") {
     return (
       <div className={styles.container}>
@@ -24,9 +25,10 @@ const NewestGame: FunctionComponent<NewestGameProps> = () => {
         >
           <h2 className={styles.gameName}>{newestGame.name}</h2>
           <div
-            onClick={() =>
-              navigate(`games/${newestGame.name.split(" ").join("")}`)
-            }
+            onClick={() => {
+              dispatch(setGame(newestGame));
+              navigate(`games/${newestGame.name.split(" ").join("")}`);
+            }}
             className={styles.imageContainer}
           >
             <img
