@@ -8,7 +8,14 @@ const HandSign:FunctionComponent = () => {
             Hand Signs
         </div>
         <div className={styles.textContainer}>
-            <p>hello</p>
+        <img
+            style={{
+              height: "50em",
+              width: "70em",
+            }}
+            alt="hint..."
+            src="https://signy-asl-models.s3.amazonaws.com/alphabet/alphabet-transparent.png"
+          />
         </div>
     </div>
   );
