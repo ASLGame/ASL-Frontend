@@ -9,6 +9,7 @@ import { ReactNotifications } from "react-notifications-component";
 import "react-notifications-component/dist/theme.css";
 import { Suspense } from "react";
 import routes from "./routes";
+import Loader from "./components/Loader/Loader";
 
 const navigation = {
   brand: { name: "Signy", to: "/" },
@@ -34,7 +35,7 @@ function App() {
 
   return (
     <Router>
-      <Suspense fallback={<p>Loading...</p>}>
+      <Suspense fallback={<Loader />}>
         <NavBar brand={brand} links={links} />
         <ReactNotifications />
         <Routes>
