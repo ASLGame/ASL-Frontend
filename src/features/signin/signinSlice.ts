@@ -61,6 +61,9 @@ export const signinSlice = createSlice({
       state.user!.account_lastname = action.payload.last_name;
       state.user!.account_dob = action.payload.DOB;
     },
+    setLoading: (state, action: PayloadAction<string>) => {
+      state.userLoading = action.payload;
+    },
     signOut: (state) => {
       state.user = {};
       state.isAuth = false;
@@ -68,14 +71,15 @@ export const signinSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(signinAsync.rejected, (state, action) => {
-      console.log(action.error);
+      state.userLoading = "rejected";
     });
     builder.addCase(signinAsync.fulfilled, (state, action) => {
       state.user = action.payload;
       state.isAuth = true;
+      state.userLoading = "idle";
     });
     builder.addCase(signupAsync.rejected, (state, action) => {
-      console.log(action.error);
+      state.userLoading = "rejected";
     });
     builder.addCase(signupAsync.fulfilled, (state, action) => {
       state.user = action.payload;
@@ -85,10 +89,12 @@ export const signinSlice = createSlice({
 });
 
 //Export actions
-export const { saveChanges, signOut } = signinSlice.actions;
+export const { saveChanges, signOut, setLoading } = signinSlice.actions;
 
 //Selecter allows us to select a value of the state
 export const selectSignIn = (state: RootState) => state.signin.isAuth;
 export const selectUser = (state: RootState) => state.signin.user;
+export const selectSignInLoading = (state: RootState) =>
+  state.signin.userLoading;
 
 export default signinSlice.reducer;

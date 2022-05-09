@@ -21,6 +21,7 @@ export const ButtonSignInUp = styled.button`
   box-sizing: border-box;
   border-radius: 23px;
   width: 100%;
+  disabled;
   cursor: pointer;
   &:hover {
     opacity: 0.8;
