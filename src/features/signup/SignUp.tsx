@@ -177,6 +177,10 @@ export default function SignUp() {
   };
 
   useEffect(() => {
+    setIsDisabled(false);
+  }, [username, password, repassword, email]);
+
+  useEffect(() => {
     if (auth) {
       navigate("/");
     }
