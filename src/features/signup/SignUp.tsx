@@ -131,6 +131,7 @@ export default function SignUp() {
         animationOut: ["animated", "fadeOut"],
         dismiss: {
           duration: 6000,
+          pauseOnHover: true,
         },
       });
       return false;
@@ -212,6 +213,8 @@ export default function SignUp() {
               id="username"
               name="username"
               value={username}
+              pattern="^(?!.*[-_.]{2,})(?=^[^-_.].*[^-_.]$)[\w.\s-]{3,9}$"
+              title="Must only contain letters, numbers or non-sequential special characters(. _ -)."
               onChange={(e) => setUsername(e.target.value)}
             />
             <label className={styles.label}>Email</label>
@@ -280,6 +283,8 @@ export default function SignUp() {
               id="firstname"
               name="firstname"
               value={firstname}
+              title="Must only contain letters and space."
+              pattern="[a-zA-Z ]+"
               onChange={(e) => setFirstname(e.target.value)}
             />
             <label className={styles.label}>Last Name</label>
@@ -290,6 +295,8 @@ export default function SignUp() {
               id="lastname"
               name="lastname"
               value={lastname}
+              pattern="[a-zA-Z ]+"
+              title="Must only contain letters and space."
               onChange={(e) => setLastname(e.target.value)}
             />
             <label className={styles.label}>Date of Birth</label>
