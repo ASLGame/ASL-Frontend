@@ -1,6 +1,6 @@
 .container {
   display: flex;
-  /* height: 100%; */
+  height: 100%;
   /* width: 100vw; */
   overflow: hidden;
 }
@@ -19,7 +19,7 @@
 
 .right {
   width: 80%;
-  height: 100%;
+  /* height: 100%; */
   background-color: var(--white);
 }
 

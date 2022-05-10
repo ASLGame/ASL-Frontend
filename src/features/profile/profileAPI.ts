@@ -64,13 +64,16 @@ export const changePassword = async (userData: passwordChanges) => {
 };
 
 export const getAchievements = async (uid: number, gid?: number) => {
-  if (typeof gid !== 'undefined') {
-    const response = await fetch(url + `user-account-achievement/${uid}/${gid}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+  if (typeof gid !== "undefined") {
+    const response = await fetch(
+      url + `user-account-achievement/${uid}/${gid}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
     if (response.ok) {
       return response.json();
     } else {
@@ -88,5 +91,24 @@ export const getAchievements = async (uid: number, gid?: number) => {
     } else {
       return response;
     }
+  }
+};
+
+export const uploadProfilePicture = async (
+  form: FormData,
+  uid: number,
+  username: string
+) => {
+  const response = await fetch(
+    url + `accounts/upload/profile/picture/${uid}/${username}`,
+    {
+      method: "POST",
+      body: form,
+    }
+  );
+  if (response.ok) {
+    return response.json();
+  } else {
+    return response;
   }
 };

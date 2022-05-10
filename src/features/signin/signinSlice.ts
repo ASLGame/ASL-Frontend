@@ -5,6 +5,7 @@ This means that both signin and signup methods will be found here.
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 import { userChanges } from "../profile/components/tabMenu/components/editProfile/EditProfile";
+import { uploadProfilePicture } from "../profile/profileAPI";
 import { signup } from "../signup/signupAPI";
 import { signin } from "./signinAPI";
 
@@ -18,6 +19,7 @@ export interface User {
   account_username?: string;
   account_created?: string;
   account_dob?: string;
+  account_profile_picture?: string;
 }
 
 export interface SignInState {
@@ -52,6 +54,22 @@ export const signupAsync = createAsyncThunk(
   }
 );
 
+export const profilePictureUplaodAsync = createAsyncThunk(
+  "profile/picture_upload",
+  async ({
+    form,
+    uid,
+    username,
+  }: {
+    form: FormData;
+    uid: number;
+    username: string;
+  }) => {
+    const response = await uploadProfilePicture(form, uid, username);
+    return response;
+  }
+);
+
 export const signinSlice = createSlice({
   name: "signin",
   initialState,
@@ -80,6 +98,12 @@ export const signinSlice = createSlice({
     builder.addCase(signupAsync.fulfilled, (state, action) => {
       state.user = action.payload;
       state.isAuth = true;
+    });
+    builder.addCase(profilePictureUplaodAsync.rejected, (state, action) => {
+      console.log(action.error);
+    });
+    builder.addCase(profilePictureUplaodAsync.fulfilled, (state, action) => {
+      state.user!.account_profile_picture = `https://signy-asl-models.s3.amazonaws.com/profileImages/${state.user?.account_username}`;
     });
   },
 });
