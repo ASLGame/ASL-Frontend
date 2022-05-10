@@ -13,7 +13,7 @@ import { TabMenu } from "./components/tabMenu/TabMenu";
 import { LastPlayed } from "./components/lastPlayed/LastPlayed";
 import { getAllGamesAsync } from "../games/gamesSlice";
 
-export function Profile() {
+export default function Profile() {
   const dispatch = useAppDispatch();
   const user = useAppSelector(selectUser)!;
 

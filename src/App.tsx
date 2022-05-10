@@ -1,23 +1,15 @@
-import { SignIn } from "./features/signin/SignIn";
-import { Profile } from "./features/profile/Profile";
-import About from "./features/about/About";
-import { Leaderboard } from "./features/leaderboard/leadrboard";
-import SpellingWords from "./features/game/games/spellingWords/spellingWords";
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { SignUp } from "./features/signup/SignUp";
-import Home from "./features/home/Home";
-import SpellingLetters from "./features/game/games/spellingLetters/spellingLetters";
-import HangMan from "./features/game/games/HangMan/hangMan";
-import Games from "./features/games/Games";
 import NavBar from "./components/NavBar/NavBar";
-import Wordle from "./features/game/games/Wordle/wordle";
 import { useSelector } from "react-redux";
 import { selectUser, signOut } from "./features/signin/signinSlice";
 import jwt_decode, { JwtPayload } from "jwt-decode";
 import { useAppDispatch } from "./app/hooks";
 import { ReactNotifications } from "react-notifications-component";
 import "react-notifications-component/dist/theme.css";
+import { Suspense } from "react";
+import routes from "./routes";
+import Loader from "./components/Loader/Loader";
 
 const navigation = {
   brand: { name: "Signy", to: "/" },
@@ -43,26 +35,15 @@ function App() {
 
   return (
     <Router>
-      <div className="App">
+      <Suspense fallback={<Loader />}>
         <NavBar brand={brand} links={links} />
         <ReactNotifications />
         <Routes>
-          {/* 
-                List of routes with respective views
-            */}
-          <Route path="/signin" element={<SignIn />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/games/spellingLetters" element={<SpellingLetters />} />
-          <Route path="/games/wordle" element={<Wordle />} />
-          <Route path="/games/spellingWords" element={<SpellingWords />} />
-          <Route path="/games/hangMan" element={<HangMan />} />
-          <Route path="/leaderboard" element={<Leaderboard />} />
-          <Route path="/" element={<Home />} />
-          <Route path="/games" element={<Games />} />
-          <Route path="/about" element={<About />} />
+          {routes.map((route, i) => (
+            <Route {...route} key={i}></Route>
+          ))}
         </Routes>
-      </div>
+      </Suspense>
     </Router>
   );
 }

@@ -3,10 +3,15 @@ import { ByGames } from "./components/GamesTable";
 import { ByTime } from "./components/TimeTable";
 import { useEffect, useState } from "react";
 import { useAppDispatch } from "../../app/hooks";
-import { getscoresAsync, gettodayAsync, getweeklyAsync, getyesterdayAsync } from "./leaderboardSlice";
+import {
+  getscoresAsync,
+  gettodayAsync,
+  getweeklyAsync,
+  getyesterdayAsync,
+} from "./leaderboardSlice";
 import { getAllGamesAsync } from "../games/gamesSlice";
 
-export function Leaderboard() {
+export default function Leaderboard() {
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(getAllGamesAsync());
@@ -19,8 +24,8 @@ export function Leaderboard() {
     <div>
       <h1 className={styles.title}>Leaderboards</h1>
       <div className={styles.tables}>
-          <ByGames />
-          <ByTime />
+        <ByGames />
+        <ByTime />
       </div>
     </div>
   );
