@@ -1,0 +1,27 @@
+.mission {
+  font-size: xxx-large;
+}
+
+.paragraph {
+  text-align: center;
+  font-size: xx-large;
+  max-width: 50rem;
+}
+
+.signUpMenu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.button {
+  border: none;
+  cursor: pointer;
+  font-size: 1.5em;
+  background-color: var(--pinkred);
+  border-radius: 100px;
+  border: 2px solid #000000;
+  padding-left: 5%;
+  padding-right: 5%;
+}

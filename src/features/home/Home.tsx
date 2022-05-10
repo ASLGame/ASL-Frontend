@@ -1,88 +1,65 @@
-import { FunctionComponent, useEffect } from "react";
-import styles from "./home.module.css";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { getNewestGameAsync, getFeaturedGamesAsync } from "./homeSlice";
-import NewGame from "./components/NewestGame/newestGame";
-import { useNavigate } from "react-router-dom";
-import FeaturedGames from "./components/FeaturedGames/featuredGames";
-import { selectSignIn } from "../signin/signinSlice";
+import { useEffect, useState } from "react";
+import { useAppDispatch } from "../../app/hooks";
+import { getFeaturedGamesAsync, getNewestGameAsync } from "./homeSlice";
 
-interface HomeProps {}
+import styles from "./Home.module.css";
+import NewestGame from "./components/NewestGame/newestGame";
+import FeaturedGameList from "./components/FeaturedGameList/FeaturedGameList";
+import Info from "./components/Info/Info";
 
-const Home: FunctionComponent<HomeProps> = () => {
-  const navigate = useNavigate();
+export default function Home2() {
   const dispatch = useAppDispatch();
-  const isAuth = useAppSelector(selectSignIn);
+  const [width, setWidth] = useState(window.innerWidth);
+  const [height, setHeight] = useState(window.innerHeight);
+  console.log(height);
 
   useEffect(() => {
     dispatch(getNewestGameAsync());
     dispatch(getFeaturedGamesAsync());
   }, [dispatch]);
 
+  useEffect(() => {
+    const handleResize = () => {
+      setWidth(window.innerWidth);
+      setHeight(window.innerHeight);
+    };
+    window.addEventListener("resize", handleResize);
+  });
+
   return (
     <>
-      <section
-        className={
-          window.innerHeight > 800 ? styles.container : styles.containerPhone
-        }
-      >
-        <div className={styles.top}>
-          <div className={styles.left}>
-            <NewGame />
-          </div>
-          <div className={styles.right}>
-            <FeaturedGames />
-          </div>
-        </div>
-        <div className={styles.bottom}>
-          <div className={styles.left}>
-            <h1
-              style={{
-                textAlign: "center",
-                fontSize: "2.5em",
-                marginBottom: "0px",
-                marginTop: "10%",
-              }}
-            >
-              Mission
-            </h1>
-            <p className={styles.paragraph}>
-              Teach the basics of ASL and spread awareness of the community, all
-              while having fun and competing with other users.
-            </p>
-          </div>
-          {!isAuth ? (
-            <div className={styles.right}>
-              <p
-                style={{
-                  textAlign: "center",
-                  fontSize: "1.5em",
-                  marginTop: "10%",
-                }}
-              >
-                Want to have fun and learn?
-              </p>
-              <button
-                className={styles.button}
-                onClick={() => navigate("/signin")}
-              >
-                Sign In
-              </button>
-              <p>or</p>
-              <button
-                className={styles.button}
-                onClick={() => navigate("/signup")}
-              >
-                Sign Up
-              </button>
+      {width > 800 ? (
+        height > 1100 ? (
+          <div className={styles.bigContainer}>
+            <div className={styles.left}>
+              <h1>Newest Games</h1>
+              <NewestGame />
+              <FeaturedGameList />
             </div>
-          ) : (
-            ""
-          )}
+            <div className={styles.right}>
+              <Info />
+            </div>
+          </div>
+        ) : (
+          <div className={styles.container}>
+            <div className={styles.left}>
+              <h1>Newest Games</h1>
+              <NewestGame />
+              <FeaturedGameList />
+            </div>
+            <div className={styles.right}>
+              <Info />
+            </div>
+          </div>
+        )
+      ) : (
+        <div className={styles.home}>
+          <h1>Newest Games</h1>
+          <NewestGame />
+          <FeaturedGameList />
+          <Info />
         </div>
-      </section>
+      )}
     </>
   );
-};
-
-export default Home;
+}
