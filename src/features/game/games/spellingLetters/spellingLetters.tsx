@@ -171,6 +171,9 @@ const SpellingLetters: FunctionComponent = () => {
       timer = 3;
     }
     setTimer(timer);
+    setHintShowed(false);
+    Store.removeAllNotifications();
+
   };
 
   function MyNotification() {
