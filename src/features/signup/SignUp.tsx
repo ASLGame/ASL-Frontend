@@ -54,6 +54,7 @@ export default function SignUp() {
       </div>
     );
   }
+
   const passwordNotMatchNotification = () => {
     return (
       <div

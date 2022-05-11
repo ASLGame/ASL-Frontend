@@ -43,6 +43,10 @@ export default function SignIn() {
   };
 
   useEffect(() => {
+    setTimeout(() => Store.removeAllNotifications(), 3000);
+  }, []);
+
+  useEffect(() => {
     if (auth) {
       navigate("/");
     }
@@ -91,7 +95,7 @@ export default function SignIn() {
             </Link>
           </a>
           <a>
-            <Link to="/forgotpassword">Forgot Password?</Link>
+            <Link to="/forgot-password">Forgot Password?</Link>
           </a>
         </div>
         <div className={styles.button_container}>

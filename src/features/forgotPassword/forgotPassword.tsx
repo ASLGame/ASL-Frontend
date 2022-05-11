@@ -1,97 +1,126 @@
 import React, { useEffect, useState } from "react";
 import { Store } from "react-notifications-component";
-import { Link, useNavigate } from "react-router-dom";
-import { useAppDispatch } from "../../app/hooks";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import {
+  initForgotPasswordAsync,
+  selectForgotPassword,
+  setEmailSent,
+} from "../forgotPasswordID/forgotPasswordSliceID";
+
 import styles from "./forgotPassword.module.css";
 
 export default function ForgotPassword() {
-  const [password, setPassword] = useState<string>("");
-  const [repassword, setRepassword] = useState<string>("");
+  const [email, setEmail] = useState("");
 
-  const navigate = useNavigate();
-  const dispatch = useAppDispatch();
+  const dispatch = useDispatch();
+  const { emailSent, emailSentState } = useSelector(selectForgotPassword);
 
-  const validatePassword = () => {
-    let text: string[] = [];
-    let index = 1;
-
-    if (password.length < 8) {
-      text.push(`${index++}. Password should be longer than 8 characters.`);
-    }
-    if (!password.match("[A-Z]")) {
-      text.push(
-        `${index++}. Password should should contain at least one capital letter.`
-      );
-    }
-    if (!password.match("[a-z]")) {
-      text.push(
-        `${index++}. Password should should contain at least one lowercase letter.`
-      );
-    }
-    if (!password.match("[0-9]")) {
-      text.push(
-        `${index++}. Password should should contain at least one number.`
-      );
-    }
-    if (!password.match("[@#$%^&*()!?+-.*&%]")) {
-      text.push(
-        `${index++}. Password should should contain at least one special character.`
-      );
-    }
-    if (text.length > 0) {
-      //   Store.addNotification({
-      //     content: passwordValidationNotification(text),
-      //     insert: "top",
-      //     container: "top-right",
-      //     animationIn: ["animated", "fadeIn"],
-      //     animationOut: ["animated", "fadeOut"],
-      //     dismiss: {
-      //       duration: 6000,
-      //       pauseOnHover: true,
-      //     },
-      //   });
-      return false;
-    }
-    return true;
+  const submit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    dispatch(initForgotPasswordAsync(email));
   };
+
+  const emailNotFoundNotification = () => {
+    return (
+      <div
+        style={{
+          width: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: "#9698D6",
+          borderLeft: "8px solid #4D4CAC",
+        }}
+      >
+        <div>
+          <h3>Email is not registered</h3>
+          <p>Please re-enter email.</p>
+        </div>
+      </div>
+    );
+  };
+
+  const emailSentNotification = () => {
+    return (
+      <div
+        style={{
+          width: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: "#9698D6",
+          borderLeft: "8px solid #4D4CAC",
+        }}
+      >
+        <div>
+          <h3>Email sent</h3>
+          <p>Please check inbox.</p>
+        </div>
+      </div>
+    );
+  };
+
+  useEffect(() => {
+    if (!emailSent && emailSentState === "rejected") {
+      Store.addNotification({
+        content: emailNotFoundNotification,
+        insert: "top",
+        container: "top-right",
+        animationIn: ["animated", "fadeIn"],
+        animationOut: ["animated", "fadeOut"],
+        dismiss: {
+          duration: 3000,
+        },
+      });
+      dispatch(setEmailSent({ emailSent: false, emailSentState: "idle" }));
+    }
+    if (emailSent && emailSentState === "idle") {
+      Store.addNotification({
+        content: emailSentNotification,
+        insert: "top",
+        container: "top-right",
+        animationIn: ["animated", "fadeIn"],
+        animationOut: ["animated", "fadeOut"],
+        dismiss: {
+          duration: 3000,
+        },
+      });
+      dispatch(setEmailSent({ emailSent: false, emailSentState: "idle" }));
+    }
+  }, [emailSent, emailSentState, dispatch]);
 
   return (
     <div className={styles.container + " " + styles.background}>
       <div className={styles.signupBoxv2}>
         <div className={styles.heading}>
-          <h1 className={styles.h1}>Reset Password</h1>
+          <h1 className={styles.h1}>Enter Email</h1>
+          <p style={{ textAlign: "center", marginBottom: "3rem" }}>
+            Check email for a link to reset password. It may take up to 5
+            minutes.
+          </p>
         </div>
-        <form className={styles.form}>
-          <label className={styles.label}>Password</label>
+        <form className={styles.form} onSubmit={submit}>
+          <label className={styles.label}>Email</label>
           <input
             required
             className={styles.input}
-            type="password"
-            id="password"
-            name="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <label className={styles.label}>Re-Enter Password</label>
-          <input
-            required
-            className={styles.input}
-            type="password"
-            id="repassword"
-            name="repassword"
-            value={repassword}
-            onChange={(e) => setRepassword(e.target.value)}
+            type="email"
+            id="email"
+            name="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <div className={styles.link}>
-            <a>
+            <p>
               <Link to="/signin">
                 Already have an account? <br /> Sign In
               </Link>
-            </a>
+            </p>
           </div>
           <div className={styles.button_container}>
             <button type="submit" className={styles.signupButton}>
-              Sign Up
+              Send Email
             </button>
           </div>
         </form>

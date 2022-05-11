@@ -11,7 +11,6 @@ export default function Home2() {
   const dispatch = useAppDispatch();
   const [width, setWidth] = useState(window.innerWidth);
   const [height, setHeight] = useState(window.innerHeight);
-  console.log(height);
 
   useEffect(() => {
     dispatch(getNewestGameAsync());
