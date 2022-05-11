@@ -478,8 +478,6 @@ const HangMan: FunctionComponent = () => {
                 See instructions
               </button>
             </div>
-            <p>{currentWord}</p>
-            <p>{timer}</p>
           </section>
         </div>
       </>

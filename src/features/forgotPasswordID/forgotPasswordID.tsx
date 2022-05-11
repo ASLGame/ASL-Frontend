@@ -184,7 +184,7 @@ export default function ForgotPassword() {
     if (auth) {
       dispatch(signOut());
     }
-  }, []);
+  }, [id, auth, dispatch]);
 
   useEffect(() => {
     if (!resetPassword && resetPasswordState === "rejected") {

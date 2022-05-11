@@ -544,8 +544,6 @@ const Wordle: FunctionComponent = () => {
                 currentRowIndex={currentRowIndex}
                 setIsCurrentRowFull={setIsCurrentRowFull}
               ></GameSide>
-              <p>{currentWord}</p>
-              <p>{timer}</p>
               <button
                 style={{
                   alignSelf: "center",
