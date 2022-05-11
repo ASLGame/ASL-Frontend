@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useAppDispatch } from "../../app/hooks";
 import { getFeaturedGamesAsync, getNewestGameAsync } from "./homeSlice";
 
-import styles from "./Home.module.css";
+import styles from "./home.module.css";
 import NewestGame from "./components/NewestGame/newestGame";
 import FeaturedGameList from "./components/FeaturedGameList/FeaturedGameList";
 import Info from "./components/Info/Info";
