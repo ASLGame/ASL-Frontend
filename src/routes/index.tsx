@@ -23,7 +23,7 @@ const Leaderboard = lazy(() => import("../features/leaderboard/leaderboard"));
 const Profile = lazy(() => import("../features/profile/Profile"));
 const SignIn = lazy(() => import("../features/signin/SignIn"));
 const SignUp = lazy(() => import("../features/signup/SignUp"));
-const HandSign = lazy(() => import("../features/HandSigns/HandSign"))
+const HandSign = lazy(() => import("../features/HandSigns/HandSign"));
 const ForgotPasswordID = lazy(
   () => import("../features/forgotPasswordID/forgotPasswordID")
 );
@@ -51,7 +51,7 @@ const routes: readonly R[] = [
   { element: <Profile />, name: "Profile", path: Path.Profile },
   { element: <SignIn />, name: "SignIn", path: Path.SignIn },
   { element: <SignUp />, name: "SignUp", path: Path.SignUp },
-  { element: <HandSign/>, name:"HandSign", path: Path.HandSigns}
+  { element: <HandSign />, name: "HandSign", path: Path.HandSigns },
   {
     element: <ForgotPasswordID />,
     name: "ForgotPasswordID",
