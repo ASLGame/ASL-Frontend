@@ -116,6 +116,9 @@ const NavBar = (props: {
         <p style={{ cursor: "pointer" }} onClick={() => navigate("/about")}>
           About Us
         </p>,
+        <p style={{ cursor: "pointer" }} onClick={() => navigate("/HandSigns")}>
+          Help
+        </p>,
       ];
       return [
         links,
