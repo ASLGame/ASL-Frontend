@@ -9,7 +9,6 @@ export default function FeaturedGameList() {
   const featuredGames = useSelector(selectFeaturedGames);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  console.log(featuredGames);
 
   if (featuredGamesState !== "loading" && featuredGames) {
     return (
