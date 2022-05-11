@@ -100,7 +100,7 @@ const NavBar = (props: {
       </p>,
       <p></p>,
       <p style={{ cursor: "pointer" }} onClick={() => navigate("/HandSigns")}>
-        Hand Signs
+        Help
       </p>
 
     ];
