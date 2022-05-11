@@ -12,7 +12,7 @@ export default function SignIn() {
   const signInLoading = useAppSelector(selectSignInLoading);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const [username, setUsername] = useState("");
+  const [usernameOrEmail, setUsernameOrEmail] = useState("");
   const [password, setPassword] = useState("");
 
   function signInErrorNotification() {
@@ -34,6 +34,17 @@ export default function SignIn() {
       </div>
     );
   }
+  const signIn = () => {
+    usernameOrEmail.includes("@")
+      ? dispatch(signinAsync({ email: usernameOrEmail, password: password }))
+      : dispatch(
+          signinAsync({ username: usernameOrEmail, password: password })
+        );
+  };
+
+  useEffect(() => {
+    setTimeout(() => Store.removeAllNotifications(), 3000);
+  }, []);
 
   useEffect(() => {
     if (auth) {
@@ -60,13 +71,13 @@ export default function SignIn() {
       <div className={styles.signinBox}>
         <h1 className={styles.h1}>Sign In</h1>
         <form className={styles.form}>
-          <label className={styles.label}>Username</label>
+          <label className={styles.label}>Username or Email</label>
           <input
             className={styles.input}
             type="text"
-            id="username"
-            name="username"
-            onChange={(e) => setUsername(e.target.value)}
+            id="usernameOrEmail"
+            name="usernameOrEmail"
+            onChange={(e) => setUsernameOrEmail(e.target.value)}
           />
           <label className={styles.label}>Password</label>
           <input
@@ -84,17 +95,11 @@ export default function SignIn() {
             </Link>
           </a>
           <a>
-            <Link to="/forgotpassword">Forgot Password?</Link>
+            <Link to="/forgot-password">Forgot Password?</Link>
           </a>
         </div>
         <div className={styles.button_container}>
-          <ButtonSignInUp
-            onClick={() => {
-              dispatch(signinAsync({ username: username, password: password }));
-            }}
-          >
-            Sign In
-          </ButtonSignInUp>
+          <ButtonSignInUp onClick={signIn}>Sign In</ButtonSignInUp>
         </div>
       </div>
     </div>

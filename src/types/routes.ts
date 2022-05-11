@@ -10,5 +10,7 @@ export enum Path {
   Profile = "/profile",
   SignIn = "/signin",
   SignUp = "/signup",
-  HandSigns = "/handSigns"
+  HandSigns = "/handSigns",
+  ForgotPasswordID = "/forgot-password/:id",
+  ForgotPassword = "/forgot-password",
 }

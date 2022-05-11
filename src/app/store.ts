@@ -10,6 +10,7 @@ import userProfile from "../features/profile/profileSlice";
 import gamesReducer from "../features/games/gamesSlice";
 import getscoreReducer from "../features/leaderboard/leaderboardSlice";
 import gameReducer from "../features/game/gameSlice";
+import forgotIDReducer from "../features/forgotPasswordID/forgotPasswordSliceID";
 
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
@@ -21,6 +22,7 @@ const reducers = combineReducers({
   games: gamesReducer,
   userProfile: userProfile,
   game: gameReducer,
+  forgotPassword: forgotIDReducer,
 });
 
 const persistConfig = {
