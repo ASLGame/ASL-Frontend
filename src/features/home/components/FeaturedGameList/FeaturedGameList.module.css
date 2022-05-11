@@ -1,0 +1,37 @@
+.featuredGames {
+  display: flex;
+  flex-direction: column;
+  margin-top: 3rem;
+}
+.title {
+  align-self: center;
+}
+
+.featuredGame {
+  display: flex;
+  justify-content: flex-start;
+  max-width: 50rem;
+  border: 2px solid black;
+  margin-bottom: 0.5rem;
+  border-radius: 3rem;
+  padding: 0.5rem 0.5rem 1rem 2rem;
+  align-items: center;
+  background-color: var(--gray);
+  font-size: larger;
+  cursor: pointer;
+}
+
+.image {
+  width: 7rem;
+  height: 7rem;
+  margin-right: 1rem;
+}
+
+.gameName {
+  width: 10rem;
+}
+
+.description {
+  max-width: 20rem;
+  margin-left: 2rem;
+}

@@ -1,71 +1,51 @@
 .container {
-  overflow-y: hidden;
   display: flex;
-  height: 91%;
-  width: 100%;
-  flex-direction: column;
+  background-image: url("./blob-scatter-haikei\ \(4\).svg");
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-  background-image: url("./layered-waves-haikei.svg");
+  align-items: center;
+  overflow-y: scroll;
 }
 
-.containerPhone {
-  overflow-y: hidden;
+.bigContainer {
   display: flex;
-  height: 105%;
-  width: 100%;
-  flex-direction: column;
+  background-image: url("./blob-scatter-haikei\ \(4\).svg");
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-  background-image: url("./layered-waves-haikei.svg");
-}
-
-.top {
-  display: flex;
-  height: 60%;
-  width: 100%;
-  min-height: 300px;
-}
-
-.bottom {
-  display: flex;
-  height: 40%;
-  margin-top: 9%;
+  align-items: center;
+  height: calc(100vh - 5.5rem);
+  overflow-y: scroll;
 }
 
 .left {
   display: flex;
-  width: 50%;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  flex: 1;
+  width: 50%;
+  background-image: url("./blob-scatter-haikei\ \(1\).svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  min-height: fit-content;
 }
 
 .right {
   display: flex;
+  flex-direction: column;
   width: 50%;
+  justify-content: center;
+  align-items: center;
+  background-image: url("./blob-scatter-haikei\ \(3\).svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+.home {
+  display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  flex: 1;
-}
-
-.button {
-  border: none;
-  cursor: pointer;
-  font-size: 1.5em;
-  background-color: var(--pinkred);
-  border-radius: 100px;
-  border: 2px solid #000000;
-  padding-left: 5%;
-  padding-right: 5%;
-}
-
-.paragraph {
-  text-align: center;
-  width: 90%;
-  font-size: 1.1em;
+  width: 100%;
 }

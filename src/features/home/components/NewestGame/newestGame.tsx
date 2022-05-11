@@ -15,7 +15,7 @@ const NewestGame: FunctionComponent<NewestGameProps> = () => {
   if (newestGameState !== "loading") {
     return (
       <div className={styles.container}>
-        <h2 className={styles.title}>Newest Game</h2>
+        {/* <h2 className={styles.title}>Newest Game</h2> */}
         <div
           className={
             window.innerHeight > 800

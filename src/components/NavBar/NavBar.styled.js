@@ -23,6 +23,7 @@ export const Navbar = styled.nav`
   display: flex;
   align-items: center;
   width: 100%;
+  height: 5.5rem;
   a {
     color: white;
     text-decoration: none;
