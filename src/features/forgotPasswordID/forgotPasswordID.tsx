@@ -13,6 +13,7 @@ import {
   setIdExist,
   setResetPassword,
 } from "./forgotPasswordSliceID";
+import { selectSignIn, signOut } from "../signin/signinSlice";
 
 export default function ForgotPassword() {
   const [password, setPassword] = useState<string>("");
@@ -23,6 +24,7 @@ export default function ForgotPassword() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const forgotPassword = useSelector(selectForgotPassword);
+  const auth = useSelector(selectSignIn);
   const { resetPassword, resetPasswordState, idExist, idExistState } =
     forgotPassword;
 
@@ -178,6 +180,9 @@ export default function ForgotPassword() {
   useEffect(() => {
     if (id) {
       dispatch(getForgotPasswordAsync(id));
+    }
+    if (auth) {
+      dispatch(signOut());
     }
   }, []);
 
