@@ -12,6 +12,8 @@ import {
   selectGame,
   updateAccountStatAsync,
   accountStat,
+  getGameAchievementsAsync,
+  getStatAsync,
 } from "../../gameSlice";
 import { Game } from "../../../../types/Game";
 import { selectSignIn, selectUser } from "../../../signin/signinSlice";
@@ -52,6 +54,10 @@ const Wordle: FunctionComponent = () => {
   const user = useSelector(selectUser);
   const isAuthorized = useSelector(selectSignIn);
   const dispatch = useDispatch();
+  const getStats = async (game: { type: string }) => {
+    return dispatch(getStatAsync(game.type));
+  };
+
   //@ts-ignore
   const game: Game = useSelector(selectGame).game;
   const stats = useSelector(selectGame).stats;
@@ -351,10 +357,13 @@ const Wordle: FunctionComponent = () => {
   ]);
 
   useEffect(() => {
-    if (!game) {
-      dispatch(getGameAsync("Wordle"));
-    }
-  }, [game, dispatch]);
+    
+    dispatch(getGameAsync("Wordle"));
+    
+    getStats(game);
+    dispatch(getGameAchievementsAsync(game.id));
+    
+  }, []);
 
   useEffect(() => {
     if (isGameLost || isGameWon) {

@@ -14,6 +14,8 @@ import {
   selectGame,
   updateAccountStatAsync,
   accountStat,
+  getStatAsync,
+  getGameAchievementsAsync,
 } from "../../gameSlice";
 import { Game } from "../../../../types/Game";
 import { selectSignIn, selectUser } from "../../../signin/signinSlice";
@@ -51,6 +53,9 @@ const SpellingWords: FunctionComponent = () => {
   const accountStatLoading = useSelector(selectGame).accountStatLoading;
   const accountStat = useSelector(selectGame).accountStat;
   const navigate = useNavigate();
+  const getStats = async (game: { type: string }) => {
+    return dispatch(getStatAsync(game.type));
+  };
 
   const resetGame = () => {
     setHintsUsed(0);
@@ -338,9 +343,12 @@ const SpellingWords: FunctionComponent = () => {
 
   // If game hasn't loaded, fetch it.
   useEffect(() => {
-    if (!game) {
-      dispatch(getGameAsync("Spelling Words"));
-    }
+    
+    dispatch(getGameAsync("Spelling Words"));
+    
+
+    getStats(game);
+    dispatch(getGameAchievementsAsync(game.id));
   }, []);
 
   // Check if letter has been spelled correctly.

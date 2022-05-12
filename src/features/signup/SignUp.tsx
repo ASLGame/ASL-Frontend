@@ -217,7 +217,7 @@ export default function SignUp() {
               id="username"
               name="username"
               value={username}
-              pattern="^(?!.*[-_.]{2,})(?=^[^-_.].*[^-_.]$)[\w.\s-]{3,9}$"
+              pattern="^(?!.*[-_.]{2,})(?=^[^-_.].*[^-_.]$)[\w.\s-]{3,20}$"
               title="Must only contain letters, numbers or non-sequential special characters(. _ -)."
               onChange={(e) => setUsername(e.target.value.toLowerCase())}
             />

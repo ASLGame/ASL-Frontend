@@ -1,7 +1,8 @@
 import { FunctionComponent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { setGame } from "../../../game/gameSlice";
+import { getGameAchievementsAsync, getStatAsync, setGame } from "../../../game/gameSlice";
+import { selectSignIn } from "../../../signin/signinSlice";
 import { selectNewestGame, selectNewestGameState } from "../../homeSlice";
 import styles from "./newestGame.module.css";
 
@@ -12,6 +13,12 @@ const NewestGame: FunctionComponent<NewestGameProps> = () => {
   const dispatch = useDispatch();
   const newestGame = useSelector(selectNewestGame)!;
   const newestGameState = useSelector(selectNewestGameState)!;
+  const isAuthorized = useSelector(selectSignIn);
+  const getStats = async (game: { type: string }) => {
+    return dispatch(getStatAsync(game.type));
+  };
+
+
   if (newestGameState !== "loading") {
     return (
       <div className={styles.container}>
@@ -27,6 +34,10 @@ const NewestGame: FunctionComponent<NewestGameProps> = () => {
           <div
             onClick={() => {
               dispatch(setGame(newestGame));
+              if (isAuthorized) {
+                getStats(newestGame);
+                dispatch(getGameAchievementsAsync(newestGame.id));
+              }
               navigate(`games/${newestGame.name.split(" ").join("")}`);
             }}
             className={styles.imageContainer}

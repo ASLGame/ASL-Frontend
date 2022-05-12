@@ -13,6 +13,8 @@ import {
   selectGame,
   updateAccountStatAsync,
   accountStat,
+  getStatAsync,
+  getGameAchievementsAsync,
 } from "../../gameSlice";
 import { Game } from "../../../../types/Game";
 import { selectSignIn, selectUser } from "../../../signin/signinSlice";
@@ -51,6 +53,10 @@ const HangMan: FunctionComponent = () => {
   const [correctLetters, setCorrectLetters] = useState<Array<String>>([]);
   const [playable, setPlayable] = useState(false);
   const [difficulty, setDifficulty] = useState<String>();
+
+  const getStats = async (game: { type: string }) => {
+    return dispatch(getStatAsync(game.type));
+  };
 
   const renderWord = (word: String | undefined) => {
     if (word !== "undefined") {
@@ -149,9 +155,13 @@ const HangMan: FunctionComponent = () => {
     }
   };
   useEffect(() => {
-    if (!game) {
-      dispatch(getGameAsync("Hang Man"));
-    }
+  
+    dispatch(getGameAsync("Hang Man"));
+    
+    
+    getStats(game);
+    dispatch(getGameAchievementsAsync(game.id));
+    
   }, []);
 
   function MyNotification() {

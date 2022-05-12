@@ -14,6 +14,8 @@ import {
   selectGame,
   updateAccountStatAsync,
   accountStat,
+  getStatAsync,
+  getGameAchievementsAsync,
 } from "../../gameSlice";
 import { Game } from "../../../../types/Game";
 import { selectSignIn, selectUser } from "../../../signin/signinSlice";
@@ -50,6 +52,9 @@ const SpellingLetters: FunctionComponent = () => {
   const stats = useSelector(selectGame).stats;
   const navigate = useNavigate();
   const [difficulty, setDifficulty] = useState<String>();
+  const getStats = async (game: { type: string }) => {
+    return dispatch(getStatAsync(game.type));
+  };
 
   const resetGame = () => {
     setLettersSpelled([]);
@@ -240,9 +245,12 @@ const SpellingLetters: FunctionComponent = () => {
   }
 
   useEffect(() => {
-    if (!game) {
-      dispatch(getGameAsync("Spelling Letters"));
-    }
+    
+    dispatch(getGameAsync("Spelling Letters"));
+    
+
+    getStats(game);
+    dispatch(getGameAchievementsAsync(game.id));
   }, []);
 
   useEffect(() => {
