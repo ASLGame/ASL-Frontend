@@ -15,12 +15,26 @@
   margin-bottom: 15px;
 }
 
+.tab_container_small {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 40px;
+  margin-bottom: 15px;
+}
+
 .achievement_name {
   margin-bottom: 8px;
 }
 .achievement_container {
-  width: 80%;
+  width: 100%;
   margin-bottom: 20px;
+}
+
+.achievement_container_small {
+  width: 100%;
+  margin-bottom: 20px;
+  margin-left: 30px;
 }
 
 .progress_bar_wrapper {
@@ -32,12 +46,32 @@
   margin-right: 8px;
 }
 
+/* .completed_bar {
+  height: 45px;
+  background: rgb(255, 128, 139) none repeat scroll 0% 0%;
+  transition: width 1s ease-in-out 0s;
+  border-radius: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  border-radius: 20px;
+  background-color: var(--pinkred);
+} */
+
 .tab_list {
   display: flex;
   justify-content: space-evenly;
   list-style-type: none;
   padding: 0;
   margin-top: 20px;
+}
+
+.tab_list_small {
+  display: flex;
+  list-style-type: none;
+  padding: 0;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .pagination {

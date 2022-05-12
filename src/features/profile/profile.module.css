@@ -7,7 +7,7 @@
 .bigContainer {
   display: flex;
   height: calc(100vh - 5.5rem);
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 .left {
