@@ -219,7 +219,7 @@ export default function SignUp() {
               value={username}
               pattern="^(?!.*[-_.]{2,})(?=^[^-_.].*[^-_.]$)[\w.\s-]{3,9}$"
               title="Must only contain letters, numbers or non-sequential special characters(. _ -)."
-              onChange={(e) => setUsername(e.target.value)}
+              onChange={(e) => setUsername(e.target.value.toLowerCase())}
             />
             <label className={styles.label}>Email</label>
             <input
@@ -229,7 +229,7 @@ export default function SignUp() {
               id="email"
               name="email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => setEmail(e.target.value.toLowerCase())}
             />
             <label className={styles.label}>Password</label>
             <input

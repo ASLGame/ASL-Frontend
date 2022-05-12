@@ -485,10 +485,15 @@ const Wordle: FunctionComponent = () => {
   }, [difficulty, letters, emptyRows, currentRow, currentWord, initEmptyRows]);
 
   useEffect(() => {
-    if (currentRowIndex === wordSize) {
+    if (
+      currentRow?.reduce(
+        (prev, curr) => prev + (curr ? (curr.letter ? 1 : 0) : 0),
+        0
+      ) === wordSize
+    ) {
       setIsCurrentRowFull(true);
     }
-  }, [isCurrentRowFull, currentRowIndex, wordSize]);
+  }, [isCurrentRowFull, currentRowIndex, wordSize, currentRow]);
 
   if (game) {
     return (

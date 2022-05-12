@@ -77,7 +77,7 @@ export default function SignIn() {
             type="text"
             id="usernameOrEmail"
             name="usernameOrEmail"
-            onChange={(e) => setUsernameOrEmail(e.target.value)}
+            onChange={(e) => setUsernameOrEmail(e.target.value.toLowerCase())}
           />
           <label className={styles.label}>Password</label>
           <input
