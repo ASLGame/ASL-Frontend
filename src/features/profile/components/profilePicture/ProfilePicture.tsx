@@ -14,6 +14,12 @@ export function ProfilePicture(props: ProfilePictureProps) {
   let editLabel;
   const uploadRef = useRef<HTMLInputElement>(null);
   const dispatch = useAppDispatch();
+  const [imageUploaded, setImageUploaded] = useState(false);
+  const [imgSrc, setImgSrc] = useState(
+    props.profilePicture
+      ? `${props.profilePicture}?${new Date().getTime()}`
+      : ""
+  );
 
   const onImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files === null) {
@@ -32,15 +38,22 @@ export function ProfilePicture(props: ProfilePictureProps) {
     }
 
     var form = new FormData();
-    form.append("userpic", e.target.files[0]);
-    await dispatch(
+    await form.append("userpic", e.target.files[0]);
+    dispatch(
       profilePictureUplaodAsync({
         form: form,
         uid: props.userID,
         username: props.userName,
       })
-    );
+    ).then(() => setImageUploaded(true));
   };
+
+  useEffect(() => {
+    if (imageUploaded) {
+      setImgSrc(`${props.profilePicture}?${new Date().getTime()}`);
+      setImageUploaded(false);
+    }
+  }, [imageUploaded, setImgSrc, props.profilePicture]);
 
   if (props.profilePicture) {
     editLabel = (
@@ -52,10 +65,7 @@ export function ProfilePicture(props: ProfilePictureProps) {
             type="file"
             accept="image/png, image/jpeg, image/jpg"
           />
-          <img
-            className={styles.image}
-            src={`${props.profilePicture}?${new Date().getTime()}`}
-          />
+          <img className={styles.image} alt="Profile" src={imgSrc} />
         </label>
       </div>
     );
