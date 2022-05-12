@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../../../../app/hooks";
 import {
   selectUser,
@@ -21,10 +21,10 @@ export interface userChanges {
 }
 
 export interface passwordChanges {
-  currentPassword: string,
-  newPassword: string,
-  reNewPassword: string
-  id: number
+  currentPassword: string;
+  newPassword: string;
+  reNewPassword: string;
+  id: number;
 }
 
 export function EditProfile() {
@@ -52,9 +52,19 @@ export function EditProfile() {
     currentPassword: "",
     newPassword: "",
     reNewPassword: "",
-    id: 0
-  } 
+    id: 0,
+  };
 
+  const [width, setWidth] = useState(window.innerWidth);
+  const [height, setHeight] = useState(window.innerHeight);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWidth(window.innerWidth);
+      setHeight(window.innerHeight);
+    };
+    window.addEventListener("resize", handleResize);
+  });
 
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -71,71 +81,240 @@ export function EditProfile() {
 
   const onSubmitPasswordChange = async (e: FormEvent) => {
     e.preventDefault();
-    passwordChanges.currentPassword = currentPassword
-    passwordChanges.newPassword = newPassword
-    passwordChanges.reNewPassword = reNewPassword
+    passwordChanges.currentPassword = currentPassword;
+    passwordChanges.newPassword = newPassword;
+    passwordChanges.reNewPassword = reNewPassword;
     passwordChanges.id = user?.account_id!;
     let res = await changePassword(passwordChanges);
     if (res === 1) {
       setSuccessfulPopUp(true);
     }
-  }
+  };
 
   return (
-    <div className={styles.container}>
-      {<SuccessPopup setSuccessfulPopUp={setSuccessfulPopUp} successfulPopUp={succesfulPopUp} />}
-      {<PasswordPopup onSubmit={onSubmitPasswordChange} reNewPassword={reNewPassword} setReNewPassword={setReNewPassword} newPassword={newPassword} setNewPassword={setNewPassword} currentPassword={currentPassword} setCurrentPassword={setCurrentPassword} setPasswordPopUp={setPasswordPopUp} passwordPopUp={passwordPopUp}/>}
-      <form className={styles.form} onSubmit={onSubmit}>
-        <label className={styles.label}>First Name</label>
-        <input
-          className={styles.input}
-          type="text"
-          id="firstname"
-          name="firstname"
-          value={firstname}
-          onChange={(e) => setFirstname(e.target.value)}
-        />
-        <label className={styles.label}>Last Name</label>
-        <input
-          className={styles.input}
-          type="text"
-          id="lastname"
-          name="lastname"
-          value={lastname}
-          onChange={(e) => setLastname(e.target.value)}
-        />
-        <label className={styles.label}>Date of Birth</label>
-        <input
-          className={styles.input}
-          type="date"
-          id="dob"
-          name="dob"
-          value={dob}
-          onChange={(e) => setDob(e.target.value)}
-        />
-        <label className={styles.label}>Username</label>
-        <input
-          className={styles.input}
-          type="text"
-          id="username"
-          name="username"
-          value={username}
-          disabled
-        />
-        <label className={styles.label}>Email</label>
-        <input
-          className={styles.input}
-          type="email"
-          id="email"
-          name="email"
-          value={email}
-          disabled
-        />
-        <ButtonProfile>Save Changes</ButtonProfile>
-      </form>
-      <ButtonProfile onClick={() => setPasswordPopUp(true)}>
-        Change Password
-      </ButtonProfile>
-    </div>
+    <>
+      {width > 800 ? (
+        height > 1100 ? (
+          <div className={styles.container}>
+            {
+              <SuccessPopup
+                setSuccessfulPopUp={setSuccessfulPopUp}
+                successfulPopUp={succesfulPopUp}
+              />
+            }
+            {
+              <PasswordPopup
+                onSubmit={onSubmitPasswordChange}
+                reNewPassword={reNewPassword}
+                setReNewPassword={setReNewPassword}
+                newPassword={newPassword}
+                setNewPassword={setNewPassword}
+                currentPassword={currentPassword}
+                setCurrentPassword={setCurrentPassword}
+                setPasswordPopUp={setPasswordPopUp}
+                passwordPopUp={passwordPopUp}
+              />
+            }
+            <form className={styles.form} onSubmit={onSubmit}>
+              <label className={styles.label}>First Name</label>
+              <input
+                className={styles.input}
+                type="text"
+                id="firstname"
+                name="firstname"
+                value={firstname}
+                onChange={(e) => setFirstname(e.target.value)}
+              />
+              <label className={styles.label}>Last Name</label>
+              <input
+                className={styles.input}
+                type="text"
+                id="lastname"
+                name="lastname"
+                value={lastname}
+                onChange={(e) => setLastname(e.target.value)}
+              />
+              <label className={styles.label}>Date of Birth</label>
+              <input
+                className={styles.input}
+                type="date"
+                id="dob"
+                name="dob"
+                value={dob}
+                onChange={(e) => setDob(e.target.value)}
+              />
+              <label className={styles.label}>Username</label>
+              <input
+                className={styles.input}
+                type="text"
+                id="username"
+                name="username"
+                value={username}
+                disabled
+              />
+              <label className={styles.label}>Email</label>
+              <input
+                className={styles.input}
+                type="email"
+                id="email"
+                name="email"
+                value={email}
+                disabled
+              />
+              <ButtonProfile>Save Changes</ButtonProfile>
+            </form>
+            <ButtonProfile onClick={() => setPasswordPopUp(true)}>
+              Change Password
+            </ButtonProfile>
+          </div>
+        ) : (
+          <div className={styles.container}>
+            {
+              <SuccessPopup
+                setSuccessfulPopUp={setSuccessfulPopUp}
+                successfulPopUp={succesfulPopUp}
+              />
+            }
+            {
+              <PasswordPopup
+                onSubmit={onSubmitPasswordChange}
+                reNewPassword={reNewPassword}
+                setReNewPassword={setReNewPassword}
+                newPassword={newPassword}
+                setNewPassword={setNewPassword}
+                currentPassword={currentPassword}
+                setCurrentPassword={setCurrentPassword}
+                setPasswordPopUp={setPasswordPopUp}
+                passwordPopUp={passwordPopUp}
+              />
+            }
+            <form className={styles.form} onSubmit={onSubmit}>
+              <label className={styles.label}>First Name</label>
+              <input
+                className={styles.input}
+                type="text"
+                id="firstname"
+                name="firstname"
+                value={firstname}
+                onChange={(e) => setFirstname(e.target.value)}
+              />
+              <label className={styles.label}>Last Name</label>
+              <input
+                className={styles.input}
+                type="text"
+                id="lastname"
+                name="lastname"
+                value={lastname}
+                onChange={(e) => setLastname(e.target.value)}
+              />
+              <label className={styles.label}>Date of Birth</label>
+              <input
+                className={styles.input}
+                type="date"
+                id="dob"
+                name="dob"
+                value={dob}
+                onChange={(e) => setDob(e.target.value)}
+              />
+              <label className={styles.label}>Username</label>
+              <input
+                className={styles.input}
+                type="text"
+                id="username"
+                name="username"
+                value={username}
+                disabled
+              />
+              <label className={styles.label}>Email</label>
+              <input
+                className={styles.input}
+                type="email"
+                id="email"
+                name="email"
+                value={email}
+                disabled
+              />
+              <ButtonProfile>Save Changes</ButtonProfile>
+            </form>
+            <ButtonProfile onClick={() => setPasswordPopUp(true)}>
+              Change Password
+            </ButtonProfile>
+          </div>
+        )
+      ) : (
+        <div className={styles.containerSmall}>
+          {
+            <SuccessPopup
+              setSuccessfulPopUp={setSuccessfulPopUp}
+              successfulPopUp={succesfulPopUp}
+            />
+          }
+          {
+            <PasswordPopup
+              onSubmit={onSubmitPasswordChange}
+              reNewPassword={reNewPassword}
+              setReNewPassword={setReNewPassword}
+              newPassword={newPassword}
+              setNewPassword={setNewPassword}
+              currentPassword={currentPassword}
+              setCurrentPassword={setCurrentPassword}
+              setPasswordPopUp={setPasswordPopUp}
+              passwordPopUp={passwordPopUp}
+            />
+          }
+          <form className={styles.formSmall} onSubmit={onSubmit}>
+            <label className={styles.labelSmall}>First Name</label>
+            <input
+              className={styles.inputSmall}
+              type="text"
+              id="firstname"
+              name="firstname"
+              value={firstname}
+              onChange={(e) => setFirstname(e.target.value)}
+            />
+            <label className={styles.labelSmall}>Last Name</label>
+            <input
+              className={styles.inputSmall}
+              type="text"
+              id="lastname"
+              name="lastname"
+              value={lastname}
+              onChange={(e) => setLastname(e.target.value)}
+            />
+            <label className={styles.labelSmall}>Date of Birth</label>
+            <input
+              className={styles.inputSmall}
+              type="date"
+              id="dob"
+              name="dob"
+              value={dob}
+              onChange={(e) => setDob(e.target.value)}
+            />
+            <label className={styles.labelSmall}>Username</label>
+            <input
+              className={styles.inputSmall}
+              type="text"
+              id="username"
+              name="username"
+              value={username}
+              disabled
+            />
+            <label className={styles.labelSmall}>Email</label>
+            <input
+              className={styles.inputSmall}
+              type="email"
+              id="email"
+              name="email"
+              value={email}
+              disabled
+            />
+            <ButtonProfile>Save Changes</ButtonProfile>
+          </form>
+          <ButtonProfile onClick={() => setPasswordPopUp(true)}>
+            Change Password
+          </ButtonProfile>
+        </div>
+      )}
+    </>
   );
 }

@@ -11,6 +11,26 @@
   flex-shrink: 0;
 }
 
+.profile_circle_small {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 127px;
+  height: 127px;
+  margin-top: 30px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 8px solid var(--dark_purple);
+  flex-shrink: 0;
+}
+
+.image_small {
+  margin-top: 4.5px;
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+}
+
 .image {
   margin-top: 4.5px;
   width: 240px;
