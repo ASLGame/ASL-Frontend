@@ -1,7 +1,17 @@
 import styles from "./GameAchievementPanels.module.css";
-import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import { Tab, TabPanel } from "react-tabs";
 import { Game as GameType } from "../../../../../../../types/Game";
 import { Achievement } from "./Achievement";
+
+let windowWidth: number;
+let resizeTimer: NodeJS.Timeout;
+
+const handleResize = () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(function () {
+    windowWidth = window.innerWidth;
+  }, 100);
+};
 
 const generatePanels = (games: Array<GameType>) => {
   let totalGames = games.length;
@@ -18,14 +28,27 @@ const generatePanels = (games: Array<GameType>) => {
 };
 
 const generateTabs = (games: Array<GameType>) => {
+  window.addEventListener("resize", handleResize);
+
   let totalGames = games.length;
   var tabs = [];
   for (var i = 0; i < totalGames; i++) {
-    tabs.push(
-      <Tab selectedClassName={styles.tab_selected} className={styles.tab}>
-        {games[i].name}
-      </Tab>
-    );
+    if (windowWidth > 577 && windowWidth < 801) {
+      tabs.push(
+        <Tab
+          selectedClassName={styles.tab_selected}
+          className={styles.tab_medium}
+        >
+          {games[i].name}
+        </Tab>
+      );
+    } else {
+      tabs.push(
+        <Tab selectedClassName={styles.tab_selected} className={styles.tab}>
+          {games[i].name}
+        </Tab>
+      );
+    }
   }
   return tabs;
 };

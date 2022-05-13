@@ -23,6 +23,17 @@ export function Achievement(props: any) {
   const [itemOffset, setItemOffset] = useState(0);
   const itemsPerPage = 8;
 
+  const [width, setWidth] = useState(window.innerWidth);
+  const [height, setHeight] = useState(window.innerHeight);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWidth(window.innerWidth);
+      setHeight(window.innerHeight);
+    };
+    window.addEventListener("resize", handleResize);
+  });
+
   useEffect(() => {
     if (gid) {
       let res: UserAchievements[] = [];
@@ -62,77 +73,114 @@ export function Achievement(props: any) {
     setItemOffset(newOffset);
   };
 
-  function Achievements({
-    currentAchievements,
-  }: {
-    currentAchievements: UserAchievements[] | undefined;
-  }) {
-    return (
-      <>
-        {currentAchievements &&
-          currentAchievements.map((achievement) => {
-            if (achievement.game_id === gid) {
-              return (
-                <div className={styles.achievement_container}>
-                  <div className={styles.achievement_name}>
-                    {achievement.name}
-                  </div>
-                  <ProgressBar
-                    className={styles.progress_bar_wrapper}
-                    completed={
-                      achievement.value >= achievement.task
-                        ? String(achievement.task)
-                        : String(achievement.value)
-                    }
-                    maxCompleted={achievement.task}
-                    labelClassName={styles.progress_bar_label}
-                    baseBgColor="#F5F5FB"
-                    bgColor="#FF808B"
-                    animateOnRender={true}
-                    height="45px"
-                  />
-                </div>
-              );
-            } else {
-              return <></>;
-            }
-          })}
-      </>
-    );
-  }
-
-  // const renderAchievements = () => {
-  //   return achievements!.map((achievement) => {
-  //     if (achievement.game_id === gid) {
-  //       return (
-  //         <div className={styles.achievement_container}>
-  //           <div className={styles.achievement_name}>{achievement.name}</div>
-  //           <ProgressBar
-  //             className={styles.progress_bar_wrapper}
-  //             completed={
-  //               achievement.value >= achievement.task
-  //                 ? String(achievement.task)
-  //                 : String(achievement.value)
-  //             }
-  //             maxCompleted={achievement.task}
-  //             labelClassName={styles.progress_bar_label}
-  //             baseBgColor="#F5F5FB"
-  //             bgColor="#FF808B"
-  //             animateOnRender={true}
-  //             height="45px"
-  //           />
-  //         </div>
-  //       );
-  //     } else {
-  //       return <></>;
+  // useEffect(() => {
+  //   if (currentAchievements) {
+  //     var bars = Array.from(
+  //       document.querySelectorAll(
+  //         "[class*=achievements_completed_bar]"
+  //       ) as unknown as HTMLCollectionOf<HTMLElement>
+  //     );
+  //     for (var i = 0; i < bars.length; i++) {
+  //       console.log(bars[i]);
+  //       var width = Number(bars[i].lastChild?.textContent);
+  //       var bar = bars[i];
+  //       // bar.style.width =;
   //     }
-  //   });
-  // };
+  //   }
+  // }, [currentAchievements]);
 
   if (newAchievements !== "loading") {
     return (
       <>
-        <Achievements currentAchievements={currentAchievements} />
+        {width > 800
+          ? height > 1100
+            ? currentAchievements &&
+              currentAchievements.map((achievement) => {
+                if (achievement.game_id === gid) {
+                  return (
+                    <div className={styles.achievement_container}>
+                      <div className={styles.achievement_name}>
+                        {achievement.name}
+                      </div>
+                      <ProgressBar
+                        className={styles.progress_bar_wrapper}
+                        completed={
+                          achievement.value >= achievement.task
+                            ? String(achievement.task)
+                            : String(achievement.value)
+                        }
+                        maxCompleted={achievement.task}
+                        labelClassName={styles.progress_bar_label}
+                        baseBgColor="#F5F5FB"
+                        bgColor="#FF808B"
+                        animateOnRender={true}
+                        height="45px"
+                        completedClassName={styles.completed_bar}
+                      />
+                    </div>
+                  );
+                } else {
+                  return <></>;
+                }
+              })
+            : currentAchievements &&
+              currentAchievements.map((achievement) => {
+                if (achievement.game_id === gid) {
+                  return (
+                    <div className={styles.achievement_container}>
+                      <div className={styles.achievement_name}>
+                        {achievement.name}
+                      </div>
+                      <ProgressBar
+                        className={styles.progress_bar_wrapper}
+                        completed={
+                          achievement.value >= achievement.task
+                            ? String(achievement.task)
+                            : String(achievement.value)
+                        }
+                        maxCompleted={achievement.task}
+                        labelClassName={styles.progress_bar_label}
+                        baseBgColor="#F5F5FB"
+                        bgColor="#FF808B"
+                        animateOnRender={true}
+                        height="45px"
+                        completedClassName={styles.completed_bar}
+                      />
+                    </div>
+                  );
+                } else {
+                  return <></>;
+                }
+              })
+          : currentAchievements &&
+            currentAchievements.map((achievement) => {
+              if (achievement.game_id === gid) {
+                return (
+                  <div className={styles.achievement_container_small}>
+                    <div className={styles.achievement_name}>
+                      {achievement.name}
+                    </div>
+                    <ProgressBar
+                      className={styles.progress_bar_wrapper}
+                      completed={
+                        achievement.value >= achievement.task
+                          ? String(achievement.task)
+                          : String(achievement.value)
+                      }
+                      maxCompleted={achievement.task}
+                      labelClassName={styles.progress_bar_label}
+                      baseBgColor="#F5F5FB"
+                      bgColor="#FF808B"
+                      animateOnRender={true}
+                      height="45px"
+                      completedClassName={styles.completed_bar}
+                    />
+                  </div>
+                );
+              } else {
+                return <></>;
+              }
+            })}
         <ReactPaginate
           nextLabel="Next"
           pageClassName={styles.page_item}

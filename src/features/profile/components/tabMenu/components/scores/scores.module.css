@@ -23,6 +23,20 @@
   margin-bottom: 7.5px;
 }
 
+.attributes_name_small {
+  width: 10%;
+  margin-top: 25px;
+  margin-bottom: 7.5px;
+  padding-left: 20px;
+}
+
+.attributes_score_small {
+  width: 10%;
+  margin-top: 25px;
+  margin-bottom: 7.5px;
+  text-align: center;
+}
+
 .attributes_score {
   width: 10%;
   margin-top: 25px;
@@ -59,6 +73,14 @@
   justify-content: space-between;
   padding: 0px;
   width: 30%;
+}
+
+.pagination_small {
+  display: flex;
+  list-style: none;
+  justify-content: space-between;
+  padding: 0px;
+  width: 80%;
 }
 
 .active {
