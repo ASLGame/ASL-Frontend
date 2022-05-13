@@ -2,6 +2,12 @@
   cursor: pointer;
 }
 
+.tab_medium {
+  cursor: pointer;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
 .game_title {
   display: flex;
   justify-content: center;

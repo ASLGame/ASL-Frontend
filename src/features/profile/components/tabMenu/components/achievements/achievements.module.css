@@ -69,6 +69,7 @@
 .tab_list_small {
   display: flex;
   list-style-type: none;
+  justify-content: center;
   padding: 0;
   margin-left: 10px;
   margin-right: 10px;
