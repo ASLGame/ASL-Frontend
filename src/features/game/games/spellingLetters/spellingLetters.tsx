@@ -62,34 +62,7 @@ const SpellingLetters: FunctionComponent = () => {
     setIsScorePosted(false);
   };
 
-  const renderModal = () => {
-    if (game) {
-      return (
-        <div className={styles.word}>
-          <h2>Rules</h2>
-          <p className={styles.rules}>{game.rules}</p>
-          <br />
-          <h2>Description</h2>
-          <p className={styles.rules}>{game.description}</p>
-          <button
-            className={styles.backButton}
-            style={{ marginTop: "20%" }}
-            onClick={() => {
-              setIsModalOpen(false);
-              setIsTimerPaused(false);
-              let emptyBuffer: String[] = buffer;
-              while (emptyBuffer.length !== 0) {
-                emptyBuffer.shift();
-              }
-              setBuffer(emptyBuffer);
-            }}
-          >
-            Start Playing!
-          </button>
-        </div>
-      );
-    }
-  };
+
   const renderNextAndTimer = (next: String, timer: number) => {
     return (
       <>
