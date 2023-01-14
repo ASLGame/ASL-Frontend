@@ -1,9 +1,8 @@
 import { GraphModel } from "@tensorflow/tfjs";
-import {TFLiteModel} from '@tensorflow/tfjs-tflite';
 
 export interface Models {
-  L_Model: GraphModel | TFLiteModel | undefined;
-  R_Model: GraphModel | TFLiteModel | undefined;
+  L_Model: GraphModel | undefined;
+  R_Model: GraphModel | undefined;
 }
 
 export const Alphabet = {
