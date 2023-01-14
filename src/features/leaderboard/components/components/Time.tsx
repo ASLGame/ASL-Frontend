@@ -15,7 +15,7 @@ export function Today() {
   let counter = 0;
 
   const allscores = () => {
-    if (scores && scores.map) {
+    if (scores) {
       return scores!.map((score) => {
         return (
           <div key={score.id} style={{ width: "100%" }}>
