@@ -357,12 +357,12 @@ const Wordle: FunctionComponent = () => {
   ]);
 
   useEffect(() => {
-    
+
     dispatch(getGameAsync("Wordle"));
-    
+
     getStats(game);
     dispatch(getGameAchievementsAsync(game.id));
-    
+
   }, []);
 
   useEffect(() => {
@@ -515,11 +515,7 @@ const Wordle: FunctionComponent = () => {
           difficulty={difficulty}
         />
         <div className={styles.background + " " + styles.layer1}>
-          {isGameWon ? (
-            <Confetti width={window.innerWidth} height={window.innerHeight} />
-          ) : (
-            ""
-          )}
+
           <section id="container" className={styles.container}>
             <div className={styles.left}>
               <div className={styles.topGameBar}>

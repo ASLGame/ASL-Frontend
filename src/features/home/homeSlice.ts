@@ -27,6 +27,7 @@ export const getFeaturedGamesAsync = createAsyncThunk(
   "games/featured",
   async () => {
     const response = await featuredGames();
+    console.log(response.json)
     return response;
   }
 );

@@ -1,7 +1,7 @@
 import { apiURL } from "../../env/dev";
 
 const url = apiURL;
-
+console.log(apiURL);
 export async function newestGame() {
   const response = await fetch(url + "game/newest-game", {
     method: "GET",
@@ -18,8 +18,10 @@ export async function featuredGames() {
     method: "GET",
   });
   if (response.ok) {
+
     return response.json();
   } else {
+
     return response;
   }
 }

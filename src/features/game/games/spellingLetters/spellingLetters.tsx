@@ -140,12 +140,12 @@ const SpellingLetters: FunctionComponent = () => {
       emptyBuffer.shift();
     }
     setBuffer(emptyBuffer);
-    let timer:number = 0
-    if(difficulty === 'easy'){
+    let timer: number = 0
+    if (difficulty === 'easy') {
       timer = 10;
     } else if (difficulty === 'medium') {
       timer = 6;
-    } else{
+    } else {
       timer = 3;
     }
     setTimer(timer);
@@ -218,9 +218,9 @@ const SpellingLetters: FunctionComponent = () => {
   }
 
   useEffect(() => {
-    
+
     dispatch(getGameAsync("Spelling Letters"));
-    
+
 
     getStats(game);
     dispatch(getGameAchievementsAsync(game.id));
@@ -352,13 +352,13 @@ const SpellingLetters: FunctionComponent = () => {
 
 
   useEffect(() => {
-    if(difficulty){
-      let timer:number = 0
-      if(difficulty === 'easy'){
+    if (difficulty) {
+      let timer: number = 0
+      if (difficulty === 'easy') {
         timer = 10;
       } else if (difficulty === 'medium') {
         timer = 6;
-      } else{
+      } else {
         timer = 3;
       }
       setTimer(timer);
@@ -381,13 +381,9 @@ const SpellingLetters: FunctionComponent = () => {
           isModalOpen={isModalOpen}
           difficulty={difficulty}
           setIsTimerPaused={setIsTimerPaused}
-        />  
+        />
         <div className={styles.background + " " + styles.layer1}>
-          {lettersSpelled.length === 10 ? (
-            <Confetti width={window.innerWidth} height={window.innerHeight} />
-          ) : (
-            ""
-          )}
+
           <section id="container" className={styles.container}>
             <div className={styles.left}>
               <div className={styles.topGameBar}>

@@ -65,24 +65,24 @@ const SpellingWords: FunctionComponent = () => {
     setIsScorePosted(false);
     difficulty === "easy"
       ? setCurrentWord(
-          easyWords[Math.floor(Math.random() * (easyWords.length - 1))]
-        )
+        easyWords[Math.floor(Math.random() * (easyWords.length - 1))]
+      )
       : difficulty === "medium"
-      ? setCurrentWord(
+        ? setCurrentWord(
           mediumWords[Math.floor(Math.random() * (mediumWords.length - 1))]
         )
-      : setCurrentWord(
+        : setCurrentWord(
           hardWords[Math.floor(Math.random() * (hardWords.length - 1))]
         );
     setCurrentLetterIndex(0);
     setCurrentLetter(undefined);
   };
 
-  const displayGameRules = (rules:string) => {
-    return(
+  const displayGameRules = (rules: string) => {
+    return (
       <>
         {rules.split('/n').map((rule) => {
-         return <p className={styles.rules}>{rule}</p>
+          return <p className={styles.rules}>{rule}</p>
         })}
       </>
     )
@@ -343,9 +343,9 @@ const SpellingWords: FunctionComponent = () => {
 
   // If game hasn't loaded, fetch it.
   useEffect(() => {
-    
+
     dispatch(getGameAsync("Spelling Words"));
-    
+
 
     getStats(game);
     dispatch(getGameAchievementsAsync(game.id));
@@ -471,13 +471,13 @@ const SpellingWords: FunctionComponent = () => {
     if (difficulty && !currentWord) {
       difficulty === "easy"
         ? setCurrentWord(
-            easyWords[Math.floor(Math.random() * (easyWords.length - 1))]
-          )
+          easyWords[Math.floor(Math.random() * (easyWords.length - 1))]
+        )
         : difficulty === "medium"
-        ? setCurrentWord(
+          ? setCurrentWord(
             mediumWords[Math.floor(Math.random() * (mediumWords.length - 1))]
           )
-        : setCurrentWord(
+          : setCurrentWord(
             hardWords[Math.floor(Math.random() * (hardWords.length - 1))]
           );
     }
@@ -496,11 +496,7 @@ const SpellingWords: FunctionComponent = () => {
           {renderModal()}
         </Modal>
         <div className={styles.background + " " + styles.layer1}>
-          {lettersSpelled.length === currentWord?.length ? (
-            <Confetti width={window.innerWidth} height={window.innerHeight} />
-          ) : (
-            ""
-          )}
+
           <section id="container" className={styles.container}>
             <div className={styles.left}>
               <div className={styles.topGameBar}>

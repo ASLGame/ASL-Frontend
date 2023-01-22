@@ -155,13 +155,13 @@ const HangMan: FunctionComponent = () => {
     }
   };
   useEffect(() => {
-  
+
     dispatch(getGameAsync("Hang Man"));
-    
-    
+
+
     getStats(game);
     dispatch(getGameAchievementsAsync(game.id));
-    
+
   }, []);
 
   function MyNotification() {
@@ -421,9 +421,7 @@ const HangMan: FunctionComponent = () => {
         />
 
         <div className={styles.background + " " + styles.layer1}>
-          {checkWin() && !isModalOpen && (
-            <Confetti width={window.innerWidth} height={window.innerHeight} />
-          )}
+
           <section id="container" className={styles.container}>
             <div className={styles.left}>
               <div className={styles.topGameBar}>
