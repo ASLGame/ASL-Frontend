@@ -10,6 +10,7 @@ import "react-notifications-component/dist/theme.css";
 import { Suspense } from "react";
 import routes from "./routes";
 import Loader from "./components/Loader/Loader";
+import { Helmet } from "react-helmet";
 
 const navigation = {
   brand: { name: "Signy", to: "/" },
@@ -35,6 +36,17 @@ function App() {
 
   return (
     <Router>
+      <Helmet>
+        <title>Signy</title>
+        <meta
+          name="description"
+          content="Learn Sign Languege"
+        />
+        <meta
+          name="keywords"
+          content="sign, language, game"
+        />
+      </Helmet>
       <Suspense fallback={<Loader />}>
         <NavBar brand={brand} links={links} />
         <ReactNotifications />
@@ -44,6 +56,7 @@ function App() {
           ))}
         </Routes>
       </Suspense>
+
     </Router>
   );
 }
