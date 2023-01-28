@@ -17,13 +17,13 @@ export default function Info() {
       {!isAuth && (
         <div className={styles.signUpMenu}>
           <p className={styles.paragraph}>Want to have fun and learn?</p>
-          <button className={styles.button} onClick={() => navigate("/signin")}>
-            Sign In
+          <button className={styles.button} onClick={() => navigate("/games")}>
+            PLAY!
           </button>
-          <p className={styles.paragraph}>or</p>
+          {/* <p className={styles.paragraph}>or</p>
           <button className={styles.button} onClick={() => navigate("/signup")}>
             Sign Up
-          </button>
+          </button> */}
         </div>
       )}
     </>

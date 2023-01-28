@@ -46,11 +46,11 @@ const NavBar = (props: {
                   </Li>,
                 ];
               } else {
-                return [
-                  <LiMobile key="Sign-In">
-                    <a href="/signin">Sign In</a>
-                  </LiMobile>,
-                ];
+                // return [
+                //   <LiMobile key="Sign-In">
+                //     <a href="/signin">Sign In</a>
+                //   </LiMobile>,
+                // ];
               }
             } else {
               if (window.innerHeight > 800) {
@@ -95,12 +95,12 @@ const NavBar = (props: {
         About Us
       </p>,
       <p></p>,
-      <p style={{ cursor: "pointer" }} onClick={() => navigate("/signup")}>
-        Sign Up
-      </p>,
+      // <p style={{ cursor: "pointer" }} onClick={() => navigate("/signup")}>
+      //   Sign Up
+      // </p>,
       <p></p>,
       <p style={{ cursor: "pointer" }} onClick={() => navigate("/HandSigns")}>
-        Help
+        Hand Signs
       </p>
 
     ];
