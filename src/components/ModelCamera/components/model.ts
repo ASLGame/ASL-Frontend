@@ -3,7 +3,7 @@ import { Models } from "../../../types/Models";
 import { isMobile } from 'react-device-detect';
 
 // Adds the CPU backend.
-import '@tensorflow/tfjs-backend-cpu';
+//import '@tensorflow/tfjs-backend-cpu';
 export async function loadModel() {
   let result: Models = { R_Model: undefined, L_Model: undefined };
 

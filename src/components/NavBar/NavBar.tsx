@@ -87,10 +87,10 @@ const NavBar = (props: {
 
   var DropLinks: any = () => {
     const links = [
-      <p style={{ cursor: "pointer" }} onClick={() => navigate("/leaderboard")}>
-        Leaderboards
-      </p>,
-      <p></p>,
+      // <p style={{ cursor: "pointer" }} onClick={() => navigate("/leaderboard")}>
+      //   Leaderboards
+      // </p>,
+      // <p></p>,
       <p style={{ cursor: "pointer" }} onClick={() => navigate("/about")}>
         About Us
       </p>,
@@ -106,12 +106,12 @@ const NavBar = (props: {
     ];
     if (isAuth) {
       const links = [
-        <p
-          style={{ cursor: "pointer" }}
-          onClick={() => navigate("/leaderboard")}
-        >
-          Leaderboards
-        </p>,
+        // <p
+        //   style={{ cursor: "pointer" }}
+        //   onClick={() => navigate("/leaderboard")}
+        // >
+        //   Leaderboards
+        // </p>,
         <p></p>,
         <p style={{ cursor: "pointer" }} onClick={() => navigate("/about")}>
           About Us

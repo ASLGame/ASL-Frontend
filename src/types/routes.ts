@@ -6,7 +6,7 @@ export enum Path {
   HangMan = "/games/hangMan",
   Wordle = "/games/wordle",
   Games = "/games",
-  Leaderboard = "/leaderboard",
+  //Leaderboard = "/leaderboard",
   Profile = "/profile",
   SignIn = "/signin",
   SignUp = "/signup",

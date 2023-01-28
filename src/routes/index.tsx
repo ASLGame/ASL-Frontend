@@ -19,7 +19,7 @@ const SpellingWords = lazy(
 );
 const Wordle = lazy(() => import("../features/game/games/Wordle/wordle"));
 const Games = lazy(() => import("../features/games/Games"));
-const Leaderboard = lazy(() => import("../features/leaderboard/leaderboard"));
+//const Leaderboard = lazy(() => import("../features/leaderboard/leaderboard"));
 const Profile = lazy(() => import("../features/profile/Profile"));
 const SignIn = lazy(() => import("../features/signin/SignIn"));
 const SignUp = lazy(() => import("../features/signup/SignUp"));
@@ -47,7 +47,7 @@ const routes: readonly R[] = [
   },
   { element: <Wordle />, name: "Wordle", path: Path.Wordle },
   { element: <Games />, name: "Games", path: Path.Games },
-  { element: <Leaderboard />, name: "Leaderboard", path: Path.Leaderboard },
+  //{ element: <Leaderboard />, name: "Leaderboard", path: Path.Leaderboard },
   { element: <Profile />, name: "Profile", path: Path.Profile },
   { element: <SignIn />, name: "SignIn", path: Path.SignIn },
   { element: <SignUp />, name: "SignUp", path: Path.SignUp },
