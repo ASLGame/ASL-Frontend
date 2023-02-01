@@ -1,39 +1,50 @@
 .container {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    height: calc(100vh - 5.5rem);
-    width: 100vw;
-    min-width: 360px;
-    min-height: 640px;
-  }
-  
-  .backgroundImage {
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    background-image: url("./blob-scene-haikei.svg");
-    height: calc(100vh - 5.5rem);
-    width: 100vw;
-  }
-  
-  .textContainer {
-    
-    overflow: none;
-    margin-bottom: 1rem;
-    text-align: center;
-    background-color: var(--gray);
-    border-radius: 3%;
-    padding: 1%;
-  }
-  
-  .title {
-    margin-bottom: 2rem;
-    margin-top: 2rem;
-    text-align: center;
-    font-size: 3em;    
-  }
-  
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  height: calc(100vh - 5.5rem);
+  width: 100%;
+  min-width: 360px;
+  min-height: 640px;
 
- 
-  
+}
+
+.backgroundImage {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-image: url("./blob-scene-haikei.svg");
+  height: calc(100vh - 5.5rem);
+  width: 100vw;
+}
+
+.textContainer {
+
+  overflow: none;
+  margin-bottom: 50%;
+  text-align: center;
+  background-color: var(--gray);
+  border-radius: 3%;
+  width: 70%;
+  height: 80%;
+
+
+}
+
+.title {
+  margin-bottom: 2rem;
+  margin-top: 2rem;
+  text-align: center;
+  font-size: 3em;
+}
+
+.imgContainer {
+  width: 80%;
+  height: 100%;
+}
+
+@media (max-width: 400px) {
+  .container {
+    width: 400px;
+  }
+}
