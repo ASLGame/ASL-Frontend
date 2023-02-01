@@ -24,7 +24,7 @@ const Camera: FunctionComponent<CameraProps> = (props) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   let camera = null;
 
-  function onResults(results: any) {
+  async function onResults(results: any) {
     let width = 0;
     let height = 0;
     if (webcamRef.current !== null && webcamRef.current.video !== null) {
@@ -72,8 +72,8 @@ const Camera: FunctionComponent<CameraProps> = (props) => {
 
         prediction = prediction as Tensor;
         //@ts-ignore
-        const scores = prediction.arraySync().pop();
-        const maxScore = prediction.max().arraySync();
+        const scores = await prediction.arraySync().pop();
+        const maxScore = await prediction.max().arraySync();
         //@ts-ignore
         const maxScoreIndex: number = scores.indexOf(maxScore);
         //@ts-ignore
