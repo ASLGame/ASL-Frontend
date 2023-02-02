@@ -1,6 +1,7 @@
 h3 {
   margin: 0.5em;
 }
+
 .container {
   display: flex;
   height: 100%;
@@ -105,6 +106,7 @@ h3 {
   padding: 1.2em;
   padding-top: 2em;
 }
+
 .word {
   display: flex;
   justify-content: center;
@@ -113,6 +115,7 @@ h3 {
   width: 80%;
   height: 90%;
 }
+
 .buttons {
   width: 100%;
   display: flex;
@@ -152,4 +155,45 @@ h3 {
   font-size: 1.2em;
   font-family: "Verdana", "sans-serif";
   text-align: center;
+}
+
+@media (max-width:400px) {
+  .modal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: fit-content;
+    width: 100%;
+    position: fixed;
+    top: 18%;
+    left: 0%;
+    justify-self: center;
+    background-color: white;
+    border-radius: 3%;
+    border-color: black;
+    border-width: 0.15em;
+    border-style: solid;
+    padding: 1.0em;
+    padding-top: 2em;
+    transform: translate(-8%, 0%);
+
+
+  }
+
+  .rules {
+    font-size: 1.2em;
+    font-family: "Verdana", "sans-serif";
+    width: 100%;
+    align-self: center;
+    max-width: 300px;
+    line-height: 85%;
+    justify-content: center;
+
+  }
+
+  .modal .buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 0%;
+  }
 }

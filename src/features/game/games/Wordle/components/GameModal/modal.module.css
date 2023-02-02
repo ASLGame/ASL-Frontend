@@ -16,12 +16,14 @@
   padding: 1.2em;
   padding-top: 2em;
 }
+
 .word {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
 }
+
 .buttons {
   display: flex;
   justify-content: center;
@@ -49,7 +51,50 @@
   margin-top: 0em;
   text-align: center;
 }
+
 .title {
   margin-top: 0em;
   margin-bottom: 0em;
+}
+
+@media (max-width:400px) {
+  .modal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: fit-content;
+    width: 100%;
+    height: fit-content;
+    position: fixed;
+    top: 18%;
+    left: 0%;
+    justify-self: center;
+    background-color: white;
+    border-radius: 3%;
+    border-color: black;
+    border-width: 0.15em;
+    border-style: solid;
+    padding: 1.0em;
+    padding-top: 2em;
+    transform: translate(-8%, 0%);
+
+
+  }
+
+  .rules {
+    font-size: 1.2em;
+    font-family: "Verdana", "sans-serif";
+    width: 100%;
+    align-self: center;
+    max-width: 300px;
+    line-height: 100%;
+    justify-content: center;
+
+  }
+
+  .modal .buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 0%;
+  }
 }
