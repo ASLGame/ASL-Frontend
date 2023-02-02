@@ -40,11 +40,11 @@ const NavBar = (props: {
           {links.map((link: { name: string; to: string }) => {
             if (!isAuth && link.name === "Account") {
               if (window.innerHeight > 800) {
-                return [
-                  <Li key="Sign-In">
-                    <a href="/signin">Sign In</a>
-                  </Li>,
-                ];
+                // return [
+                //   <Li key="Sign-In">
+                //     <a href="/signin">Sign In</a>
+                //   </Li>,
+                // ];
               } else {
                 // return [
                 //   <LiMobile key="Sign-In">
