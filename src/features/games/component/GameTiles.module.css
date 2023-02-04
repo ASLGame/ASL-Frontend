@@ -57,3 +57,10 @@
   width: 30%;
   padding-top: 10px;
 }
+
+@media(max-width:550) {
+  .gameImage {
+    width: 10em;
+    height: 10em;
+  }
+}
