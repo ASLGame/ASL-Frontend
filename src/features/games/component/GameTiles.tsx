@@ -15,7 +15,7 @@ import {
 } from "../gamesSlice";
 import styles from "./GameTiles.module.css";
 
-interface GameTilesProps {}
+interface GameTilesProps { }
 
 const GameTiles: FunctionComponent<GameTilesProps> = () => {
   const allGames = useSelector(selectAllGames);
@@ -68,18 +68,16 @@ const GameTiles: FunctionComponent<GameTilesProps> = () => {
                             src={
                               game.gameAssets
                                 ? game.gameAssets
-                                    .filter((asset: GameAsset) => {
-                                      return asset.name === "thumbnail";
-                                    })
-                                    .pop()?.path
+                                  .filter((asset: GameAsset) => {
+                                    return asset.name === "thumbnail";
+                                  })
+                                  .pop()?.path
                                 : ""
                             }
                           ></img>
                         </td>
                         <td className={styles.gameNameColumn}>{game.name}</td>
-                        <td className={styles.gameDescriptionColumn}>
-                          {game.description}
-                        </td>
+
                       </tr>
                     </>
                   );
@@ -105,19 +103,16 @@ const GameTiles: FunctionComponent<GameTilesProps> = () => {
                             src={
                               game.gameAssets
                                 ? game.gameAssets
-                                    .filter((asset: GameAsset) => {
-                                      return asset.name === "thumbnail";
-                                    })
-                                    .pop()?.path
+                                  .filter((asset: GameAsset) => {
+                                    return asset.name === "thumbnail";
+                                  })
+                                  .pop()?.path
                                 : ""
                             }
                           ></img>
                         </td>
                         <td className={styles.lastGameNameColumn}>
                           {game.name}
-                        </td>
-                        <td className={styles.lastGameDescriptionColumn}>
-                          {game.description}
                         </td>
                       </tr>
                     </>
