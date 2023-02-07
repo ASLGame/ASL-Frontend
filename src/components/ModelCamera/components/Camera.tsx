@@ -122,8 +122,8 @@ const Camera: FunctionComponent<CameraProps> = (props) => {
             await hands.send({ image: webcamRef.current.video! });
           }
         },
-        width: 1280,
-        height: 720,
+        width: 720,
+        height: 576,
       });
       camera.start();
     }
