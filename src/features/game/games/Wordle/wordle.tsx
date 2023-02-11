@@ -357,12 +357,12 @@ const Wordle: FunctionComponent = () => {
   ]);
 
   useEffect(() => {
-    
+
     dispatch(getGameAsync("Wordle"));
-    
+
     getStats(game);
     dispatch(getGameAchievementsAsync(game.id));
-    
+
   }, []);
 
   useEffect(() => {
@@ -526,7 +526,7 @@ const Wordle: FunctionComponent = () => {
                 <button
                   style={{ marginRight: "30px" }}
                   onClick={() => {
-                    navigate("../");
+                    navigate("../games");
                     window.location.reload();
                   }}
                   className={styles.backButton}

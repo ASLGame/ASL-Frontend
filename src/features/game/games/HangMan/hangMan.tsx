@@ -155,13 +155,13 @@ const HangMan: FunctionComponent = () => {
     }
   };
   useEffect(() => {
-  
+
     dispatch(getGameAsync("Hang Man"));
-    
-    
+
+
     getStats(game);
     dispatch(getGameAchievementsAsync(game.id));
-    
+
   }, []);
 
   function MyNotification() {
@@ -430,7 +430,7 @@ const HangMan: FunctionComponent = () => {
                 <button
                   style={{ marginRight: "30px" }}
                   onClick={() => {
-                    navigate("../");
+                    navigate("../games");
                     window.location.reload();
                   }}
                   className={styles.backButton}
