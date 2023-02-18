@@ -51,9 +51,9 @@ export default function Home2() {
         )
       ) : (
         <div className={styles.home}>
-
-          <FeaturedGameList />
           <Info />
+          <FeaturedGameList />
+
         </div>
       )}
     </>
