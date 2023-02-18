@@ -11,7 +11,7 @@ export default function Info() {
     <>
       <h1 className={styles.mission}>Mission</h1>
       <p className={styles.paragraph}>
-        Teach the basics of ASL and spread awareness of the community, all while
+        Learn the basics of ASL, all while
         having fun and competing with other users.
       </p>
       {!isAuth && (
