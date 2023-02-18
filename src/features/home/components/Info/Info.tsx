@@ -12,7 +12,7 @@ export default function Info() {
       <h1 className={styles.mission}>Mission</h1>
       <p className={styles.paragraph}>
         Learn the basics of ASL, all while
-        having fun and competing with other users.
+        having fun.
       </p>
       {!isAuth && (
         <div className={styles.signUpMenu}>
