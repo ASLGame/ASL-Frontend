@@ -115,3 +115,37 @@ line {
 button {
   text-align: "center";
 }
+
+
+
+
+
+.rodUp {}
+
+.rodRight {}
+
+.rodDown {}
+
+.head {}
+
+.torso {}
+
+.armRight {}
+
+.armLeft {}
+
+.legLeft {}
+
+.legRight {}
+
+@media (max-width:600px) {
+  .gameboard {
+    max-width: 400px
+  }
+
+  .figureContainer {
+    transform: translate(-30%, 0%);
+  }
+
+
+}
