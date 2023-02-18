@@ -17,8 +17,8 @@ export default function Info() {
       {!isAuth && (
         <div className={styles.signUpMenu}>
           <p className={styles.paragraph}>Want to have fun and learn?</p>
-          <button className={styles.button} onClick={() => navigate("/games")}>
-            PLAY!
+          <button className={styles.button} onClick={() => navigate("/handSigns")}>
+            START!
           </button>
           {/* <p className={styles.paragraph}>or</p>
           <button className={styles.button} onClick={() => navigate("/signup")}>

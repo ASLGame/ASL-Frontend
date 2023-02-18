@@ -14,7 +14,7 @@ export default function FeaturedGameList() {
   const getStats = async (game: { type: string }) => {
     return dispatch(getStatAsync(game.type));
   };
-  console.log(featuredGames);
+
 
   if (featuredGamesState !== "loading" && featuredGames) {
     return (
@@ -29,7 +29,7 @@ export default function FeaturedGameList() {
                 dispatch(getGameAchievementsAsync(featuredGame.id));
               }
               navigate(`games/${featuredGame.name.split(" ").join("")}`);
-              
+
             }}
             className={styles.featuredGame}
             key={index}
@@ -40,8 +40,8 @@ export default function FeaturedGameList() {
               src={
                 featuredGame.gameAssets
                   ? featuredGame.gameAssets?.find(
-                      (gameAsset) => gameAsset.name === "thumbnail"
-                    )?.path
+                    (gameAsset) => gameAsset.name === "thumbnail"
+                  )?.path
                   : ""
               }
             ></img>

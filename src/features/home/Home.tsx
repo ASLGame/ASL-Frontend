@@ -31,8 +31,7 @@ export default function Home2() {
         height > 1100 ? (
           <div className={styles.bigContainer}>
             <div className={styles.left}>
-              <h1>Newest Games</h1>
-              <NewestGame />
+
               <FeaturedGameList />
             </div>
             <div className={styles.right}>
@@ -42,8 +41,7 @@ export default function Home2() {
         ) : (
           <div className={styles.container}>
             <div className={styles.left}>
-              <h1>Newest Games</h1>
-              <NewestGame />
+
               <FeaturedGameList />
             </div>
             <div className={styles.right}>
@@ -53,8 +51,7 @@ export default function Home2() {
         )
       ) : (
         <div className={styles.home}>
-          <h1>Newest Games</h1>
-          <NewestGame />
+
           <FeaturedGameList />
           <Info />
         </div>
