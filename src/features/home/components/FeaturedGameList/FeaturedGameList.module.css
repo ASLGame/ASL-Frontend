@@ -4,6 +4,7 @@
   margin-top: 2rem;
   margin-bottom: 0;
   max-height: 90vh;
+
 }
 
 .title {
@@ -23,6 +24,7 @@
   background-color: var(--gray);
   font-size: larger;
   cursor: pointer;
+  box-shadow: 2px 2px 5px rgb(0, 0, 0, 0.3);
 }
 
 .image {
@@ -38,4 +40,9 @@
 .description {
   max-width: 20rem;
   margin-left: 2rem;
+}
+
+.featuredGame:hover {
+  background-color: #FF808B;
+  box-shadow: 2px 2px 5px rgb(0, 0, 0);
 }

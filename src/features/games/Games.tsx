@@ -9,7 +9,7 @@ import {
 import { useAppDispatch } from "../../app/hooks";
 import { useSelector } from "react-redux";
 
-interface GamesProps {}
+interface GamesProps { }
 
 const Games: FunctionComponent<GamesProps> = () => {
   const dispatch = useAppDispatch();
@@ -21,7 +21,7 @@ const Games: FunctionComponent<GamesProps> = () => {
 
   return (
     <div className={styles.containerOuter}>
-      <div className={styles.searchContainer}>
+      {/* <div className={styles.searchContainer}>
         <form className={styles.form}>
           <div className={styles.inputContainer}>
             <input
@@ -44,7 +44,7 @@ const Games: FunctionComponent<GamesProps> = () => {
             <i className={styles.icon} />
           </div>
         </form>
-      </div>
+      </div> */}
       <div className={styles.containerInner}>
         <div className={styles.gamesContainer}>
           <GameTiles />

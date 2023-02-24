@@ -8,7 +8,7 @@ export default function Info() {
   const navigate = useNavigate();
 
   return (
-    <>
+    <div className={styles.container}>
       <h1 className={styles.mission}>Mission</h1>
       <p className={styles.paragraph}>
         Learn the basics of ASL, all while
@@ -26,6 +26,6 @@ export default function Info() {
           </button> */}
         </div>
       )}
-    </>
+    </div>
   );
 }

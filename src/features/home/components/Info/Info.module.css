@@ -1,5 +1,14 @@
+.container {
+  background-color: #f5f5fb;
+  padding: 3vh 1vw 3vh 1vw;
+  border-radius: 4%;
+  border: 2px solid black;
+}
+
+
 .mission {
   font-size: xxx-large;
+  text-align: center;
 }
 
 .paragraph {
@@ -27,4 +36,9 @@
   padding-right: 10%;
   padding-top: 5%;
   padding-bottom: 5%;
+  box-shadow: 2px 2px 5px rgb(0, 0, 0, 0.3);
+}
+
+.button:hover {
+  box-shadow: 2px 2px 5px rgb(0, 0, 0);
 }
