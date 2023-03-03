@@ -408,23 +408,27 @@ const SpellingLetters: FunctionComponent = () => {
                 updateGameBuffer={updateBuffer}
               ></ModelCamera>
 
-              {lettersSpelled.length !== 10
-                ? renderNextAndTimer(currentLetter, timer)
-                : ""}
+
             </div>
+
             <div className={styles.right}>
               <div className={styles.gameboard}>
-                <h1 className={styles.gameboardTitle}> Score </h1>
-                <div className={styles.letters}>
-                  {renderLetters(lettersSpelled)}
+                <div>
+                  {lettersSpelled.length !== 10
+                    ? renderNextAndTimer(currentLetter, timer)
+                    : ""}
                 </div>
+                <h1 className={styles.gameboardTitle}> Score </h1>
+                {/* <div className={styles.letters}>
+                  {renderLetters(lettersSpelled)}
+                </div> */}
                 <hr className={styles.divider}></hr>
                 <table>
                   <tbody>
                     <tr>
                       <td>Total</td>
                       <td className={styles.answerCell}>
-                        {score} - {hintsUsed} ={" "}
+
                         {score - hintsUsed < 0 ? 0 : score - hintsUsed}
                       </td>
                     </tr>
