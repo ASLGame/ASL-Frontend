@@ -1,22 +1,26 @@
 import React, { Suspense } from 'react'
 import { Canvas } from '@react-three/fiber'
-import { useGLTF } from '@react-three/drei/core'
-import Hands3D from './components/Hands3D'
-import styles from './demo.module.css'
+import { Float, useGLTF } from '@react-three/drei/core'
 import { Model } from './components/Hand_asl'
-import { Model2 } from './components/Hand_asl2'
+import styles from './demo.module.css'
+
+
 const Demo = () => {
     return (
-        <div className={styles.canvas3D}>
-            <Suspense fallback={null}>
-                <Canvas>
-                    <ambientLight />
 
-                    <Model2 />
-                </Canvas>
-            </Suspense>
+        <Suspense fallback={null}>
+            <Canvas className={styles.canvas3D}>
+                <ambientLight />
+                <pointLight position={[5, 4, -1]} intensity={1} />
+                <pointLight position={[-3, -3, 2]} />
 
-        </div >
+                <Model />
+
+
+            </Canvas>
+        </Suspense>
+
+
     )
 }
 
