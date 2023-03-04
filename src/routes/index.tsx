@@ -30,6 +30,7 @@ const HandSign = lazy(() => import("../features/HandSigns/HandSign"));
 // const ForgotPassword = lazy(
 //   () => import("../features/forgotPassword/forgotPassword")
 // );
+const Demo = lazy(() => import("../features/Demos/demo"))
 
 const routes: readonly R[] = [
   { element: <Home />, name: "Home", path: Path.Home },
@@ -52,6 +53,7 @@ const routes: readonly R[] = [
   // { element: <SignIn />, name: "SignIn", path: Path.SignIn },
   // { element: <SignUp />, name: "SignUp", path: Path.SignUp },
   { element: <HandSign />, name: "HandSign", path: Path.HandSigns },
+  { element: <Demo />, name: 'Demo', path: Path.Demo }
   // {
   //   element: <ForgotPasswordID />,
   //   name: "ForgotPasswordID",
