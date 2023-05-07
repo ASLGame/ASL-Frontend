@@ -9,23 +9,33 @@ export default function Info() {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.mission}>Mission</h1>
-      <p className={styles.paragraph}>
-        Learn the basics of ASL, all while
-        having fun.
-      </p>
-      {!isAuth && (
-        <div className={styles.signUpMenu}>
-          <p className={styles.paragraph}>Want to have fun and learn?</p>
-          <button className={styles.button} onClick={() => navigate("/handSigns")}>
-            START!
-          </button>
-          {/* <p className={styles.paragraph}>or</p>
-          <button className={styles.button} onClick={() => navigate("/signup")}>
-            Sign Up
-          </button> */}
-        </div>
-      )}
+      <img className={styles.imgContainer}
+        alt="hint..."
+        src="https://signy-asl-models.s3.amazonaws.com/alphabet/alphabet-transparent.png"
+      />
+
     </div>
-  );
+  )
+
+  // return (
+  //   <div className={styles.container}>
+  //     <h1 className={styles.mission}>Mission</h1>
+  //     <p className={styles.paragraph}>
+  //       Learn the basics of ASL, all while
+  //       having fun.
+  //     </p>
+  //     {!isAuth && (
+  //       <div className={styles.signUpMenu}>
+  //         <p className={styles.paragraph}>Want to have fun and learn?</p>
+  //         <button className={styles.button} onClick={() => navigate("/handSigns")}>
+  //           START!
+  //         </button>
+  //         <p className={styles.paragraph}>or</p>
+  //         <button className={styles.button} onClick={() => navigate("/signup")}>
+  //           Sign Up
+  //         </button>
+  //       </div>
+  //     )}
+  //   </div>
+  //);
 }
