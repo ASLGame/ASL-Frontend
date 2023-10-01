@@ -10,12 +10,18 @@ export async function loadModel() {
   let result: Models = { R_Model: undefined, L_Model: undefined };
 
   if (isMobile) {
-    tflite.setWasmPath(
-      'https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-tflite@0.0.1-alpha.8/dist/'
+    // tflite.setWasmPath(
+    //   'https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-tflite@0.0.1-alpha.8/dist/'
+    // );
+    // console.log('isMobile');
+    // result.R_Model = await tflite.loadTFLiteModel(`${process.env.REACT_APP_R_TFLITE}`)
+    // result.L_Model = await tflite.loadTFLiteModel(`${process.env.REACT_APP_L_TFLITE}`)
+    result.R_Model = await tf.loadGraphModel(
+      `${process.env.REACT_APP_R_TF}`
     );
-    console.log('isMobile');
-    result.R_Model = await tflite.loadTFLiteModel(`${process.env.REACT_APP_R_TFLITE}`)
-    result.L_Model = await tflite.loadTFLiteModel(`${process.env.REACT_APP_L_TFLITE}`)
+    result.L_Model = await tf.loadGraphModel(
+      `${process.env.REACT_APP_L_TF}`
+    );
   } else {
     console.log("isDesktop");
     result.R_Model = await tf.loadGraphModel(
