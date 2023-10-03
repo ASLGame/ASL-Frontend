@@ -5,10 +5,8 @@
   background-position: center;
   background-size: cover;
   align-items: center;
-  height: 88vh;
-  overflow: hidden;
-
-
+  min-height: 88vh;
+  position: absolute;
 }
 
 .bigContainer {
@@ -18,10 +16,6 @@
   background-position: center;
   background-size: 95vh;
   align-items: center;
-
-
-
-
 }
 
 .left {

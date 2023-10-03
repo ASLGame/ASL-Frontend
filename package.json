@@ -3,9 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
     "@mediapipe/camera_utils": "^0.3.1640029074",
     "@mediapipe/drawing_utils": "^0.3.1620248257",
     "@mediapipe/hands": "^0.4.1646424915",
+    "@mui/icons-material": "^5.14.11",
+    "@mui/material": "^5.14.11",
     "@ramonak/react-progress-bar": "^4.4.0",
     "@reduxjs/toolkit": "^1.7.2",
     "@tensorflow/tfjs": "^3.20.0",
@@ -21,7 +25,9 @@
     "@types/react-tabs": "^2.3.4",
     "@uiball/loaders": "^1.2.6",
     "dotenv": "^16.0.3",
+    "i": "^0.3.7",
     "jwt-decode": "^3.1.2",
+    "npm": "^10.1.0",
     "nth-check": "^2.0.1",
     "path": "^0.12.7",
     "react": "^17.0.2",
@@ -64,7 +70,14 @@
       "last 1 safari version"
     ]
   },
+  "overrides": {
+    "@types/react": "17.0.44"
+  },
+  "resolutions": {
+    "@types/react": "17.0.44"
+  },
   "devDependencies": {
+    "@types/react": "17.0.44",
     "@types/react-helmet": "^6.1.6",
     "@types/react-modal": "^3.13.1",
     "react-scripts": "5.0.0",

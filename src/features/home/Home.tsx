@@ -6,6 +6,7 @@ import styles from "./home.module.css";
 import NewestGame from "./components/NewestGame/newestGame";
 import FeaturedGameList from "./components/FeaturedGameList/FeaturedGameList";
 import Info from "./components/Info/Info";
+import Grid from "@mui/material/Grid/Grid";
 
 export default function Home2() {
   const dispatch = useAppDispatch();
@@ -26,12 +27,11 @@ export default function Home2() {
   });
 
   return (
-    <>
+    <Grid container style={{ width: "100%" }}>
       {width > 800 ? (
         height > 1100 ? (
           <div className={styles.bigContainer}>
             <div className={styles.left}>
-
               <FeaturedGameList />
             </div>
             <div className={styles.right}>
@@ -41,7 +41,6 @@ export default function Home2() {
         ) : (
           <div className={styles.container}>
             <div className={styles.left}>
-
               <FeaturedGameList />
             </div>
             <div className={styles.right}>
@@ -53,9 +52,8 @@ export default function Home2() {
         <div className={styles.home}>
           <Info />
           <FeaturedGameList />
-
         </div>
       )}
-    </>
+    </Grid>
   );
 }

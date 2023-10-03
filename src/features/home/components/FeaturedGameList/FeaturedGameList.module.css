@@ -1,15 +1,18 @@
 .featuredGames {
   display: flex;
   flex-direction: column;
-  margin-top: 2rem;
   margin-bottom: 0;
   max-height: 90vh;
-
+  padding: 15px;
+  width: 100%;
 }
 
 .title {
   align-self: center;
   margin-bottom: 1vh;
+  font-weight: 500;
+  font-size: 44px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .featuredGame {
@@ -43,6 +46,6 @@
 }
 
 .featuredGame:hover {
-  background-color: #FF808B;
+  background-color: #ff808b;
   box-shadow: 2px 2px 5px rgb(0, 0, 0);
 }
