@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../../../app/hooks";
 import { selectSignIn } from "../../../signin/signinSlice";
 import styles from "./Info.module.css";
+import Typography from "@mui/material/Typography";
 
 export default function Info() {
   const isAuth = useAppSelector(selectSignIn);
@@ -9,13 +10,15 @@ export default function Info() {
 
   return (
     <div className={styles.container}>
-      <img className={styles.imgContainer}
-        alt="hint..."
-        src="https://signy-asl-models.s3.amazonaws.com/alphabet/alphabet-transparent.png"
-      />
-
+      <div className={styles.imgContainer}>
+        <img
+          style={{ width: "100%" }}
+          alt="hint..."
+          src="https://signy-asl-models.s3.amazonaws.com/alphabet/alphabet-transparent.png"
+        />
+      </div>
     </div>
-  )
+  );
 
   // return (
   //   <div className={styles.container}>

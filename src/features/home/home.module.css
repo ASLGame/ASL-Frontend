@@ -1,12 +1,19 @@
 .container {
   display: flex;
-  background-image: url("./blob-scatter-haikei\ \(4\).svg");
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  padding: 15vh 2vw;
+  min-height: 100vh;
+}
+
+.backgroundImage {
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-  align-items: center;
-  min-height: 88vh;
-  position: absolute;
+  background-image: url("../../assets/blob-scene-haikei.svg");
+  width: 100%;
+  min-height: 100vh;
 }
 
 .bigContainer {
@@ -23,28 +30,23 @@
   flex-direction: column;
   align-items: center;
   width: 50%;
-  height: 95vh;
   background-image: url("./blob-scatter-haikei\ \(1\).svg");
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
   min-height: 95vh;
-  transform: translate(0, -2%);
-  overflow: hidden;
 }
 
 .right {
   display: flex;
   flex-direction: column;
   width: 50%;
-  justify-content: center;
   align-items: center;
   background-image: url("./blob-scatter-haikei\ \(3\).svg");
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
-  transform: translate(0, -7%);
-  height: 95vh;
+  min-height: 95vh;
 }
 
 .home {

@@ -11,7 +11,7 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import { ReactComponent as Signy } from "./signy.svg";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 function Header(props: {
   brand: { name: string; to: string };
@@ -28,6 +28,7 @@ function Header(props: {
   );
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -45,7 +46,7 @@ function Header(props: {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position="fixed">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -85,7 +86,14 @@ function Header(props: {
                     handleCloseNavMenu();
                   }}
                 >
-                  <Typography textAlign="center">{page?.name}</Typography>
+                  <Typography
+                    style={{
+                      fontWeight: page?.to === location?.pathname ? 700 : 400,
+                    }}
+                    textAlign="center"
+                  >
+                    {page?.name}
+                  </Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -100,6 +108,9 @@ function Header(props: {
             variant="h6"
             noWrap
             component="a"
+            onClick={() => {
+              navigate("/");
+            }}
             sx={{
               mr: 0,
               display: { xs: "none", md: "flex" },
@@ -108,6 +119,7 @@ function Header(props: {
               letterSpacing: ".3rem",
               color: "inherit",
               textDecoration: "none",
+              cursor: "pointer",
             }}
           >
             {brand?.name}
@@ -127,6 +139,7 @@ function Header(props: {
               letterSpacing: ".3rem",
               color: "inherit",
               textDecoration: "none",
+              cursor: "pointer",
             }}
           >
             {brand?.name}
@@ -138,6 +151,12 @@ function Header(props: {
                 onClick={() => {
                   navigate(page?.to);
                   handleCloseNavMenu();
+                }}
+                style={{
+                  fontWeight: page?.to === location?.pathname ? 700 : 400,
+                  color:
+                    page?.to === location?.pathname ? "#fc94e4" : "#fafafa",
+                  fontSize: "18px",
                 }}
                 sx={{ my: 2, color: "white", display: "block" }}
               >

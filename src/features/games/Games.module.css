@@ -1,3 +1,21 @@
+.container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  padding: 15vh 2vw;
+  min-height: 100vh;
+}
+
+.backgroundImage {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-image: url("../../assets/blob-scene-haikei.svg");
+  width: 100%;
+  min-height: 100vh;
+}
+
 .containerOuter {
   display: flex;
   align-items: center;

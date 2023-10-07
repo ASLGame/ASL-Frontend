@@ -7,14 +7,7 @@ import {
 } from "../../../game/gameSlice";
 import { selectSignIn } from "../../../signin/signinSlice";
 import { selectFeaturedGames, selectFeaturedGamesState } from "../../homeSlice";
-import {
-  List,
-  ListItemButton,
-  Avatar,
-  Divider,
-  Grid,
-  Typography,
-} from "@mui/material";
+import { List, ListItemButton, Grid, Typography } from "@mui/material";
 import styles from "./FeaturedGameList.module.css";
 
 export default function FeaturedGameList() {
@@ -30,7 +23,6 @@ export default function FeaturedGameList() {
   if (featuredGamesState !== "loading" && featuredGames) {
     return (
       <Grid className={styles.featuredGames}>
-        <Typography className={styles.title}>Featured Games</Typography>
         <List>
           {featuredGames.map((featuredGame, index) => (
             <ListItemButton
@@ -49,7 +41,7 @@ export default function FeaturedGameList() {
                 container
                 style={{ width: "100%", display: "flex", alignItems: "center" }}
               >
-                <Grid xs={3}>
+                <Grid xs={5} md={3}>
                   <img
                     className={styles.image}
                     alt="Whoops..."
@@ -62,25 +54,17 @@ export default function FeaturedGameList() {
                     }
                   ></img>
                 </Grid>
-                <Grid xs={3}>
+                <Grid xs={7} md={9}>
                   <Typography className={styles.gameName}>
                     {featuredGame.name}
                   </Typography>
-                </Grid>
-                <Grid xs={6}>
+
                   <Typography className={styles.description}>
                     {featuredGame.description}
                   </Typography>
                 </Grid>
               </Grid>
             </ListItemButton>
-            // <div
-
-            // >
-
-            //   <h3 className={styles.gameName}>{featuredGame.name}</h3>
-            //   <p className={styles.description}>{featuredGame.description}</p>
-            // </div>
           ))}
         </List>
       </Grid>
