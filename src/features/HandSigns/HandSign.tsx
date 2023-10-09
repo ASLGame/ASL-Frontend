@@ -2,6 +2,7 @@ import React, { FunctionComponent } from "react";
 import styles from "./HandSign.module.css";
 import { Chip, Grid, Typography } from "@mui/material";
 import PageTitle from "../../components/PageTitle/Title";
+import { isMobile } from "react-device-detect";
 
 const HandSign: FunctionComponent = () => {
   return (
@@ -9,7 +10,7 @@ const HandSign: FunctionComponent = () => {
       <PageTitle label={"Hand Signs"} />
       <Grid xs={12} md={3}>
         <img
-          className={styles.imgContainer}
+          className={isMobile ? styles.imgMobileContainer : styles.imgContainer}
           alt="hint..."
           src="https://signy-asl-models.s3.amazonaws.com/alphabet/alphabet-transparent.png"
         />

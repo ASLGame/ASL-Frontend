@@ -16,8 +16,9 @@ import Header from "./components/NavBar/Header";
 const navigation = {
   brand: { name: "Signy", to: "/" },
   links: [
+    { name: "Home", to: "/" },
     { name: "Games", to: "/games" },
-    { name: "Account", to: "/profile" },
+    // { name: "Account", to: "/profile" },
     { name: "About Us", to: "/about" },
     { name: "Hand Signs", to: "/HandSigns" },
   ],

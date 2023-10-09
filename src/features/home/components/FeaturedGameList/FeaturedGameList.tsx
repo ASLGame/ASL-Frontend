@@ -9,6 +9,7 @@ import { selectSignIn } from "../../../signin/signinSlice";
 import { selectFeaturedGames, selectFeaturedGamesState } from "../../homeSlice";
 import { List, ListItemButton, Grid, Typography } from "@mui/material";
 import styles from "./FeaturedGameList.module.css";
+import { isMobile } from "react-device-detect";
 
 export default function FeaturedGameList() {
   const featuredGamesState = useSelector(selectFeaturedGamesState);
@@ -43,7 +44,7 @@ export default function FeaturedGameList() {
               >
                 <Grid xs={5} md={3}>
                   <img
-                    className={styles.image}
+                    className={isMobile ? styles.imageMobile : styles.image}
                     alt="Whoops..."
                     src={
                       featuredGame.gameAssets

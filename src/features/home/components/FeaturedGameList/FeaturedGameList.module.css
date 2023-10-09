@@ -3,7 +3,7 @@
   flex-direction: column;
   margin-bottom: 0;
   max-height: 90vh;
-  padding: 15px;
+  padding: 0px 15px;
   width: 100%;
 }
 
@@ -30,6 +30,12 @@
 }
 
 .image {
+  width: 5rem;
+  height: 5rem;
+  margin-right: 1rem;
+}
+
+.imageMobile {
   width: 7rem;
   height: 7rem;
   margin-right: 1rem;

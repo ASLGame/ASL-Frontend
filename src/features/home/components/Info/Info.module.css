@@ -1,5 +1,5 @@
 .container {
-  padding: 15px;
+  padding: 10px;
 }
 
 .title {
@@ -50,10 +50,12 @@
 
 .imgContainer {
   background-color: #f5f5fb;
-  padding: 3vw;
+  padding: 10px;
   border-radius: 4%;
   border: 2px solid black;
   align-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 @media (max-width: 400px) {

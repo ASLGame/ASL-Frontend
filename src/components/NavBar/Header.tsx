@@ -56,7 +56,9 @@ function Header(props: {
               aria-controls="menu-appbar"
               aria-haspopup="true"
               onClick={handleOpenNavMenu}
-              color="inherit"
+              style={{
+                color: "#c42b35",
+              }}
             >
               <MenuIcon />
             </IconButton>
@@ -75,7 +77,15 @@ function Header(props: {
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
               sx={{
-                display: { xs: "block", md: "none" },
+                display: {
+                  xs: "block",
+                  md: "none",
+                },
+              }}
+              PaperProps={{
+                style: {
+                  backgroundColor: "#fcf3f2",
+                },
               }}
             >
               {links.map((page: any) => (
@@ -89,6 +99,7 @@ function Header(props: {
                   <Typography
                     style={{
                       fontWeight: page?.to === location?.pathname ? 700 : 400,
+                      color: "#c42b35",
                     }}
                     textAlign="center"
                   >
@@ -117,7 +128,7 @@ function Header(props: {
               fontFamily: "monospace",
               fontWeight: 700,
               letterSpacing: ".3rem",
-              color: "inherit",
+              color: "#c42b35",
               textDecoration: "none",
               cursor: "pointer",
             }}
@@ -137,14 +148,19 @@ function Header(props: {
               fontFamily: "monospace",
               fontWeight: 700,
               letterSpacing: ".3rem",
-              color: "inherit",
+              color: "#c42b35",
               textDecoration: "none",
               cursor: "pointer",
             }}
           >
             {brand?.name}
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: { xs: "none", md: "flex", justifyContent: "flex-end" },
+            }}
+          >
             {links?.map((page) => (
               <Button
                 key={page?.name}
@@ -153,9 +169,8 @@ function Header(props: {
                   handleCloseNavMenu();
                 }}
                 style={{
-                  fontWeight: page?.to === location?.pathname ? 700 : 400,
-                  color:
-                    page?.to === location?.pathname ? "#fc94e4" : "#fafafa",
+                  fontWeight: page?.to === location?.pathname ? 800 : 400,
+                  color: "#c42b35",
                   fontSize: "18px",
                 }}
                 sx={{ my: 2, color: "white", display: "block" }}
@@ -167,7 +182,7 @@ function Header(props: {
 
           <Box sx={{ flexGrow: 0 }}>
             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-              <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+              <Avatar alt="" src="/static/images/avatar/2.jpg" />
             </IconButton>
           </Box>
         </Toolbar>

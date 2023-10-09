@@ -6,8 +6,8 @@ export default function PageTitle(props: any) {
     <Chip
       label={label}
       style={{
-        backgroundColor: "#1976d2",
-        color: "#FAFAFA",
+        backgroundColor: "#c42b35",
+        color: "#fcf3f2",
         minHeight: "50px",
         minWidth: "175px",
         fontSize: "22px",

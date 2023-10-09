@@ -3,6 +3,7 @@ import { useAppSelector } from "../../../../app/hooks";
 import { selectSignIn } from "../../../signin/signinSlice";
 import styles from "./Info.module.css";
 import Typography from "@mui/material/Typography";
+import { isMobile } from "react-device-detect";
 
 export default function Info() {
   const isAuth = useAppSelector(selectSignIn);
@@ -12,7 +13,7 @@ export default function Info() {
     <div className={styles.container}>
       <div className={styles.imgContainer}>
         <img
-          style={{ width: "100%" }}
+          style={{ width: isMobile ? "100%" : "75%" }}
           alt="hint..."
           src="https://signy-asl-models.s3.amazonaws.com/alphabet/alphabet-transparent.png"
         />
