@@ -26,6 +26,7 @@ import { updateAccountAchievement } from "../../gameAPI";
 import { achievementNotification } from "../../../../components/notifications";
 import { Store } from "react-notifications-component";
 import GameModal from "./GameModal/modal";
+import ModalPopup from "../components/Modal";
 
 const SpellingLetters: FunctionComponent = () => {
   Modal.setAppElement("body");
@@ -61,7 +62,6 @@ const SpellingLetters: FunctionComponent = () => {
     setScore(0);
     setIsScorePosted(false);
   };
-
 
   const renderNextAndTimer = (next: String, timer: number) => {
     return (
@@ -140,10 +140,10 @@ const SpellingLetters: FunctionComponent = () => {
       emptyBuffer.shift();
     }
     setBuffer(emptyBuffer);
-    let timer: number = 0
-    if (difficulty === 'easy') {
+    let timer: number = 0;
+    if (difficulty === "easy") {
       timer = 10;
-    } else if (difficulty === 'medium') {
+    } else if (difficulty === "medium") {
       timer = 6;
     } else {
       timer = 3;
@@ -151,7 +151,6 @@ const SpellingLetters: FunctionComponent = () => {
     setTimer(timer);
     setHintShowed(false);
     Store.removeAllNotifications();
-
   };
 
   function MyNotification() {
@@ -218,9 +217,7 @@ const SpellingLetters: FunctionComponent = () => {
   }
 
   useEffect(() => {
-
     dispatch(getGameAsync("Spelling Letters"));
-
 
     getStats(game);
     dispatch(getGameAchievementsAsync(game.id));
@@ -350,38 +347,47 @@ const SpellingLetters: FunctionComponent = () => {
     }
   });
 
-
   useEffect(() => {
     if (difficulty) {
-      let timer: number = 0
-      if (difficulty === 'easy') {
+      let timer: number = 0;
+      if (difficulty === "easy") {
         timer = 10;
-      } else if (difficulty === 'medium') {
+      } else if (difficulty === "medium") {
         timer = 6;
       } else {
         timer = 3;
       }
       setTimer(timer);
       setScore(0);
-      setLettersSpelled([])
+      setLettersSpelled([]);
       let emptyBuffer: String[] = buffer;
       while (emptyBuffer.length !== 0) {
         emptyBuffer.shift();
       }
       setBuffer(emptyBuffer);
     }
-  }, [difficulty])
+  }, [difficulty]);
   if (game) {
     return (
       <>
-        <GameModal
+        <ModalPopup
           game={game}
           setIsModalOpen={setIsModalOpen}
           setDifficulty={setDifficulty}
           isModalOpen={isModalOpen}
           difficulty={difficulty}
           setIsTimerPaused={setIsTimerPaused}
+          rules={["hello", "hello1"]}
+          description="hello world"
         />
+        {/* <GameModal
+          game={game}
+          setIsModalOpen={setIsModalOpen}
+          setDifficulty={setDifficulty}
+          isModalOpen={isModalOpen}
+          difficulty={difficulty}
+          setIsTimerPaused={setIsTimerPaused}
+        /> */}
         <div className={styles.background + " " + styles.layer1}>
           {lettersSpelled.length === 10 ? (
             <Confetti width={window.innerWidth} height={window.innerHeight} />
@@ -407,8 +413,6 @@ const SpellingLetters: FunctionComponent = () => {
                 onUserMedia={setIsCameraLoading}
                 updateGameBuffer={updateBuffer}
               ></ModelCamera>
-
-
             </div>
 
             <div className={styles.right}>
@@ -428,7 +432,6 @@ const SpellingLetters: FunctionComponent = () => {
                     <tr>
                       <td>Total</td>
                       <td className={styles.answerCell}>
-
                         {score - hintsUsed < 0 ? 0 : score - hintsUsed}
                       </td>
                     </tr>

@@ -180,11 +180,11 @@ function Header(props: {
             ))}
           </Box>
 
-          <Box sx={{ flexGrow: 0 }}>
+          {/* <Box sx={{ flexGrow: 0 }}>
             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
               <Avatar alt="" src="/static/images/avatar/2.jpg" />
             </IconButton>
-          </Box>
+          </Box> */}
         </Toolbar>
       </Container>
     </AppBar>
