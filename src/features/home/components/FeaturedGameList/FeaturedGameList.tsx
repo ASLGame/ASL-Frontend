@@ -34,7 +34,7 @@ export default function FeaturedGameList() {
                   getStats(featuredGame);
                   dispatch(getGameAchievementsAsync(featuredGame.id));
                 }
-                navigate(`games/${featuredGame.name.split(" ").join("")}`);
+                navigate(`/games/${featuredGame.name.split(" ").join("")}`);
               }}
               key={index}
             >

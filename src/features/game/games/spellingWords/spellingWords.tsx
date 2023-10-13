@@ -6,7 +6,6 @@ import { easyWords, mediumWords, hardWords } from "../../../../types/Models";
 import LetterSpelled from "../../../../types/LetterSpelled";
 import Confetti from "react-confetti";
 import { useNavigate } from "react-router-dom";
-import Modal from "react-modal";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getGameAsync,
@@ -25,9 +24,11 @@ import { getAchievements } from "../../../profile/profileAPI";
 import { UserAchievements } from "../../../profile/profileSlice";
 import { updateAccountAchievement } from "../../gameAPI";
 import { achievementNotification } from "../../../../components/notifications";
+import ModalPopup from "../components/Modal";
+import { Grid, IconButton } from "@mui/material";
+import { isMobile } from "react-device-detect";
 
 const SpellingWords: FunctionComponent = () => {
-  Modal.setAppElement("body");
   const [buffer, setBuffer] = useState<String[]>([]);
   const [flag, setFlag] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(true);
@@ -65,116 +66,18 @@ const SpellingWords: FunctionComponent = () => {
     setIsScorePosted(false);
     difficulty === "easy"
       ? setCurrentWord(
-        easyWords[Math.floor(Math.random() * (easyWords.length - 1))]
-      )
+          easyWords[Math.floor(Math.random() * (easyWords.length - 1))]
+        )
       : difficulty === "medium"
-        ? setCurrentWord(
+      ? setCurrentWord(
           mediumWords[Math.floor(Math.random() * (mediumWords.length - 1))]
         )
-        : setCurrentWord(
+      : setCurrentWord(
           hardWords[Math.floor(Math.random() * (hardWords.length - 1))]
         );
     setCurrentLetterIndex(0);
     setCurrentLetter(undefined);
   };
-
-  const displayGameRules = (rules: string) => {
-    return (
-      <>
-        {rules.split('/n').map((rule) => {
-          return <p className={styles.rules}>{rule}</p>
-        })}
-      </>
-    )
-
-  }
-
-  const renderModal = () => {
-    if (game) {
-      return (
-        <div className={styles.word}>
-          <h2>Rules</h2>
-          {displayGameRules(game.rules)}
-          <br />
-          <h2>Description</h2>
-          <p className={styles.rules}>{game.description}</p>
-          <h3>Choose a difficulty:</h3>
-          <div className={styles.buttons}>
-            <button
-              className={styles.backButton}
-              style={{ fontSize: "1.5em" }}
-              onClick={() => {
-                setIsModalOpen(false);
-                setIsTimerPaused(false);
-                setDifficulty("easy");
-              }}
-            >
-              Easy
-            </button>
-            <button
-              className={styles.backButton}
-              style={{ fontSize: "1.5em" }}
-              onClick={() => {
-                setIsModalOpen(false);
-                setIsTimerPaused(false);
-                setDifficulty("medium");
-              }}
-            >
-              Medium
-            </button>
-            <button
-              className={styles.backButton}
-              style={{ fontSize: "1.5em" }}
-              onClick={() => {
-                setIsModalOpen(false);
-                setIsTimerPaused(false);
-                setDifficulty("hard");
-              }}
-            >
-              Hard
-            </button>
-          </div>
-        </div>
-      );
-    }
-  };
-
-  const closeModal = () => {
-    if (difficulty) {
-      setIsModalOpen(false);
-      setIsTimerPaused(false);
-    } else {
-      Store.addNotification({
-        content: difficultyNotification,
-        insert: "top",
-        container: "top-right",
-        animationIn: ["animated", "fadeIn"],
-        animationOut: ["animated", "fadeOut"],
-        dismiss: {
-          duration: 3000,
-        },
-      });
-    }
-  };
-
-  function difficultyNotification() {
-    return (
-      <div
-        style={{
-          width: "100%",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          backgroundColor: "#9698D6",
-          borderLeft: "8px solid #4D4CAC",
-        }}
-      >
-        <div>
-          <h4>Please choose a difficulty first.</h4>
-        </div>
-      </div>
-    );
-  }
 
   const renderNextAndTimer = (next: String, timer: number) => {
     return (
@@ -183,7 +86,9 @@ const SpellingWords: FunctionComponent = () => {
           <h3>Your next letter is: {next}</h3>
         </div>
         <div>
-          <h3>Timer: {timer} second{timer === 1 ? "" : "s"}</h3>
+          <h3>
+            Timer: {timer} second{timer === 1 ? "" : "s"}
+          </h3>
         </div>
       </>
     );
@@ -343,9 +248,7 @@ const SpellingWords: FunctionComponent = () => {
 
   // If game hasn't loaded, fetch it.
   useEffect(() => {
-
     dispatch(getGameAsync("Spelling Words"));
-
 
     getStats(game);
     dispatch(getGameAchievementsAsync(game.id));
@@ -471,13 +374,13 @@ const SpellingWords: FunctionComponent = () => {
     if (difficulty && !currentWord) {
       difficulty === "easy"
         ? setCurrentWord(
-          easyWords[Math.floor(Math.random() * (easyWords.length - 1))]
-        )
+            easyWords[Math.floor(Math.random() * (easyWords.length - 1))]
+          )
         : difficulty === "medium"
-          ? setCurrentWord(
+        ? setCurrentWord(
             mediumWords[Math.floor(Math.random() * (mediumWords.length - 1))]
           )
-          : setCurrentWord(
+        : setCurrentWord(
             hardWords[Math.floor(Math.random() * (hardWords.length - 1))]
           );
     }
@@ -488,13 +391,14 @@ const SpellingWords: FunctionComponent = () => {
   if (game) {
     return (
       <>
-        <Modal
-          isOpen={isModalOpen}
-          onRequestClose={() => closeModal()}
-          className={styles.modal}
-        >
-          {renderModal()}
-        </Modal>
+        <ModalPopup
+          game={game}
+          setIsModalOpen={setIsModalOpen}
+          setDifficulty={setDifficulty}
+          isModalOpen={isModalOpen}
+          difficulty={difficulty}
+          setIsTimerPaused={setIsTimerPaused}
+        />
         <div className={styles.background + " " + styles.layer1}>
           {lettersSpelled.length === currentWord?.length ? (
             <Confetti width={window.innerWidth} height={window.innerHeight} />
@@ -502,80 +406,105 @@ const SpellingWords: FunctionComponent = () => {
             ""
           )}
           <section id="container" className={styles.container}>
-            <div className={styles.left}>
-              <div className={styles.topGameBar}>
-                <button
-                  style={{ marginRight: "30px" }}
-                  onClick={() => {
-                    navigate("../games");
-                    window.location.reload();
-                  }}
-                  className={styles.backButton}
-                >
-                  &#8249;
-                </button>
-                <h1 style={{ alignSelf: "" }}> {game.name}</h1>
-              </div>
-              <ModelCamera
-                onUserMedia={setIsCameraLoading}
-                updateGameBuffer={updateBuffer}
-              ></ModelCamera>
-
-              {currentLetter ? renderNextAndTimer(currentLetter, timer) : ""}
-            </div>
-            <div className={styles.right}>
-              <div className={styles.gameboard}>
-                <h1 className={styles.gameboardTitle}> Score </h1>
-                <h3 style={{ alignSelf: "center" }}>
-                  Spell the word: {currentWord}
-                </h3>
-                <div className={styles.letters}>
-                  {renderLetters(lettersSpelled)}
-                </div>
-                <hr className={styles.divider}></hr>
-                <table>
-                  <tbody>
-                    <tr>
-                      <td>Total</td>
-                      <td className={styles.answerCell}>
-                        {score} - {hintsUsed} ={" "}
-                        {score - hintsUsed < 0 ? 0 : score - hintsUsed}
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-                {lettersSpelled.length === currentWord?.length ? (
-                  <Button
+            <Grid container>
+              {/* Left column (game display and camera) */}
+              <Grid xs={12} md={6}>
+                <div>
+                  <div
+                    className={styles.topGameBar}
                     style={{
-                      width: "50%",
-                      minWidth: "100px",
+                      justifyContent: isMobile ? "start" : "space-between",
+                      marginBottom: isMobile ? "8vh" : "0",
+                    }}
+                  >
+                    <IconButton
+                      style={{ marginRight: "30px" }}
+                      onClick={() => {
+                        navigate("../games");
+                        window.location.reload();
+                      }}
+                      className={styles.backButton}
+                    >
+                      &#8249; {/* Back button */}
+                    </IconButton>
+                    <h1 style={{ alignSelf: "" }}> {game.name}</h1>{" "}
+                    {/* Game title */}
+                  </div>
+                  <ModelCamera
+                    onUserMedia={setIsCameraLoading}
+                    updateGameBuffer={updateBuffer}
+                  ></ModelCamera>{" "}
+                  {/* Camera component */}
+                  {currentLetter
+                    ? renderNextAndTimer(currentLetter, timer)
+                    : ""}{" "}
+                  {/* Render next letter and timer */}
+                </div>
+              </Grid>
+              {/* Right column (score display and controls) */}
+              <Grid xs={12} md={6}>
+                <div style={{ padding: "0px 15px" }}>
+                  <div
+                    className={styles.gameboard}
+                    style={{
+                      width: isMobile ? "" : "50%",
+                      marginTop: isMobile ? "0" : "20%",
+                    }}
+                  >
+                    <h1 className={styles.gameboardTitle}> Score </h1>
+                    <h3 style={{ alignSelf: "center" }}>
+                      Spell the word: {currentWord}
+                    </h3>
+                    <div className={styles.letters}>
+                      {renderLetters(lettersSpelled)} {/* Render letters */}
+                    </div>
+                    <hr className={styles.divider}></hr>
+                    <table>
+                      <tbody>
+                        <tr>
+                          <td>Total</td>
+                          <td className={styles.answerCell}>
+                            {score} - {hintsUsed} ={" "}
+                            {score - hintsUsed < 0 ? 0 : score - hintsUsed}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    {lettersSpelled.length === currentWord?.length ? (
+                      <Button
+                        style={{
+                          width: "50%",
+                          minWidth: "100px",
+                          alignSelf: "center",
+                          fontSize: "20px",
+                          marginTop: "2%",
+                        }}
+                        onClick={resetGame}
+                      >
+                        Next
+                      </Button>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                  <button
+                    style={{
                       alignSelf: "center",
                       fontSize: "20px",
-                      marginTop: "2%",
+                      marginLeft: "5px",
                     }}
-                    onClick={resetGame}
+                    className={styles.backButton}
+                    onClick={() => {
+                      setIsModalOpen(true); // Open instructions modal
+                      setIsTimerPaused(true);
+                      setDifficulty("");
+                    }}
                   >
-                    Next
-                  </Button>
-                ) : (
-                  ""
-                )}
-              </div>
-              <button
-                style={{
-                  alignSelf: "center",
-                  fontSize: "20px",
-                  marginLeft: "5px",
-                }}
-                className={styles.backButton}
-                onClick={() => {
-                  setIsModalOpen(true);
-                  setIsTimerPaused(true);
-                }}
-              >
-                See instructions
-              </button>
-            </div>
+                    See instructions
+                  </button>
+                </div>
+              </Grid>
+            </Grid>
           </section>
         </div>
       </>

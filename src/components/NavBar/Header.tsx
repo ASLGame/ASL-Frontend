@@ -7,19 +7,22 @@ import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import { ReactComponent as Signy } from "./signy.svg";
 import { useNavigate, useLocation } from "react-router-dom";
 
+// Header component which takes brand and links as props
+
 function Header(props: {
   brand: { name: string; to: string };
   links: Array<{ name: string; to: string }>;
 }) {
+  // Destructure props to obtain brand and links
   const brand: { name: string; to: string } = props?.brand;
   const links: Array<{ name: string; to: string }> = props?.links;
 
+  // Define state variables. They are being used to open popups especially for mobile view
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
@@ -27,28 +30,25 @@ function Header(props: {
     null
   );
 
+  // Access routing functionality and to navigate to game pages
   const navigate = useNavigate();
   const location = useLocation();
 
+  // Event handlers for user menus
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
-  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElUser(event.currentTarget);
-  };
 
+  // Event handlers for closing navigation and user menus
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
-  };
-
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
   };
 
   return (
     <AppBar position="fixed">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
+          {/* Hamburger menu for small screens */}
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
@@ -62,6 +62,7 @@ function Header(props: {
             >
               <MenuIcon />
             </IconButton>
+            {/* Navigation menu for small screens */}
             <Menu
               id="menu-appbar"
               anchorEl={anchorElNav}
@@ -88,6 +89,7 @@ function Header(props: {
                 },
               }}
             >
+              {/* Menu items based on links */}
               {links.map((page: any) => (
                 <MenuItem
                   key={page?.name}
@@ -109,12 +111,11 @@ function Header(props: {
               ))}
             </Menu>
           </Box>
-          <IconButton
-            // sx={{ display: { xs: "none", md: "flex" }, mr: 0 }}
-            onClick={() => navigate("/")}
-          >
+          {/* Logo button */}
+          <IconButton onClick={() => navigate("/")}>
             <Signy />
           </IconButton>
+          {/* Brand name for medium screens */}
           <Typography
             variant="h6"
             noWrap
@@ -135,7 +136,7 @@ function Header(props: {
           >
             {brand?.name}
           </Typography>
-
+          {/* Brand name for small screens */}
           <Typography
             variant="h6"
             noWrap
@@ -161,6 +162,7 @@ function Header(props: {
               display: { xs: "none", md: "flex", justifyContent: "flex-end" },
             }}
           >
+            {/* Buttons for navigation on medium screens */}
             {links?.map((page) => (
               <Button
                 key={page?.name}
@@ -179,12 +181,6 @@ function Header(props: {
               </Button>
             ))}
           </Box>
-
-          {/* <Box sx={{ flexGrow: 0 }}>
-            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-              <Avatar alt="" src="/static/images/avatar/2.jpg" />
-            </IconButton>
-          </Box> */}
         </Toolbar>
       </Container>
     </AppBar>

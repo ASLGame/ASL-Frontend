@@ -9,8 +9,9 @@ h3 {
 }
 
 .background {
-  height: calc(100vh - 5.5rem);
-  width: 100vw;
+  height: 100vh;
+  margin-top: 5.5rem;
+  width: 100%;
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -61,7 +62,6 @@ h3 {
 }
 
 .gameboard {
-  margin-top: 20%;
   display: flex;
   border: 2px;
   padding: 5%;
@@ -69,13 +69,11 @@ h3 {
   border-radius: 10px;
   flex-direction: column;
   justify-content: center;
-  width: 50%;
 }
 
 .topGameBar {
   display: flex;
   width: 100%;
-  justify-content: space-between;
 }
 
 .gameboardTitle {
@@ -157,7 +155,7 @@ h3 {
   text-align: center;
 }
 
-@media (max-width:550px) {
+@media (max-width: 550px) {
   .modal {
     display: flex;
     flex-direction: column;
@@ -173,11 +171,9 @@ h3 {
     border-color: black;
     border-width: 0.15em;
     border-style: solid;
-    padding: 1.0em;
+    padding: 1em;
     padding-top: 2em;
     transform: translate(-8%, 0%);
-
-
   }
 
   .rules {
@@ -188,7 +184,6 @@ h3 {
     max-width: 300px;
     line-height: 85%;
     justify-content: center;
-
   }
 
   .modal .buttons {

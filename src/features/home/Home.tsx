@@ -10,25 +10,17 @@ import { isMobile } from "react-device-detect";
 
 export default function Home2() {
   const dispatch = useAppDispatch();
-  const [width, setWidth] = useState(window.innerWidth);
-  const [height, setHeight] = useState(window.innerHeight);
 
   useEffect(() => {
+    // Dispatch actions to fetch data for the newest and featured games
     dispatch(getNewestGameAsync());
     dispatch(getFeaturedGamesAsync());
   }, [dispatch]);
 
-  useEffect(() => {
-    const handleResize = () => {
-      setWidth(window.innerWidth);
-      setHeight(window.innerHeight);
-    };
-    window.addEventListener("resize", handleResize);
-  });
-
   return (
     <Grid className={styles.container + " " + styles.backgroundImage}>
       {isMobile ? (
+        // Render content for mobile devices
         <>
           <PageTitle label={"Information"} />
           <Grid
@@ -48,6 +40,7 @@ export default function Home2() {
           </Grid>
         </>
       ) : (
+        // Render content for non-mobile (desktop) devices
         <Grid container>
           <Grid xs={6}>
             <Grid container xs={12} justifyContent={"center"}>
