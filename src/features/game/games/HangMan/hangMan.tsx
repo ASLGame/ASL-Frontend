@@ -456,12 +456,20 @@ const HangMan: FunctionComponent = () => {
                   ></ModelCamera>
                 </div>
               </Grid>
-              <Grid xs={12} md={6} style={{ padding: "0px 15px" }}>
+              <Grid
+                xs={12}
+                md={6}
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  padding: "0px 15px",
+                }}
+              >
                 <div>
                   <div
                     className={styles.gameboard}
                     style={{
-                      width: isMobile ? "" : "50%",
                       marginTop: isMobile ? "0" : "20%",
                     }}
                   >

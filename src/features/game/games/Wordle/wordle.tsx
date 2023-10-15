@@ -552,7 +552,15 @@ const Wordle: FunctionComponent = () => {
                 </div>
               </Grid>
               {/* Right column (game side and instructions) */}
-              <Grid xs={12} md={6}>
+              <Grid
+                xs={12}
+                md={6}
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
                 <div style={{ padding: "0px 15px" }}>
                   <GameSide
                     score={score}

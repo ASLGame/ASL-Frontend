@@ -419,12 +419,19 @@ const SpellingLetters: FunctionComponent = () => {
                 </div>
               </Grid>
               {/* Right column (score display and controls) */}
-              <Grid xs={12} md={6}>
+              <Grid
+                xs={12}
+                md={6}
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
                 <div style={{ padding: "0px 15px" }}>
                   <div
                     className={styles.gameboard}
                     style={{
-                      width: isMobile ? "" : "50%",
                       marginTop: isMobile ? "0" : "20%",
                     }}
                   >

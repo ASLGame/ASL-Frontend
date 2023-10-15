@@ -6,10 +6,11 @@ h3 {
   display: flex;
   height: 100%;
   width: 100%;
+  margin-bottom: 20px;
 }
 
 .background {
-  height: 100vh;
+  min-height: 100vh;
   margin-top: 5.5rem;
   width: 100%;
   background-repeat: no-repeat;
@@ -64,7 +65,7 @@ h3 {
 .gameboard {
   display: flex;
   border: 2px;
-  padding: 5%;
+  padding: 25px;
   border-style: solid;
   border-radius: 10px;
   flex-direction: column;
