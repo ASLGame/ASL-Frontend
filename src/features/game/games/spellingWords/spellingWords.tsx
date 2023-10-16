@@ -478,7 +478,7 @@ const SpellingWords: FunctionComponent = () => {
                       </tbody>
                     </table>
                     {lettersSpelled.length === currentWord?.length ? (
-                      <Button
+                      <button
                         style={{
                           width: "50%",
                           minWidth: "100px",
@@ -489,7 +489,7 @@ const SpellingWords: FunctionComponent = () => {
                         onClick={resetGame}
                       >
                         Next
-                      </Button>
+                      </button>
                     ) : (
                       ""
                     )}
