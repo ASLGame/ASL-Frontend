@@ -7,7 +7,13 @@ import {
 } from "../../../game/gameSlice";
 import { selectSignIn } from "../../../signin/signinSlice";
 import { selectFeaturedGames, selectFeaturedGamesState } from "../../homeSlice";
-import { List, ListItemButton, Grid, Typography } from "@mui/material";
+import {
+  List,
+  ListItemButton,
+  Grid,
+  Typography,
+  useMediaQuery,
+} from "@mui/material";
 import styles from "./FeaturedGameList.module.css";
 import { isMobile } from "react-device-detect";
 
@@ -17,6 +23,7 @@ export default function FeaturedGameList() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isAuthorized = useSelector(selectSignIn);
+  const isDesktop = useMediaQuery("(min-width:1660px)");
   const getStats = async (game: { type: string }) => {
     return dispatch(getStatAsync(game.type));
   };
@@ -56,11 +63,11 @@ export default function FeaturedGameList() {
                   ></img>
                 </Grid>
                 <Grid xs={7} md={9}>
-                  <Typography className={styles.gameName}>
+                  <Typography variant={isDesktop ? "h4" : "h5"}>
                     {featuredGame.name}
                   </Typography>
 
-                  <Typography className={styles.description}>
+                  <Typography variant={isDesktop ? "h6" : "body1"}>
                     {featuredGame.description}
                   </Typography>
                 </Grid>

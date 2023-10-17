@@ -26,7 +26,7 @@ import { updateAccountAchievement } from "../../gameAPI";
 import { achievementNotification } from "../../../../components/notifications";
 import { Store } from "react-notifications-component";
 import ModalPopup from "../components/Modal";
-import { Grid, IconButton } from "@mui/material";
+import { Grid, IconButton, useMediaQuery } from "@mui/material";
 import { isMobile } from "react-device-detect";
 
 const SpellingLetters: FunctionComponent = () => {
@@ -57,6 +57,7 @@ const SpellingLetters: FunctionComponent = () => {
   const getStats = async (game: { type: string }) => {
     return dispatch(getStatAsync(game.type));
   };
+  const isDesktop = useMediaQuery("(min-width:1660px)");
 
   const resetGame = () => {
     setLettersSpelled([]);

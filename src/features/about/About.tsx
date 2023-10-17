@@ -3,8 +3,11 @@ import styles from "./About.module.css";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import PageTitle from "../../components/PageTitle/Title";
+import { useMediaQuery } from "@mui/material";
 
 const About: FunctionComponent = () => {
+  const isDesktop = useMediaQuery("(min-width:1660px)");
+
   return (
     // Container for the About page with specified styles from css file
     <Grid className={styles.container + " " + styles.backgroundImage}>
@@ -12,7 +15,7 @@ const About: FunctionComponent = () => {
       <PageTitle label={"About Us"} />
       {/* Container for text content with specific styles from css file */}
       <Grid className={styles.textContainer}>
-        <Typography>
+        <Typography variant={isDesktop ? "h5" : "h6"}>
           {/* Text content  */}
           According to the World Health Organization (WHO), over 5% of the
           world's population -or 430 million people - require rehabilitation to

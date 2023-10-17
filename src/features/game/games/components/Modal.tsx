@@ -6,6 +6,7 @@ import {
   Modal,
   List,
   ListItem,
+  useMediaQuery,
 } from "@mui/material";
 import { useEffect } from "react";
 import { isMobile } from "react-device-detect";
@@ -56,6 +57,8 @@ export default function ModalPopup(props: any) {
     setPlayable,
   } = props;
 
+  const isDesktop = useMediaQuery("(min-width:1660px)");
+
   useEffect(() => {
     // Close the modal if a difficulty is chosen
     if (difficulty) {
@@ -104,7 +107,7 @@ export default function ModalPopup(props: any) {
                     justifyContent: "center",
                   }}
                 >
-                  <Typography variant="h6" sx={{ mt: 1 }}>
+                  <Typography variant={isDesktop ? "h5" : "h6"} sx={{ mt: 1 }}>
                     {rule}
                   </Typography>
                 </ListItem>
@@ -119,7 +122,11 @@ export default function ModalPopup(props: any) {
           >
             Description
           </Typography>
-          <Typography textAlign={"center"} variant="h6" sx={{ mt: 1 }}>
+          <Typography
+            textAlign={"center"}
+            variant={isDesktop ? "h5" : "h6"}
+            sx={{ mt: 1 }}
+          >
             {game.description}
           </Typography>
           <Typography
@@ -145,6 +152,7 @@ export default function ModalPopup(props: any) {
                 fontWeight: "bold",
                 border: "1px solid black",
                 borderRadius: "8px",
+                fontSize: isDesktop ? "21px" : "18px",
               }}
               onClick={() => {
                 setDifficulty("easy");
@@ -160,6 +168,7 @@ export default function ModalPopup(props: any) {
                 border: "1px solid black",
                 borderRadius: "8px",
                 margin: "0px 10px",
+                fontSize: isDesktop ? "21px" : "18px",
               }}
               onClick={() => {
                 setDifficulty("medium");
@@ -174,6 +183,7 @@ export default function ModalPopup(props: any) {
                 fontWeight: "bold",
                 border: "1px solid black",
                 borderRadius: "8px",
+                fontSize: isDesktop ? "21px" : "18px",
               }}
               onClick={() => {
                 setDifficulty("hard");

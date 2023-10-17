@@ -494,7 +494,7 @@ const HangMan: FunctionComponent = () => {
                           width: "50%",
                           minWidth: "10vh",
                           alignSelf: "center",
-                          fontSize: "20px",
+                          fontSize: "24px",
                           marginTop: "2%",
                         }}
                         onClick={reset}
@@ -508,7 +508,7 @@ const HangMan: FunctionComponent = () => {
                   <button
                     style={{
                       alignSelf: "center",
-                      fontSize: "20px",
+                      fontSize: "24px",
                       marginLeft: "5px",
                     }}
                     className={styles.backButton}

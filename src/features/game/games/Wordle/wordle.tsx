@@ -583,7 +583,7 @@ const Wordle: FunctionComponent = () => {
                   <button
                     style={{
                       alignSelf: "center",
-                      fontSize: "20px",
+                      fontSize: "24px",
                       marginLeft: "5px",
                     }}
                     className={styles.backButton}
