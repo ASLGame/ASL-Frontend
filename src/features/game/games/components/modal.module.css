@@ -1,0 +1,4 @@
+.centeredText {
+  display: flex;
+  justify-content: "center";
+}

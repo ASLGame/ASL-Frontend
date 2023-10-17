@@ -5,7 +5,8 @@ import ModelCamera from "../../../../components/ModelCamera/ModelCamera";
 import { easyWords, mediumWords, hardWords } from "../../../../types/Models";
 import Confetti from "react-confetti";
 import { useNavigate } from "react-router-dom";
-import Modal from "react-modal";
+
+import ModalPopup from "../components/Modal";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getGameAsync,
@@ -21,15 +22,15 @@ import { selectSignIn, selectUser } from "../../../signin/signinSlice";
 import { scorePost } from "../../../../types/Score";
 import Figure from "./HM_components/figure";
 import WrongSection from "./HM_components/WrongSection";
-import GameModal from "./HM_components/GameModal/modal";
 import { getAchievements } from "../../../profile/profileAPI";
 import { UserAchievements } from "../../../profile/profileSlice";
 import { updateAccountAchievement } from "../../gameAPI";
 import { Store } from "react-notifications-component";
 import { achievementNotification } from "../../../../components/notifications";
+import { Grid, IconButton } from "@mui/material";
+import { isMobile } from "react-device-detect";
 
 const HangMan: FunctionComponent = () => {
-  Modal.setAppElement("body");
   const [buffer, setBuffer] = useState<String[]>([]);
   const [bufferFlag, setBufferFlag] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(true);
@@ -155,13 +156,10 @@ const HangMan: FunctionComponent = () => {
     }
   };
   useEffect(() => {
-
     dispatch(getGameAsync("Hang Man"));
-
 
     getStats(game);
     dispatch(getGameAchievementsAsync(game.id));
-
   }, []);
 
   function MyNotification() {
@@ -411,83 +409,119 @@ const HangMan: FunctionComponent = () => {
   if (game) {
     return (
       <>
-        <GameModal
+        <ModalPopup
           game={game}
           setIsModalOpen={setIsModalOpen}
           setDifficulty={setDifficulty}
           isModalOpen={isModalOpen}
-          setPlayable={setPlayable}
           difficulty={difficulty}
+          setPlayable={setPlayable}
         />
 
         <div className={styles.background + " " + styles.layer1}>
           {checkWin() && !isModalOpen && (
             <Confetti width={window.innerWidth} height={window.innerHeight} />
           )}
+
           <section id="container" className={styles.container}>
-            <div className={styles.left}>
-              <div className={styles.topGameBar}>
-                <button
-                  style={{ marginRight: "30px" }}
-                  onClick={() => {
-                    navigate("../games");
-                    window.location.reload();
-                  }}
-                  className={styles.backButton}
-                >
-                  &#8249;
-                </button>
-                <h1 style={{ alignSelf: "" }}>{game.name}</h1>
-              </div>
-              <ModelCamera
-                onUserMedia={setIsCameraLoading}
-                updateGameBuffer={updateBuffer}
-              ></ModelCamera>
-            </div>
-            <div className={styles.right}>
-              <div className={styles.gameboard}>
-                <div className={styles.letters}>{renderWord(currentWord)}</div>
-                <hr className={styles.divider}></hr>
+            {/* Grid container for layout */}
+            <Grid container>
+              <Grid xs={12} md={6}>
                 <div>
-                  <Figure wrong={wrongLetters} />
-                  {wrongLetters.length === 10 && (
-                    <h1>YOU LOSE! The word was: {currentWord}</h1>
-                  )}
-                </div>
-                <hr className={styles.divider}></hr>
-                <WrongSection wrong={wrongLetters} />
-                {!playable ? (
-                  <Button
+                  {/* Top game bar with back button and game title */}
+                  <div
+                    className={styles.topGameBar}
                     style={{
-                      width: "50%",
-                      minWidth: "10vh",
-                      alignSelf: "center",
-                      fontSize: "20px",
-                      marginTop: "2%",
+                      justifyContent: isMobile ? "start" : "space-between",
+                      marginBottom: isMobile ? "8vh" : "0",
                     }}
-                    onClick={reset}
                   >
-                    Next
-                  </Button>
-                ) : (
-                  ""
-                )}
-              </div>
-              <button
+                    <IconButton
+                      style={{ marginRight: "30px" }}
+                      onClick={() => {
+                        navigate("../games");
+                        window.location.reload();
+                      }}
+                      className={styles.backButton}
+                    >
+                      &#8249; {/* Back button */}
+                    </IconButton>
+                    <h1 style={{ alignSelf: "" }}>{game.name}</h1>{" "}
+                    {/* Game title */}
+                  </div>
+                  {/* ModelCamera component for camera usage */}
+                  <ModelCamera
+                    onUserMedia={setIsCameraLoading}
+                    updateGameBuffer={updateBuffer}
+                  ></ModelCamera>
+                </div>
+              </Grid>
+              <Grid
+                xs={12}
+                md={6}
                 style={{
-                  alignSelf: "center",
-                  fontSize: "20px",
-                  marginLeft: "5px",
-                }}
-                className={styles.backButton}
-                onClick={() => {
-                  setIsModalOpen(true);
-                  setPlayable(false);
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  padding: "0px 15px",
                 }}
               >
-                See instructions
-              </button>
-            </div>
+                <div>
+                  <div
+                    className={styles.gameboard}
+                    style={{
+                      marginTop: isMobile ? "0" : "20%",
+                    }}
+                  >
+                    <div className={styles.letters}>
+                      {/* Render the word with current letters */}
+                      {renderWord(currentWord)}
+                    </div>
+                    <hr className={styles.divider}></hr>
+                    <div>
+                      <Figure wrong={wrongLetters} />{" "}
+                      {/* Display figure for wrong letters */}
+                      {wrongLetters.length === 10 && (
+                        <h1>YOU LOSE! The word was: {currentWord}</h1>
+                      )}
+                    </div>
+                    <hr className={styles.divider}></hr>
+                    <WrongSection wrong={wrongLetters} />{" "}
+                    {/* Display wrong letters */}
+                    {!playable ? (
+                      <Button
+                        style={{
+                          width: "50%",
+                          minWidth: "10vh",
+                          alignSelf: "center",
+                          fontSize: "24px",
+                          marginTop: "2%",
+                        }}
+                        onClick={reset}
+                      >
+                        Next
+                      </Button>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                  <button
+                    style={{
+                      alignSelf: "center",
+                      fontSize: "24px",
+                      marginLeft: "5px",
+                    }}
+                    className={styles.backButton}
+                    onClick={() => {
+                      setIsModalOpen(true);
+                      setPlayable(false);
+                    }}
+                  >
+                    See instructions
+                  </button>
+                </div>
+              </Grid>
+            </Grid>
           </section>
         </div>
       </>

@@ -1,13 +1,30 @@
+h3 {
+  margin: 0.5em;
+  font-size: 24px;
+}
+
+td {
+  font-size: 24px;
+}
+p {
+  font-size: 24px;
+}
+button {
+  font-size: 24px;
+}
+
 .container {
   display: flex;
   height: 100%;
   width: 100%;
+  margin-bottom: 20px;
 }
 
 .background {
-  height: calc(100vh - 5.5rem);
-  width: 100vw;
-  background-repeat: no-repeat;
+  min-height: 100vh;
+  margin-top: 5.5rem;
+  width: 100%;
+  background-repeat: repeat;
   background-position: center;
   background-size: cover;
 }
@@ -60,18 +77,16 @@
   margin-top: 5%;
   display: flex;
   border: 2px;
-  padding: 5%;
+  padding: 25px;
   border-style: solid;
   border-radius: 10px;
   flex-direction: column;
   justify-content: center;
-  width: 50%;
 }
 
 .topGameBar {
   display: flex;
   width: 100%;
-  justify-content: space-between;
 }
 
 .gameboardTitle {
@@ -116,36 +131,39 @@ button {
   text-align: "center";
 }
 
+.rodUp {
+}
 
+.rodRight {
+}
 
+.rodDown {
+}
 
+.head {
+}
 
-.rodUp {}
+.torso {
+}
 
-.rodRight {}
+.armRight {
+}
 
-.rodDown {}
+.armLeft {
+}
 
-.head {}
+.legLeft {
+}
 
-.torso {}
+.legRight {
+}
 
-.armRight {}
-
-.armLeft {}
-
-.legLeft {}
-
-.legRight {}
-
-@media (max-width:600px) {
+@media (max-width: 600px) {
   .gameboard {
-    max-width: 400px
+    max-width: 400px;
   }
 
   .figureContainer {
     transform: translate(-30%, 0%);
   }
-
-
 }

@@ -8,6 +8,15 @@ import * as serviceWorker from "./serviceWorker";
 
 import { PersistGate } from "redux-persist/integration/react";
 import { persistStore } from "redux-persist";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#fcf3f2",
+    },
+  },
+});
 
 let persistor = persistStore(store);
 
@@ -15,7 +24,9 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <App />
+        <ThemeProvider theme={theme}>
+          <App />
+        </ThemeProvider>
       </PersistGate>
     </Provider>
   </React.StrictMode>,

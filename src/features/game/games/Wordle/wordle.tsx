@@ -20,12 +20,14 @@ import { selectSignIn, selectUser } from "../../../signin/signinSlice";
 import { scorePost } from "../../../../types/Score";
 import { Cell } from "../../../../types/Wordle";
 import { Store } from "react-notifications-component";
-import GameModal from "./components/GameModal/modal";
+import ModalPopup from "../components/Modal";
 import GameSide from "./components/GameSide/GameSide";
 import { getAchievements } from "../../../profile/profileAPI";
 import { UserAchievements } from "../../../profile/profileSlice";
 import { updateAccountAchievement } from "../../gameAPI";
 import { achievementNotification } from "../../../../components/notifications";
+import { Grid, IconButton } from "@mui/material";
+import { isMobile } from "react-device-detect";
 
 const Wordle: FunctionComponent = () => {
   const [buffer, setBuffer] = useState<string[]>([]);
@@ -357,12 +359,10 @@ const Wordle: FunctionComponent = () => {
   ]);
 
   useEffect(() => {
-
     dispatch(getGameAsync("Wordle"));
 
     getStats(game);
     dispatch(getGameAchievementsAsync(game.id));
-
   }, []);
 
   useEffect(() => {
@@ -507,7 +507,7 @@ const Wordle: FunctionComponent = () => {
   if (game) {
     return (
       <>
-        <GameModal
+        <ModalPopup
           game={game}
           setIsModalOpen={setIsModalOpen}
           setDifficulty={setDifficulty}
@@ -521,57 +521,81 @@ const Wordle: FunctionComponent = () => {
             ""
           )}
           <section id="container" className={styles.container}>
-            <div className={styles.left}>
-              <div className={styles.topGameBar}>
-                <button
-                  style={{ marginRight: "30px" }}
-                  onClick={() => {
-                    navigate("../games");
-                    window.location.reload();
-                  }}
-                  className={styles.backButton}
-                >
-                  &#8249;
-                </button>
-                <h1> {game.name}</h1>
-              </div>
-              <ModelCamera
-                updateGameBuffer={updateBuffer}
-                onUserMedia={setIsCameraLoading}
-              ></ModelCamera>
-            </div>
-            <div className={styles.right}>
-              <GameSide
-                score={score}
-                hintsUsed={hintsUsed}
-                isGameLost={isGameLost}
-                isGameWon={isGameWon}
-                resetGame={resetGame}
-                isCurrentRowFull={isCurrentRowFull}
-                checkCurrentRow={checkCurrentRow}
-                currentRow={currentRow!}
-                emptyRows={emptyRows!}
-                completedRows={completedRows!}
-                reset={reset}
-                setCurrentRow={setCurrentRow}
-                setCurrentRowIndex={setCurrentRowIndex}
-                currentRowIndex={currentRowIndex}
-                setIsCurrentRowFull={setIsCurrentRowFull}
-              ></GameSide>
-              <button
+            <Grid container>
+              {/* Left column (game display and camera) */}
+              <Grid xs={12} md={6}>
+                <div>
+                  <div
+                    className={styles.topGameBar}
+                    style={{
+                      justifyContent: isMobile ? "start" : "space-between",
+                      marginBottom: isMobile ? "8vh" : "0",
+                    }}
+                  >
+                    <IconButton
+                      style={{ marginRight: "30px" }}
+                      onClick={() => {
+                        navigate("../games");
+                        window.location.reload();
+                      }}
+                      className={styles.backButton}
+                    >
+                      &#8249; {/* Back button */}
+                    </IconButton>
+                    <h1> {game.name}</h1> {/* Game title */}
+                  </div>
+                  <ModelCamera
+                    updateGameBuffer={updateBuffer}
+                    onUserMedia={setIsCameraLoading}
+                  ></ModelCamera>{" "}
+                  {/* Camera component */}
+                </div>
+              </Grid>
+              {/* Right column (game side and instructions) */}
+              <Grid
+                xs={12}
+                md={6}
                 style={{
-                  alignSelf: "center",
-                  fontSize: "20px",
-                  marginLeft: "5px",
-                }}
-                className={styles.backButton}
-                onClick={() => {
-                  setIsModalOpen(true);
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
               >
-                See instructions
-              </button>
-            </div>
+                <div style={{ padding: "0px 15px" }}>
+                  <GameSide
+                    score={score}
+                    hintsUsed={hintsUsed}
+                    isGameLost={isGameLost}
+                    isGameWon={isGameWon}
+                    resetGame={resetGame}
+                    isCurrentRowFull={isCurrentRowFull}
+                    checkCurrentRow={checkCurrentRow}
+                    currentRow={currentRow!}
+                    emptyRows={emptyRows!}
+                    completedRows={completedRows!}
+                    reset={reset}
+                    setCurrentRow={setCurrentRow}
+                    setCurrentRowIndex={setCurrentRowIndex}
+                    currentRowIndex={currentRowIndex}
+                    setIsCurrentRowFull={setIsCurrentRowFull}
+                  ></GameSide>{" "}
+                  {/* Game side component */}
+                  <button
+                    style={{
+                      alignSelf: "center",
+                      fontSize: "24px",
+                      marginLeft: "5px",
+                    }}
+                    className={styles.backButton}
+                    onClick={() => {
+                      setIsModalOpen(true); // Open instructions modal
+                    }}
+                  >
+                    See instructions
+                  </button>
+                </div>
+              </Grid>
+            </Grid>
           </section>
         </div>
       </>

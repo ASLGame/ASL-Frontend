@@ -1,25 +1,23 @@
 .container {
   display: flex;
   align-items: center;
-  justify-content: center;
   flex-direction: column;
-  height: calc(100vh - 5.5rem);
-  width: 100vw;
-  min-width: 360px;
-  min-height: 640px;
+  width: 100%;
+  padding: 15vh 2vw 15px 2vw;
+  min-height: 100vh;
 }
 
 .backgroundImage {
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-  background-image: url("./blob-scene-haikei.svg");
-  height: calc(100vh - 5.5rem);
-  width: 100vw;
+  background-image: url("../../assets/blob-scene-haikei.svg");
+  width: 100%;
+  min-height: 100vh;
 }
 
 .textContainer {
-  width: 50%;
+  width: 90%;
   line-height: 1.6;
   overflow: auto;
   max-height: 40%;
@@ -36,7 +34,8 @@
 .titleBackground {
   color: white;
   display: flex;
-  height: 50%;
+  height: 25vh;
+  font-size: 25px;
   align-self: center;
   align-items: center;
   justify-content: center;

@@ -2,11 +2,28 @@
   display: flex;
   height: 100%;
   width: 100%;
+  margin-bottom: 20px;
+}
+
+h3 {
+  margin: 0.5em;
+  font-size: 24px;
+}
+
+td {
+  font-size: 24px;
+}
+p {
+  font-size: 24px;
+}
+button {
+  font-size: 24px;
 }
 
 .background {
-  height: calc(100vh - 5.5rem);
-  width: 100vw;
+  min-height: 100vh;
+  margin-top: 5.5rem;
+  width: 100%;
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;

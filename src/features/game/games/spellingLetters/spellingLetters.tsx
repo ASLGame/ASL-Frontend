@@ -25,7 +25,9 @@ import { UserAchievements } from "../../../profile/profileSlice";
 import { updateAccountAchievement } from "../../gameAPI";
 import { achievementNotification } from "../../../../components/notifications";
 import { Store } from "react-notifications-component";
-import GameModal from "./GameModal/modal";
+import ModalPopup from "../components/Modal";
+import { Grid, IconButton, useMediaQuery } from "@mui/material";
+import { isMobile } from "react-device-detect";
 
 const SpellingLetters: FunctionComponent = () => {
   Modal.setAppElement("body");
@@ -55,13 +57,13 @@ const SpellingLetters: FunctionComponent = () => {
   const getStats = async (game: { type: string }) => {
     return dispatch(getStatAsync(game.type));
   };
+  const isDesktop = useMediaQuery("(min-width:1660px)");
 
   const resetGame = () => {
     setLettersSpelled([]);
     setScore(0);
     setIsScorePosted(false);
   };
-
 
   const renderNextAndTimer = (next: String, timer: number) => {
     return (
@@ -140,10 +142,10 @@ const SpellingLetters: FunctionComponent = () => {
       emptyBuffer.shift();
     }
     setBuffer(emptyBuffer);
-    let timer: number = 0
-    if (difficulty === 'easy') {
+    let timer: number = 0;
+    if (difficulty === "easy") {
       timer = 10;
-    } else if (difficulty === 'medium') {
+    } else if (difficulty === "medium") {
       timer = 6;
     } else {
       timer = 3;
@@ -151,7 +153,6 @@ const SpellingLetters: FunctionComponent = () => {
     setTimer(timer);
     setHintShowed(false);
     Store.removeAllNotifications();
-
   };
 
   function MyNotification() {
@@ -218,9 +219,7 @@ const SpellingLetters: FunctionComponent = () => {
   }
 
   useEffect(() => {
-
     dispatch(getGameAsync("Spelling Letters"));
-
 
     getStats(game);
     dispatch(getGameAchievementsAsync(game.id));
@@ -350,31 +349,30 @@ const SpellingLetters: FunctionComponent = () => {
     }
   });
 
-
   useEffect(() => {
     if (difficulty) {
-      let timer: number = 0
-      if (difficulty === 'easy') {
+      let timer: number = 0;
+      if (difficulty === "easy") {
         timer = 10;
-      } else if (difficulty === 'medium') {
+      } else if (difficulty === "medium") {
         timer = 6;
       } else {
         timer = 3;
       }
       setTimer(timer);
       setScore(0);
-      setLettersSpelled([])
+      setLettersSpelled([]);
       let emptyBuffer: String[] = buffer;
       while (emptyBuffer.length !== 0) {
         emptyBuffer.shift();
       }
       setBuffer(emptyBuffer);
     }
-  }, [difficulty])
+  }, [difficulty]);
   if (game) {
     return (
       <>
-        <GameModal
+        <ModalPopup
           game={game}
           setIsModalOpen={setIsModalOpen}
           setDifficulty={setDifficulty}
@@ -382,6 +380,7 @@ const SpellingLetters: FunctionComponent = () => {
           difficulty={difficulty}
           setIsTimerPaused={setIsTimerPaused}
         />
+
         <div className={styles.background + " " + styles.layer1}>
           {lettersSpelled.length === 10 ? (
             <Confetti width={window.innerWidth} height={window.innerHeight} />
@@ -389,83 +388,108 @@ const SpellingLetters: FunctionComponent = () => {
             ""
           )}
           <section id="container" className={styles.container}>
-            <div className={styles.left}>
-              <div className={styles.topGameBar}>
-                <button
-                  style={{ marginRight: "30px" }}
-                  onClick={() => {
-                    navigate("../games");
-                    window.location.reload();
-                  }}
-                  className={styles.backButton}
-                >
-                  &#8249;
-                </button>
-                <h1 style={{ alignSelf: "" }}> {game.name}</h1>
-              </div>
-              <ModelCamera
-                onUserMedia={setIsCameraLoading}
-                updateGameBuffer={updateBuffer}
-              ></ModelCamera>
-
-
-            </div>
-
-            <div className={styles.right}>
-              <div className={styles.gameboard}>
+            <Grid container>
+              {/* Left column (game display and camera) */}
+              <Grid xs={12} md={6}>
                 <div>
-                  {lettersSpelled.length !== 10
-                    ? renderNextAndTimer(currentLetter, timer)
-                    : ""}
-                </div>
-                <h1 className={styles.gameboardTitle}> Score </h1>
-                {/* <div className={styles.letters}>
-                  {renderLetters(lettersSpelled)}
-                </div> */}
-                <hr className={styles.divider}></hr>
-                <table>
-                  <tbody>
-                    <tr>
-                      <td>Total</td>
-                      <td className={styles.answerCell}>
-
-                        {score - hintsUsed < 0 ? 0 : score - hintsUsed}
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-                {lettersSpelled.length === 10 ? (
-                  <Button
+                  <div
+                    className={styles.topGameBar}
                     style={{
-                      width: "50%",
-                      minWidth: "100px",
-                      alignSelf: "center",
-                      fontSize: "20px",
-                      marginTop: "2%",
+                      justifyContent: isMobile ? "start" : "space-between",
+                      marginBottom: isMobile ? "8vh" : "0",
                     }}
-                    onClick={resetGame}
                   >
-                    Next
-                  </Button>
-                ) : (
-                  ""
-                )}
-              </div>
-              <button
+                    <IconButton
+                      style={{ marginRight: "30px" }}
+                      onClick={() => {
+                        navigate("../games");
+                        window.location.reload();
+                      }}
+                      className={styles.backButton}
+                    >
+                      &#8249; {/* Back button */}
+                    </IconButton>
+                    <h1 style={{ alignSelf: "" }}> {game.name}</h1>{" "}
+                    {/* Game title */}
+                  </div>
+                  <ModelCamera
+                    onUserMedia={setIsCameraLoading}
+                    updateGameBuffer={updateBuffer}
+                  ></ModelCamera>{" "}
+                  {/* Camera component */}
+                </div>
+              </Grid>
+              {/* Right column (score display and controls) */}
+              <Grid
+                xs={12}
+                md={6}
                 style={{
-                  alignSelf: "center",
-                  fontSize: "20px",
-                  marginLeft: "5px",
-                }}
-                className={styles.backButton}
-                onClick={() => {
-                  setIsModalOpen(true);
-                  setIsTimerPaused(true);
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
               >
-                See instructions
-              </button>
-            </div>
+                <div style={{ padding: "0px 15px" }}>
+                  <div
+                    className={styles.gameboard}
+                    style={{
+                      marginTop: isMobile ? "0" : "20%",
+                    }}
+                  >
+                    <div>
+                      {/* Render next letter and timer if not completed */}
+                      {lettersSpelled.length !== 10
+                        ? renderNextAndTimer(currentLetter, timer)
+                        : ""}
+                    </div>
+                    <h1 className={styles.gameboardTitle}> Score </h1>
+                    <hr className={styles.divider}></hr>
+                    <table>
+                      <tbody>
+                        <tr>
+                          <td>Total</td>
+                          <td className={styles.answerCell}>
+                            {score - hintsUsed < 0 ? 0 : score - hintsUsed}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    {/* Display "Next" button when the game is completed */}
+                    {lettersSpelled.length === 10 ? (
+                      <button
+                        style={{
+                          width: "50%",
+                          minWidth: "100px",
+                          alignSelf: "center",
+                          fontSize: "20px",
+                          marginTop: "2%",
+                        }}
+                        onClick={resetGame}
+                      >
+                        Next
+                      </button>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                  <button
+                    style={{
+                      alignSelf: "center",
+                      fontSize: "20px",
+                      marginLeft: "5px",
+                    }}
+                    className={styles.backButton}
+                    onClick={() => {
+                      setIsModalOpen(true); // Open instructions modal
+                      setIsTimerPaused(true);
+                      setDifficulty("");
+                    }}
+                  >
+                    See instructions
+                  </button>
+                </div>
+              </Grid>
+            </Grid>
           </section>
         </div>
       </>

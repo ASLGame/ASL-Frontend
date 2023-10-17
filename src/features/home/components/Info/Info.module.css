@@ -1,14 +1,15 @@
 .container {
-  background-color: #f5f5fb;
-  padding: 3vw;
-  border-radius: 4%;
-  border: 2px solid black;
-  align-content: center;
-  margin: 10vh;
-  transform: translate(0, 6.5vh);
-
+  padding: 10px;
 }
 
+.title {
+  align-self: center;
+  margin-bottom: 1vh;
+  text-align: center;
+  font-weight: 500;
+  font-size: 44px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
 
 .mission {
   font-size: xxx-large;
@@ -48,10 +49,13 @@
 }
 
 .imgContainer {
-  width: 100%;
-  height: 100%;
-  margin-top: 5vh;
-
+  background-color: #f5f5fb;
+  padding: 10px;
+  border-radius: 4%;
+  border: 2px solid black;
+  align-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 @media (max-width: 400px) {

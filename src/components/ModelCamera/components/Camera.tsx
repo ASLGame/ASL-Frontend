@@ -9,6 +9,7 @@ import { drawConnectors, drawLandmarks } from "@mediapipe/drawing_utils";
 import { calc_landmark_list, pre_process_landmarks } from "./model";
 import { Tensor } from "@tensorflow/tfjs";
 import * as tf from "@tensorflow/tfjs";
+import { isMobile } from "react-device-detect";
 
 interface CameraProps {
   models: Models;
@@ -130,7 +131,10 @@ const Camera: FunctionComponent<CameraProps> = (props) => {
   }, []);
 
   return (
-    <div className={styles.webcamContainer}>
+    <div
+      className={styles.webcamContainer}
+      style={{ height: isMobile ? "60%" : "60vh" }}
+    >
       <Webcam
         className={styles.webcam}
         videoConstraints={{ facingMode: "user" }}

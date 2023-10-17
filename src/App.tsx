@@ -11,12 +11,16 @@ import { Suspense } from "react";
 import routes from "./routes";
 import Loader from "./components/Loader/Loader";
 import { Helmet } from "react-helmet";
+import Header from "./components/NavBar/Header";
 
 const navigation = {
   brand: { name: "Signy", to: "/" },
   links: [
+    { name: "Home", to: "/" },
     { name: "Games", to: "/games" },
-    { name: "Account", to: "/profile" },
+    // { name: "Account", to: "/profile" },
+    { name: "About Us", to: "/about" },
+    { name: "Hand Signs", to: "/HandSigns" },
   ],
 };
 const { brand, links } = navigation;
@@ -38,17 +42,12 @@ function App() {
     <Router>
       <Helmet>
         <title>Signy</title>
-        <meta
-          name="description"
-          content="Learn Sign Languege"
-        />
-        <meta
-          name="keywords"
-          content="sign, language, game"
-        />
+        <meta name="description" content="Learn Sign Languege" />
+        <meta name="keywords" content="sign, language, game" />
       </Helmet>
       <Suspense fallback={<Loader />}>
-        <NavBar brand={brand} links={links} />
+        <Header brand={brand} links={links} />
+        {/* <NavBar brand={brand} links={links} /> */}
         <ReactNotifications />
         <Routes>
           {routes.map((route, i) => (
@@ -56,7 +55,6 @@ function App() {
           ))}
         </Routes>
       </Suspense>
-
     </Router>
   );
 }
