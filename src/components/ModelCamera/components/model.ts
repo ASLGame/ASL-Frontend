@@ -1,7 +1,6 @@
 import * as tf from "@tensorflow/tfjs";
 import { Models } from "../../../types/Models";
 import { isMobile } from 'react-device-detect';
-import * as tflite from '@tensorflow/tfjs-tflite'
 import dotenv from 'dotenv'
 
 // Adds the CPU backend.
