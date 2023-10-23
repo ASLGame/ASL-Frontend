@@ -1,5 +1,4 @@
 import { GraphModel } from "@tensorflow/tfjs";
-import { TFLiteModel } from "@tensorflow/tfjs-tflite"
 
 export interface Models {
   L_Model: GraphModel | TFLiteModel | undefined;
