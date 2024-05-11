@@ -1,7 +1,7 @@
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import NavBar from "./components/NavBar/NavBar";
-import Footer from "./components/Footer/Footer";
+import Footer from "./components/Footer/footer";
 import { useSelector } from "react-redux";
 import { selectUser, signOut } from "./features/signin/signinSlice";
 import jwt_decode, { JwtPayload } from "jwt-decode";
