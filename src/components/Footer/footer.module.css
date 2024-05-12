@@ -1,0 +1,21 @@
+/* Footer.module.css */
+.footerContainer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 50px;
+  padding: 10px 20px;
+  background: #f5f5fb; 
+  border-top: 1px solid #e1e1e1;
+}
+
+.footerLink {
+  color: #1DA1F2;
+  display: flex;
+  align-items: center;
+  height: 40px;
+}
+
+.footerIcon {
+  margin-right: 5px;
+}
