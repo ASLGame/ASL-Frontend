@@ -28,7 +28,7 @@ export default function FeaturedGameList() {
     return dispatch(getStatAsync(game.type));
   };
 
-  if (featuredGamesState !== "loading" && featuredGames) {
+  if (featuredGamesState !== "loading" && Array.isArray(featuredGames)) {
     return (
       <Grid className={styles.featuredGames}>
         <List>
